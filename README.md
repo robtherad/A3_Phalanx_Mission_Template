@@ -9,7 +9,7 @@ Simply click the link below to download the template. The master branch is alway
 ### Using the Template
 First you'll need to download the template using the link above. Once it's done, drag the folder called `ADV120_MissionTemplate.Altis` into your Arma 3 mission folder. Your Arma 3 mission folder which should be a path similar to `C:\Users\Rob\Documents\Arma 3 - Other Profiles\robtherad\missions`. 
 
-After that you can use the **[template guide](https://github.com/robtherad/BCArma/wiki/Creating-a-Mission-with-the-Template)** to help you make your mission.
+After that you can use the **[template guide](https://github.com/robtherad/A3_Phalanx_Mission_Template/wiki/Creating-a-Mission-with-the-Template)** to help you make your mission.
 
 ---
 
