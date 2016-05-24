@@ -1,7 +1,6 @@
-author = "Bravo Company";
-onLoadName = "MissionNameHere";
-OnLoadMission = "LoadingScreenMessageHere";
-loadScreen =  "images\intro.jpg";
+author = "robtherad";
+onLoadName = "Mission Template";
+OnLoadMission = "Phoenix Mission Template. Change all these lines!";
 
 #include "description\definitions.hpp"
 #include "description\cfgNotifications.hpp"

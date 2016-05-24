@@ -1,17 +1,17 @@
 /*
-This file will start all scripts part of the default BC template. Call this file from init.sqf using the following line of code.
+This file will start all scripts part of the default phx template. Call this file from init.sqf using the following line of code.
 
-[] execVM "f\bcInit.sqf";
+[] execVM "f\phxInit.sqf";
 
 */
 //====================================================================================================
 //Initialize Variables - End conditions
-bc_missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
-bc_missionRunTime = ["mission_runtime",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
-bc_missionRuntimeMins = bc_missionRunTime + bc_missionSafeTime;
-bc_alertOver = 1; // Time elapsed warning
-bc_alertEnd = 0; // Time elapsed warning
-bc_alertSoon = 0; // 15 minute warning
+phx_missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
+phx_missionRunTime = ["mission_runtime",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
+phx_missionRuntimeMins = phx_missionRunTime + phx_missionSafeTime;
+phx_alertOver = 1; // Time elapsed warning
+phx_alertEnd = 0; // Time elapsed warning
+phx_alertSoon = 0; // 15 minute warning
 
 //====================================================================================================
 //difficulty Message
@@ -26,7 +26,7 @@ if (isServer) then {
             case 3: {_diff = "Elite";};
         };
         _hintStr = "Mission Difficulty Setting = " + _diff;
-        [_hintStr,15] remoteExecCall ["bc_fnc__hintThenClear", 0];
+        [_hintStr,15] remoteExecCall ["phx_fnc__hintThenClear", 0];
     };
 };
 
@@ -37,18 +37,18 @@ disableRemoteSensors true;
 //====================================================================================================
 //Pre Briefing Client Scripts
 if (hasInterface) then {
-    bc_core_showTags = [BC_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
-    bc_radHandle1 = [BC_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
-    bc_end_clientWait = [BC_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHandler;
+    phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
+    phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
+    phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHandler;
 };
 
 //====================================================================================================
 //Pre Briefing Server Scripts
-if (isServer && isNil "bc_serverInit") then {
-    bc_end_checkTime = [BC_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
-    bc_end_checkAlive = [BC_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
+if (isServer && isNil "phx_serverInit") then {
+    phx_end_checkTime = [phx_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
+    phx_end_checkAlive = [phx_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
 
-    bc_serverInit = true; //Set this so that the server stuff only runs once
+    phx_serverInit = true; //Set this so that the server stuff only runs once
 };
 
 //====================================================================================================
@@ -58,7 +58,7 @@ waitUntil {time > 0};
 //====================================================================================================
 //Post Briefing Client Scripts
 if (hasInterface) then {
-    call BC_fnc_gps_init;
+    call phx_fnc_gps_init;
 };
 
 //====================================================================================================
