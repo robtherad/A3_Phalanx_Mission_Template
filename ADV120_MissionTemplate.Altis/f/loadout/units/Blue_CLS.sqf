@@ -7,17 +7,17 @@ removeBackpack player;
 removeHeadgear player;
 removeGoggles player;
 
-player forceAddUniform "MNP_CombatUniform_Ranger_A";
+player forceAddUniform "CUP_U_B_USMC_MARPAT_WDL_Sleeves";
 for "_i" from 1 to 8 do {player addItemToUniform "SmokeShell";};
-player addVest "V_PlateCarrier1_rgr";
-for "_i" from 1 to 12 do {player addItemToVest "rhs_mag_30Rnd_556x45_Mk318_Stanag";};
-for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
-player addBackpack "B_AssaultPack_rgr";
+player addVest "CUP_V_B_MTV_Patrol";
+for "_i" from 1 to 8 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
+player addBackpack "CUP_B_USMC_MOLLE";
 for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
 for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
-player addHeadgear "H_HelmetB";
-player addWeapon "rhs_weap_m4a1_carryhandle";
-player addPrimaryWeaponItem "acc_flashlight";
+for "_i" from 1 to 4 do {player addItemToBackpack "30Rnd_556x45_Stanag_Tracer_Red";};
+player addHeadgear "CUP_H_USMC_HelmetWDL";
+
+player addWeapon "CUP_arifle_M16A4_Base";
 
 if (s_loadout_map == 0) then {
     player linkItem "ItemMap";
