@@ -19,7 +19,7 @@ Runs locally and gets the name of the person that the player is looking at. Only
 #####Configure
 No configuration required.
 #####Disable
-In `'f\bcInit.sqf'` remove or comment out the line that reads:
+In `'f\phxInit.sqf'` remove or comment out the line that reads:
 ```
 phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
 ```

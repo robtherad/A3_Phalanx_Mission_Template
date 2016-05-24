@@ -28,4 +28,4 @@ If you wish for teams to be able to see each other's GPS markers then you can de
 If you wish to change this value after the mission has started you can redefine `phx_sidesVisibleToPlayer` which is a variable local to each client that is initially equal to the `_sidesVisibleToXXXX` that corresponds to the player's initial side when the script was called.
 
 ###Disable
-In `'f\bcInit.sqf'` remove the line `call phx_fnc_gps_init;`.
+In `'f\phxInit.sqf'` remove the line `call phx_fnc_gps_init;`.

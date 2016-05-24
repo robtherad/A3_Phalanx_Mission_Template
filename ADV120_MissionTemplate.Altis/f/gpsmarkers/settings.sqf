@@ -1,5 +1,5 @@
 /*
-    Settings file for the bc\gpsmarkers\ module.
+    Settings file for the phx\gpsmarkers\ module.
     
     Vehicle Markers
         If you do have vehicles in your mission, make sure they are named and then add that name to the array for the team they are on. If vehicles exist in your mission but are not entered into this settings file they will not have markers in game.  

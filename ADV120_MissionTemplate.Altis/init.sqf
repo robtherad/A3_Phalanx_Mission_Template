@@ -15,5 +15,5 @@ if (hasInterface) then {phx_playerBoundsCheck_PFH = [phx_fnc_core_playerBoundsCh
 //Call the safeStart
 [] execVM "f\safeStart\f_safeStart.sqf";
 
-//Call BC Template
-[] execVM "f\bcInit.sqf";
+//Call PHX Template
+[] execVM "f\phxInit.sqf";
