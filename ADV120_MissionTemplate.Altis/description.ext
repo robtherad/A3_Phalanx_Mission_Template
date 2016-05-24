@@ -1,0 +1,27 @@
+author = "Bravo Company";
+onLoadName = "MissionNameHere";
+OnLoadMission = "LoadingScreenMessageHere";
+loadScreen =  "images\intro.jpg";
+
+#include "description\definitions.hpp"
+#include "description\cfgNotifications.hpp"
+#include "description\cfgParams.hpp"
+#include "description\cfgRespawnTemplates.hpp"
+#include "description\cfgDebriefingSections.hpp"
+#include "description\cfgEventHandlers.hpp"
+
+#include "f\spect\config.hpp"
+class CfgFunctions {
+    #include "description\cfgFunctions.hpp"
+    class F {
+        class safeStart {
+            file = "f\safeStart";
+            class safety{};
+        };
+        #include "f\spect\functions.hpp"
+    };
+    class BC {
+        #include "f\functions.hpp"
+    };
+};
+#include "f\display.hpp"
