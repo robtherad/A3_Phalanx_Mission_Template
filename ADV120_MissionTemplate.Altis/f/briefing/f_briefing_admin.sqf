@@ -45,6 +45,6 @@ Force safety off for all players</execute><br/><br/>
 
 // CREATE DIARY ENTRY
 
-player createDiaryRecord ["diary", ["F3 Admin Menu",_briefing]];
+player createDiaryRecord ["PHX_Diary", ["F3 Admin Menu",_briefing]];
 
 // ====================================================================================
