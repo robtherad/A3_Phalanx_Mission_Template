@@ -87,6 +87,7 @@ waitUntil { !isNil "phx_playerBaseChannel"; };
     } forEach units _x;
 } forEach _groups;
 
+waitUntil {!isNil "PHX_Diary"};
 // Insert final result into subsection ORBAT of section Notes
-player createDiaryRecord ["diary", ["ORBAT", _orbatText]];
+player createDiaryRecord ["PHX_Diary", ["ORBAT", _orbatText]];
 phx_writtenORBAT = true;

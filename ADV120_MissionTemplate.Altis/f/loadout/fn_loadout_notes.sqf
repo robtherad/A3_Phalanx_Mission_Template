@@ -163,5 +163,5 @@ if (count _items > 0) then {
 // ====================================================================================
 // ADD DIARY SECTION
 // Wait for the briefing script to finish, then add the created text
-
-player createDiaryRecord ["diary", ["Loadout", "NOTE: The loadout shown below is only accurate at mission start.<br/>"+ _visText + _text]];
+waitUntil {!isNil "PHX_Diary"};
+player createDiaryRecord ["PHX_Diary", ["Loadout", "NOTE: The loadout shown below is only accurate at mission start.<br/>"+ _visText + _text]];

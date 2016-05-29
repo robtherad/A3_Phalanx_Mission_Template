@@ -2,7 +2,7 @@ if (!hasInterface) exitWith {};
 disableSerialization;
 if (phx_show_timeUI) then {
     _missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
-    _missionRunTimeMins = ["mission_runtime",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
+    _missionRunTimeMins = ["phx_missionTimelimit",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
     _missionTime = _missionRuntimeMins + _missionSafeTime;
     //Create displays in bottom left
     ("timeRsc" call BIS_fnc_rscLayer) cutRsc ["timeleftStructText", "PLAIN"];

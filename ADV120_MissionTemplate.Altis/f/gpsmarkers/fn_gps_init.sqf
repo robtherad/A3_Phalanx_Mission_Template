@@ -35,7 +35,7 @@ Excluding groups from being marked
 //Local script, dedicated server not needed
 if (isDedicated) exitWith {};
 //Check to see if mission parameters have markers enabled - Default ON
-_useMarkers = ["s_gps_markers",1] call BIS_fnc_getParamValue;
+_useMarkers = ["phx_gps_markersEnabledParam",1] call BIS_fnc_getParamValue;
 if (_useMarkers == 0) exitWith {};
 
 #include "settings.sqf";

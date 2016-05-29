@@ -7,7 +7,7 @@ This file will start all scripts part of the default phx template. Call this fil
 //====================================================================================================
 //Initialize Variables - End conditions
 phx_missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
-phx_missionRunTime = ["mission_runtime",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
+phx_missionRunTime = ["phx_missionTimelimit",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
 phx_missionRuntimeMins = phx_missionRunTime + phx_missionSafeTime;
 phx_alertOver = 1; // Time elapsed warning
 phx_alertEnd = 0; // Time elapsed warning
