@@ -25,7 +25,7 @@ if (phx_show_timeUI) then {
                 _secs = "0" + str(60-floor(CBA_missionTime%60));
             };
         };
-        _setText ctrlSetStructuredText (parseText format ["Approximate CBA_missionTime Remaining: %1:%2",_mins,_secs]);
+        _setText ctrlSetStructuredText (parseText format ["Approximate Time Remaining: %1:%2",_mins,_secs]);
     } else {
         _mins = floor((CBA_missionTime-(_missionTime*60))/60);
         _secs = floor((CBA_missionTime-(_missionTime*60))%60);
