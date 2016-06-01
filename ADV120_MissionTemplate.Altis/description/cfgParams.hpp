@@ -24,7 +24,7 @@ class Params {
         title = "Time Limit:";
         values[] = {5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90};
         texts[] = {"5 minutes","10 minutes","15 minutes","20 minutes","25 minutes","30 minutes","35 minutes","40 minutes","45 minutes (default)","50 minutes","55 minutes","60 minutes","65 minutes","70 minutes","75 minutes","80 minutes","85 minutes","90 minutes",};
-        default = 60;
+        default = 45;
     };
     // Other Template Scripts
     class phx_gps_markersEnabledParam {
@@ -44,7 +44,7 @@ class Params {
       title = "Loadout Modset:";
         values[] = {0, 1, 2};
         texts[] = {"Vanilla", "RHS", "CUP"};
-        default = 1;
+        default = 2;
     };
     class phx_loadout_radio {
         title = "Radio Deployment:";
