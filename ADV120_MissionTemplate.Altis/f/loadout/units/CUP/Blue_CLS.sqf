@@ -1,24 +1,18 @@
-removeAllWeapons player;
-removeAllItems player;
-removeAllAssignedItems player;
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeHeadgear player;
-removeGoggles player;
-
+// Add clothing
 player forceAddUniform "CUP_U_B_USMC_MARPAT_WDL_Sleeves";
-for "_i" from 1 to 8 do {player addItemToUniform "SmokeShell";};
 player addVest "CUP_V_B_MTV_Patrol";
-for "_i" from 1 to 8 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
 player addBackpack "CUP_B_USMC_MOLLE";
-for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
-for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
-for "_i" from 1 to 4 do {player addItemToBackpack "30Rnd_556x45_Stanag_Tracer_Red";};
 player addHeadgear "CUP_H_USMC_HelmetWDL";
 
+// Add gear
+for "_i" from 1 to 8 do {player addItemToUniform "SmokeShell";};
+for "_i" from 1 to 9 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
+for "_i" from 1 to 4 do {player addItemToBackpack "30Rnd_556x45_Stanag_Tracer_Red";};
+for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
+for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
 player addWeapon "CUP_arifle_M16A4_Base";
 
+// Add items
 if (phx_loadout_map == 0) then {
     player linkItem "ItemMap";
     if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};

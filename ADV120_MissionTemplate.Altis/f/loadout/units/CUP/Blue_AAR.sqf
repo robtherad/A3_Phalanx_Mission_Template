@@ -1,26 +1,19 @@
-removeAllWeapons player;
-removeAllItems player;
-removeAllAssignedItems player;
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeHeadgear player;
-removeGoggles player;
-
+// Add clothing
 player forceAddUniform "CUP_U_B_USMC_MARPAT_WDL_Sleeves";
+player addVest "CUP_V_B_MTV_Patrol";
+player addBackpack "CUP_B_USMC_MOLLE";
+player addHeadgear "CUP_H_USMC_HelmetWDL";
+
+// Add gear
 for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
 for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
-player addVest "CUP_V_B_MTV_Patrol";
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
-for "_i" from 1 to 5 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
-player addBackpack "CUP_B_USMC_MOLLE";
-for "_i" from 1 to 2 do {player addItemToBackpack "CUP_200Rnd_TE4_Red_Tracer_556x45_M249";};
-for "_i" from 1 to 5 do {player addItemToBackpack "30Rnd_556x45_Stanag_Tracer_Red";};
-for "_i" from 1 to 3 do {player addItemToBackpack "CUP_30Rnd_556x45_Stanag";};
-
-player addHeadgear "CUP_H_USMC_HelmetWDL";
+for "_i" from 1 to 6 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
+for "_i" from 1 to 4 do {player addItemToBackpack "30Rnd_556x45_Stanag_Tracer_Red";};
+player addItemToBackpack "CUP_200Rnd_TE4_Red_Tracer_556x45_M249";
 player addWeapon "CUP_arifle_M16A4_Base";
 
+// Add items
 if (phx_loadout_map == 0) then {
     player linkItem "ItemMap";
     if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
