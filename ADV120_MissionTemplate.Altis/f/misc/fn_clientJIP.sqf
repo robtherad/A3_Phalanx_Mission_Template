@@ -25,6 +25,7 @@ if (!hasInterface) exitWith {};
     if ( ((phx_hasGameStarted) && (isNil "phx_didJipCheck")) && {isMultiplayer}) then {
         phx_didJipCheck = true;
         player setPos [-1000,-1000,0];
+        player setVariable ["phx_loadoutAssigned",false];
         [player,objNull,0,0,true] call f_fnc_CamInit;
         [_handle] call CBA_fnc_removePerFrameHandler;
     };

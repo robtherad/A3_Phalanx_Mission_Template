@@ -11,7 +11,7 @@ publicVariable "phx_hasGameStarted";
 [{
     params ["_args","_handle"];
     
-    if (time > 0) then {
+    if (CBA_missionTime > 0) then {
         phx_hasGameStarted = true;
         publicVariable "phx_hasGameStarted";
         [_handle] call CBA_fnc_removePerFrameHandler;

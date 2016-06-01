@@ -118,7 +118,7 @@ f_freecam_z_speed = 0;
 f_cam_tagTextSize = 0.025;
 phx_show_timeUI = true;
 
-f_cam_timestamp = time;
+f_cam_timestamp = CBA_missionTime;
 f_cam_muteSpectators = true;
 //diag_log "fn_camInit: Define initial values";
 // ====================================================================================

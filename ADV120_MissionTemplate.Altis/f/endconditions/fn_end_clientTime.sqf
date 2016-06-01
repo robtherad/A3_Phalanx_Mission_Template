@@ -12,29 +12,29 @@ if (phx_show_timeUI) then {
     //Update text in the displays to match the points markers
     _display = uiNameSpace getVariable "timeleftStructText";
     _setText = _display displayCtrl 1003;
-    if (time <= (_missionTime*60)) then {
-        _mins = (_missionTime - floor(time/60)) -1;
-        _secs = 60-floor(time%60);
+    if (CBA_missionTime <= (_missionTime*60)) then {
+        _mins = (_missionTime - floor(CBA_missionTime/60)) -1;
+        _secs = 60-floor(CBA_missionTime%60);
         if ((_secs < 10) || (_secs == 60)) then {
             if (_secs == 60) then {
                 if (_secs == 60) then {
                     _secs = "00";
-                    _mins = (_missionTime - floor(time/60));
+                    _mins = (_missionTime - floor(CBA_missionTime/60));
                 };
             } else {
-                _secs = "0" + str(60-floor(time%60));
+                _secs = "0" + str(60-floor(CBA_missionTime%60));
             };
         };
-        _setText ctrlSetStructuredText (parseText format ["Approximate Time Remaining: %1:%2",_mins,_secs]);
+        _setText ctrlSetStructuredText (parseText format ["Approximate CBA_missionTime Remaining: %1:%2",_mins,_secs]);
     } else {
-        _mins = floor((time-(_missionTime*60))/60);
-        _secs = floor((time-(_missionTime*60))%60);
+        _mins = floor((CBA_missionTime-(_missionTime*60))/60);
+        _secs = floor((CBA_missionTime-(_missionTime*60))%60);
         if (_secs < 10) then {
             if (_secs == 0) then {
                 _secs = "00";
-                _mins = floor((time-(_missionTime*60))/60);
+                _mins = floor((CBA_missionTime-(_missionTime*60))/60);
             };
-            _secs = "0" + str(floor((time-(_missionTime*60))%60));
+            _secs = "0" + str(floor((CBA_missionTime-(_missionTime*60))%60));
         };
         _setText ctrlSetStructuredText (parseText format ["Approximate Overtime: + %1:%2",_mins,_secs]);
     };
