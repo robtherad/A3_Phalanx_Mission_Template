@@ -1,24 +1,17 @@
-removeAllWeapons player;
-removeAllItems player;
-removeAllAssignedItems player;
-removeUniform player;
-removeVest player;
-removeBackpack player;
-removeHeadgear player;
-removeGoggles player;
-
+// Add clothing
 player forceAddUniform "CUP_U_O_CHDKZ_Kam_02";
+player addVest "CUP_V_BAF_Osprey_Mk2_DPM_Scout";
+player addBackpack "CUP_B_CivPack_WDL";
+player addHeadgear "CUP_H_SLA_Helmet";
+
+// Add gear
 for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
 for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
-player addVest "CUP_V_BAF_Osprey_Mk2_DPM_Scout";
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 4 do {player addItemToVest "CUP_30Rnd_TE1_Green_Tracer_545x39_AK_M";};
-player addBackpack "CUP_B_CivPack_WDL";
-for "_i" from 1 to 11 do {player addItemToBackpack "CUP_30Rnd_545x39_AK_M";};
-player addHeadgear "CUP_H_SLA_Helmet";
-player addItemToBackpack "CUP_RPG18_M";
-
+for "_i" from 1 to 9 do {player addItemToBackpack "CUP_30Rnd_545x39_AK_M";};
 player addWeapon "CUP_arifle_AK107";
+player addItemToBackpack "CUP_RPG18_M";
 player addWeapon "CUP_launch_RPG18";
 
 if (phx_loadout_map == 0) then {

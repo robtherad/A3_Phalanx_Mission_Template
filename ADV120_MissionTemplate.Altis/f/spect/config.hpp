@@ -656,10 +656,10 @@ class f_spec_dialog {
             y = -0.1 * safezoneH + safezoneY;
             w = 0.4 * safezoneW;
             h = 0.2 * safezoneH;
-        //    onMouseEnter = "[true] spawn f_fnc_showMenu;f_cam_menuShownTime=time;";
+        //    onMouseEnter = "[true] spawn f_fnc_showMenu;f_cam_menuShownTime=CBA_missionTime;";
            // onMouseExit = "[false] spawn f_fnc_showMenu;";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
             borderSize = 0;
             colorBorder[] = {0,0,0,0};
             colorBackgroundActive[] = {0,0,0,0};
@@ -722,8 +722,8 @@ class f_spec_dialog {
             tooltip = "Toggle AI";
             sizeEx = "(         (           (           ((safezoneW / safezoneH) min 0.9) / 1.2) / 25) * 1)";
             onButtonClick = "[_this select 0,0] call f_fnc_HandleMenu";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
 
         };
         class SideFilterButton: RscSpectButton
@@ -737,8 +737,8 @@ class f_spec_dialog {
             tooltip = "Filter by side";
             sizeEx = "(((((safezoneW / safezoneH) min 0.9) / 1.2) / 25) * 1)";
             onButtonClick = "[_this select 0,1] call f_fnc_HandleMenu";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
         };
         class TagsNameButton: RscSpectButton
         {
@@ -751,8 +751,8 @@ class f_spec_dialog {
             tooltip = "Toggle tags";
             sizeEx = "(((((safezoneW / safezoneH) min 0.9) / 1.2) / 25) * 1)";
             onButtonClick = "[_this select 0,2] call f_fnc_HandleMenu";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
         };
         class FirstPersonButton: RscSpectButton
         {
@@ -765,8 +765,8 @@ class f_spec_dialog {
             tooltip = "Switch between First Person or Third person";
             sizeEx = "(((((safezoneW / safezoneH) min 0.9) / 1.2) / 25) * 1)";
             onButtonClick = "[_this select 0,3] call f_fnc_HandleMenu";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
         };
         class SpecUnitBox: RscSpectList
         {
@@ -786,8 +786,8 @@ class f_spec_dialog {
             h = 0.02 * safezoneH;
             sizeEx = "(((((safezoneW / safezoneH) min 0.9) / 1.2) / 25) * 1)";
             onLBSelChanged = "[""LBListSelChanged_modes"",_this] call F_fnc_EventHandler";
-            onMouseHolding = "f_cam_menuShownTime=time";
-            onMouseMoving = "f_cam_menuShownTime=time";
+            onMouseHolding = "f_cam_menuShownTime=CBA_missionTime";
+            onMouseMoving = "f_cam_menuShownTime=CBA_missionTime";
         };
         class SpecText: RscSpectText
         {

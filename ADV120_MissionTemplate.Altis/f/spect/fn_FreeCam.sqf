@@ -3,11 +3,11 @@ private ["_commitTime","_delta","_zLevel","_pos","_visPos","_mode","_currPos","_
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 // Menu shown/hidden
-if(abs (f_cam_menuShownTime - time) <= 0.1 && !f_cam_menuShown) then // disable due to being a bit wonky
+if(abs (f_cam_menuShownTime - CBA_missionTime) <= 0.1 && !f_cam_menuShown) then // disable due to being a bit wonky
 {
     [true] spawn f_fnc_showMenu;
 };
-if(abs (f_cam_menuShownTime - time) >= 1 && f_cam_menuShown) then // disable due to being a bit wonky
+if(abs (f_cam_menuShownTime - CBA_missionTime) >= 1 && f_cam_menuShown) then // disable due to being a bit wonky
 {
     [false] spawn f_fnc_showMenu;
 };
@@ -46,7 +46,7 @@ if(f_cam_mode == 1) then {
     };
 };
 if(f_cam_mode == 3) then {
-    _delta = (time - f_cam_timestamp)*10;
+    _delta = (CBA_missionTime - f_cam_timestamp)*10;
     f_cam_freecamera camSetFov f_cam_fovZoom;
     _currPos = getposASL f_cam_freecamera;
     _mX = 0;
@@ -149,7 +149,7 @@ if(f_cam_mode == 3) then {
     f_cam_freecamera setDir f_cam_angleX;
     [f_cam_freecamera,f_cam_angleY,0] call BIS_fnc_setPitchBank;
     f_cam_scrollHeight = 0;
-    f_cam_timestamp = time;
+    f_cam_timestamp = CBA_missionTime;
 };
 //MAKE SURE PLAYER IS HIDDEN + NOT SIMULATED
 if (simulationEnabled player) then {

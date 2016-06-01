@@ -53,7 +53,7 @@ if (isServer && isNil "phx_serverInit") then {
 
 //====================================================================================================
 //Wait for mission to start
-waitUntil {time > 0};
+waitUntil {CBA_missionTime > 0};
 
 //====================================================================================================
 //Post Briefing Client Scripts

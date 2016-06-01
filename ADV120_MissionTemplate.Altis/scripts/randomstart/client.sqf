@@ -85,7 +85,7 @@ if (_randomizeTeam) then {
     player setPos [(_newPos select 0), (_newPos select 1)];
     player setDir (markerDir _randomMarker);
 
-    waitUntil {time > 0;};
+    waitUntil {CBA_missionTime > 0;};
     titleText ["Your team has been started in a location unknown to the enemy.\n\nDO NOT fire your weapon during safe start or the enemy will know where you are.","PLAIN DOWN", 1.5];
 };
 if (!isNil "phx_rs_WestMark") then {diag_log format["[randomstart] BLUFOR started at = %1",phx_rs_WestMark];};

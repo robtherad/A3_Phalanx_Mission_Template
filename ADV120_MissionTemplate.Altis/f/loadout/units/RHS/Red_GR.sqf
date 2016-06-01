@@ -14,7 +14,6 @@ for "_i" from 1 to 4 do {player addItemToVest "rhs_VG40OP_white";};
 for "_i" from 1 to 9 do {player addItemToBackpack "rhs_30Rnd_545x39_AK";};
 for "_i" from 1 to 4 do {player addItemToBackpack "rhs_30Rnd_545x39_AK_green";};
 player addWeapon "rhs_weap_ak74m_gp25";
-player addWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {
