@@ -14,13 +14,13 @@ player addWeapon "CUP_arifle_AK107";
 player addItemToBackpack "CUP_RPG18_M";
 player addWeapon "CUP_launch_RPG18";
 
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 

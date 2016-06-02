@@ -14,13 +14,13 @@ for "_i" from 1 to 2 do {player addItemToBackpack "SatchelCharge_Remote_Mag";};
 player addWeapon "CUP_arifle_AK107";
 
 // Add Items
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 
