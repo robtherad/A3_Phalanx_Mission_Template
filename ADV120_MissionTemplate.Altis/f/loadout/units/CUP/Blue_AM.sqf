@@ -14,13 +14,13 @@ player addWeapon "CUP_arifle_M16A4_Base";
 for "_i" from 1 to 4 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
 
 // Add items
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 

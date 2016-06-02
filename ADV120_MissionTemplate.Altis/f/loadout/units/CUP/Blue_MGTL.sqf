@@ -18,13 +18,13 @@ for "_i" from 1 to 2 do {player addItemToBackpack "CUP_100Rnd_TE4_LRT4_Red_Trace
 player addWeapon "Binocular";
 
 // Add items
-if ((phx_loadout_map == 0) or (phx_loadout_map == 1)) then {
+if ((phx_loadout_map isEqualTo 0) or (phx_loadout_map isEqualTo 1)) then {
     player linkItem "ItemMap";
-    if ((phx_loadout_gps == 0) or (phx_loadout_gps == 1)) then {player linkItem "ItemGPS";};
+    if ((phx_loadout_gps isEqualTo 0) or (phx_loadout_gps isEqualTo 1)) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if ((phx_loadout_radio == 0) or (phx_loadout_radio == 1)) then {
+if ((phx_loadout_radio isEqualTo 0) or (phx_loadout_radio isEqualTo 1)) then {
     player linkItem "ItemRadio";
 };
 

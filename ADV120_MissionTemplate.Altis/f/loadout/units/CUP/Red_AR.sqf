@@ -14,13 +14,13 @@ player addWeapon "CUP_arifle_RPK74";
 player addItemToVest "CUP_75Rnd_TE4_LRT4_Green_Tracer_545x39_RPK_M";
 
 // Add Items
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 

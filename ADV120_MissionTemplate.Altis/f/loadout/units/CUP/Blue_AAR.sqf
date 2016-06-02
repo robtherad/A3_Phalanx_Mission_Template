@@ -14,13 +14,13 @@ player addItemToBackpack "CUP_200Rnd_TE4_Red_Tracer_556x45_M249";
 player addWeapon "CUP_arifle_M16A4_Base";
 
 // Add items
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 

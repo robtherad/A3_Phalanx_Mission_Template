@@ -17,13 +17,13 @@ for "_i" from 1 to 6 do {player addItemToBackpack "CUP_30Rnd_545x39_AK_M";};
 player addWeapon "Binocular";
 
 // Add Items
-if (phx_loadout_map != 3) then {
+if !(phx_loadout_map isEqualTo 3) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps != 3) then {player linkItem "ItemGPS";};
+    if !(phx_loadout_gps isEqualTo 3) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio != 3) then {
+if !(phx_loadout_radio isEqualTo 3) then {
     player linkItem "ItemRadio";
 };
 

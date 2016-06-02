@@ -14,13 +14,13 @@ player addWeapon "CUP_arifle_AK107";
 for "_i" from 1 to 4 do {player addItemToVest "CUP_30Rnd_545x39_AK_M";};
 
 // Add Items
-if (phx_loadout_map == 0) then {
+if (phx_loadout_map isEqualTo 0) then {
     player linkItem "ItemMap";
-    if (phx_loadout_gps == 0) then {player linkItem "ItemGPS";};
+    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
 };
 player linkItem "ItemCompass";
 player linkItem "ItemWatch";
-if (phx_loadout_radio == 0) then {
+if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
 [player,"MedB"] call bis_fnc_setUnitInsignia;
