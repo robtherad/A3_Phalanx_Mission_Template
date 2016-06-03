@@ -1,93 +1,169 @@
-// F3 - ORBAT Notes
+// F3 - ORBAT Notes (Heavily Modified)
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // This script has been modified from it's original form.
 // ====================================================================================
 
-// This script will automatically generate an ORBAT page.
+_generateORBAT = {
+    params ["_groups"];
+    
+    private _functionText = "";
+    
+    // Loop through the group, print out group ID, leader name and medics if present
+    {
+        if !((count units _x) isEqualTo 0) then {
+            // Don't apply leading line breaks to first group.
+            private _groupSize = _x getVariable ["phx_gps_groupSize",0];
+            private _name = groupID _x;
+            private _longName = _x getVariable ["phx_LongName",groupID _x];
+            private _groupString = "";
+            private _changeColor = false;
+            
+            if (_forEachIndex != 0) then {
+                switch (_groupSize) do {
+                    case 0: {_groupString = _groupString + format["    "]; _changeColor = false;};
+                    case 1: {_groupString = _groupString + format["<br />- %1<br />    ",_longName]; _changeColor = true;};
+                    case 2: {_groupString = _groupString + format["<br /><br /><font size='16'>%1</font><br />    ",_longName]; _changeColor = true;};
+                    case 3: {_groupString = _groupString + format["<br /><br /><br />%1<br />    ",_longName]; _changeColor = true;};
+                };
+            } else {
+                switch (_groupSize) do {
+                    case 0: {_groupString = _groupString + format["    ",_longName]; _changeColor = false;};
+                    case 1: {_groupString = _groupString + format["- %1<br />    ",_longName]; _changeColor = true;};
+                    case 2: {_groupString = _groupString + format["<font size='16'>%1</font><br />    ",_longName]; _changeColor = true;};
+                    case 3: {_groupString = _groupString + format["%1<br />    ",_longName]; _changeColor = true;};
+                };
+            };
+            
+            // Highlight the player's group with a different color (based on the player's side)
+            private _highlightColor = "#FFFFFF";
+            
+            private _color = "#FFFFFF";
+            if (_changeColor) then {
+                if (isNil "phx_orbat_lastUsedColor") then {
+                    phx_orbat_lastUsedColor = ["#FFFFFF"];
+                };
+                phx_colorArray = (phx_colorArrayBase - phx_colorArrayUsed);
+                if (count phx_colorArray isEqualTo 0) then {
+                    phx_colorArrayUsed = [];
+                    phx_colorArray = phx_colorArrayBase;
+                };
+                diag_log format["f_orbatNotes DEBUG: phx_colorArray:%1 -- phx_colorArrayUsed:%2 -- phx_orbat_lastUsedColor:%3",phx_colorArray,phx_colorArrayUsed,phx_orbat_lastUsedColor];
+                _color = phx_colorArray select 0;
+                phx_colorArrayUsed pushBack _color;
+                phx_orbat_lastUsedColor = [_color];
+            } else {
+                if (count phx_colorArray isEqualTo 0) then {
+                    phx_colorArrayUsed = [];
+                };
+                _color = phx_orbat_lastUsedColor select 0;
+            };
+            
+            // Get group's radio frequency
+            private _freq = _x getVariable ["phx_radioSettings",nil];
+            if (isNil "_freq") then {
+                _freq = "UNK";
+            } else {
+                private _chNum = _freq select 0;
+                _chNum = _chNum - 2; //Minus one since array starts at 0
+                private _chArray = _freq select 2;
+                if (_chNum < 0) then {
+                    if (_chNum isEqualTo -1) then {
+                        _freq = 0;
+                    };
+                } else {
+                    _freq = _chArray select _chNum; //Get group's main channel from freq list
+                    if (isNil "_freq") then { //Check if frequency is out of range.
+                        _freq = "UNK";
+                        _str = format["[setGroupIDs] No radio freq found for group - '%1'",groupID _x];
+                        systemChat _str;
+                    };
+                };
+                if (!(_freq isEqualTo "UNK")) then {
+                    _freq = _freq + phx_playerBaseChannel;
+                };
+            };
+            
+            // Add group to the ORBAT
+            if (isNil "_freq") then {
+                _groupString = _groupString + format ["%1 --", _name];
+            } else {
+                _groupString = _groupString + format ["%1<font size='12'> - %2 MHz -- </font>", _name, _freq];
+            };
+            
+            // Add group members
+            {
+                private _leftPad = " ";
+                if !(_forEachIndex isEqualTo 0) then{
+                    _leftPad = ", ";
+                };
+                if (getNumber (configFile >> "CfgVehicles" >> typeOf _x >> "attendant") isEqualTo 1) then {
+                    private _colorUsed = _color;
+                    if (player == _x) then {_colorUsed = _highlightColor};
+                    _groupString = _groupString + format["<font size='12'>%2<font color='%3'>%1</font> [M]</font>",name _x,_leftPad,_colorUsed];
+                } else {
+                    private _colorUsed = _color;
+                    if (player == _x) then {_colorUsed = _highlightColor};
+                    _groupString = _groupString + format["<font size='12'>%2<font color='%3'>%1</font></font>",name _x,_leftPad,_colorUsed];
+                };
+            } forEach units _x;
+            
+            _groupString = _groupString + "<br/>";
+            _functionText = _functionText + _groupString;
+        };
+    } forEach _groups;
+    
+    // Return functionText
+    _functionText
+};
 
-// Define needed variables
-private ["_orbatText", "_groups", "_precompileGroups","_maxSlots","_freeSlots","_side","_freq","_chNum","_chArray","_color"];
-_side = side group player;
-_orbatText = "<br />NOTE: The ORBAT below is only accurate at mission start.<br />
-<br />
-<font size='18'>GROUP LEADERS + MEDICS</font><br /><br />";
-_groups = [];
+private _side = side group player;
+private _orbatText = "<br />NOTE: The ORBAT below is only accurate at mission start.<br />
+<br />";
 
 waitUntil { !isNil "phx_playerBaseChannel"; };
 
+phx_colorArrayBase = [
+    "#8080FF", // light blue
+    "#80FF80", // light green
+    "#FF8080", // light red
+    "#FFFF80", // light yellow
+    "#FF80FF", // light pink
+    "#FFC080" // light orange
+];
+phx_colorArray = [];
+phx_colorArrayUsed = [];
+
+private _groups = [];
+private _templateGroups = [];
+private _templateGroupList = [
+    "Blue_HQ", "Blue_A", "Blue_A1", "Blue_A2", "Blue_B", "Blue_B1", "Blue_B2", "Blue_C", "Blue_C1", "Blue_C2", "Blue_D", "Blue_D1", "Blue_D2", "Blue_D3",
+    "Red_HQ", "Red_E", "Red_E1", "Red_E2", "Red_F", "Red_F1", "Red_F2", "Red_G", "Red_G1", "Red_G2", "Red_H", "Red_H1", "Red_H2", "Red_H3",
+    "Green_HQ", "Green_I", "Green_I1", "Green_I2", "Green_J", "Green_J1", "Green_J2", "Green_K", "Green_K1", "Green_K2", "Green_L", "Green_L1", "Green_L2", "Green_L3"
+];
+
 {
     // Add to ORBAT if side matches, group isn't already listed, and group has players
-    if ((side _x == _side) && !(_x in _groups) && ({_x in (switchableUnits + playableUnits)} count units _x) > 0) then {
-        _groups pushBack _x;
+    private _identity = _x getVariable ["phx_groupIdentifier",groupID _x];
+    if ((side _x isEqualTo _side) && {!(_x in _groups)} && {({_x in (switchableUnits + playableUnits)} count units _x) > 0}) then {
+        if (_identity in _templateGroupList) then {
+            _templateGroups pushBack _x;
+        } else {
+            _groups pushBack _x;
+        };
     };
 } forEach allGroups;
 
-
-// Loop through the group, print out group ID, leader name and medics if present
-{
-    // Don't apply leading line breaks to first group.
-    if (_forEachIndex != 0) then {
-        switch (_x getVariable ["phx_gps_groupSize",0]) do {
-            case 0: {_orbatText = _orbatText + "  ~ "};
-            case 1: {_orbatText = _orbatText + "<br /> "};
-            case 2: {_orbatText = _orbatText + "<br /><br />"};
-            case 3: {_orbatText = _orbatText + "<br /><br /><br />"};
-        };
-    };
-    
-    // Highlight the player's group with a different color (based on the player's side)
-    _color = "#FFFFFF";
-    if (_x == group player) then {
-        _color = switch (side player) do {
-             case west: {"#0080FF"};
-             case east: {"#B40404"};
-             case independent: {"#298A08"};
-             default {"#8904B1"};
-         };
-    };
-    
-    // Get group's radio frequency
-    _freq = _x getVariable ["phx_radioSettings",nil];
-    if (isNil "_freq") then {
-        _freq = "UNK";
-    } else {
-        _chNum = _freq select 0;
-        _chNum = _chNum - 2; //Minus one since array starts at 0
-        _chArray = _freq select 2;
-        if (_chNum < 0) then {
-            if (_chNum == -1) then {
-                _freq = 0;
-            };
-        } else {
-            _freq = _chArray select _chNum; //Get group's main channel from freq list
-            if (isNil "_freq") then { //Check if frequency is out of range.
-                _freq = "UNK";
-                _str = format["[setGroupIDs] No radio freq found for group - '%1'",groupID _x];
-                systemChat _str;
-            };
-        };
-        if (!(_freq isEqualTo "UNK")) then {
-            _freq = _freq + phx_playerBaseChannel;
-        };
-    };
-    
-    // Add group to the ORBAT
-    _longName = _x getVariable ["phx_LongName",groupID _x];
-    if (isNil "_freq") then {
-        _orbatText = _orbatText + format ["<font color='%3'>(%4 men) <b>%1</b> -- %2</font>", _longName, name leader _x,_color,count (units _x)] + "<br />";
-    } else {
-        _orbatText = _orbatText + format ["<font color='%3'>(%4 men) <b>%5 MHz -- %1</b> -- %2</font>", _longName, name leader _x,_color,count (units _x),_freq] + "<br />";
-    };
-    
-    // List medics too.
-    {
-        if (getNumber (configFile >> "CfgVehicles" >> typeOf _x >> "attendant") == 1 && {_x != leader group _x}) then {
-            _orbatText = _orbatText + format["      [M] %1",name _x] + "<br />";
-        };
-    } forEach units _x;
-} forEach _groups;
+private _templateText = [_templateGroups] call _generateORBAT;
+_orbatText = _orbatText + _templateText;
+private _groupText = "";
+if !(_groups isEqualTo []) then {
+    _groupText = [_groups] call _generateORBAT;
+};
+if !(_groupText isEqualTo "") then {
+    _orbatText = _orbatText + "<br/>Attached Units:<br/>" + _groupText;
+};
 
 waitUntil {!isNil "PHX_Diary"};
 // Insert final result into subsection ORBAT of section Notes
-player createDiaryRecord ["PHX_Diary", ["ORBAT", _orbatText]];
+player createDiaryRecord ["PHX_Diary", ["Team ORBAT", _orbatText]];
 phx_writtenORBAT = true;
