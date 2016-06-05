@@ -13,7 +13,7 @@ _groups = [
 
 // ====================================================================================
 // - format: [group,groupID,phx_LongName,unitSize,radioSettings]
-// group: defined in initialization field of units in editor. ex: Red_HQ = group this;
+// group: defined in initialization field of units in editor. Also used as the group's identifier in scripts ex: Red_HQ = group this;
 // groupID: ID given to group for use in things such as GPS, nametags, etc. (string)
 // phx_LongName: Longer version of the groupID used in things such as the radios, etc. (string)
 // unitSize: Number telling what level the group is. Company = 3, Platoon = 2, Squad = 1, Fireteam = 0 (0-3)
@@ -27,7 +27,7 @@ _groups = [
 //     ex: [1,6,[1,2,3,4]] - mainChannel is ch1, altChannel is ch6, ch2 is 1 unit MHz higher than ch1, etc.
 
 // BLUFOR
-["Blue_HQ","BLU CMD","Command",2, [1, 6, [1, 2, 3, 4, .1]] ],
+["Blue_HQ","PltHQ","First Platoon",2, [1, 6, [1, 2, 3, 4, .1]] ],
 
 ["Blue_A","A","Alpha Squad",1, [2, 1, [1, 1.1, 1.2]] ],
 ["Blue_A1","A1","Alpha One",0, [3, 2, [1, 1.1, 1.2]] ],
@@ -47,9 +47,8 @@ _groups = [
 ["Blue_D3","D3","Delta Three",0, [5, 2, [4, 4.1, 4.2, 4.3, 4.4]] ],
 ["Blue_D4","D4","Delta Four",0, [6, 2, [4, 4.1, 4.2, 4.3, 4.4]] ],
 
-
 // REDFOR
-["Red_HQ","RED CMD","Command",2, [1, 6, [1, 2, 3, 4, .1]] ],
+["Red_HQ","PltHQ","First Platoon",2, [1, 6, [1, 2, 3, 4, .1]] ],
 
 ["Red_E","E","Echo Squad",1, [2, 1, [1, 1.1, 1.2]] ],
 ["Red_E1","E1","Echo One",0, [3, 2, [1, 1.1, 1.2]] ],
@@ -70,7 +69,7 @@ _groups = [
 ["Red_H4","H4","Hotel Four",0, [6, 2, [4, 4.1, 4.2, 4.3, 4.4]] ],
 
 // INDFOR
-["Green_HQ","IND CMD","Command",2, [1, 6, [1, 2, 3, 4, .1]] ],
+["Green_HQ","PltHQ","First Platoon",2, [1, 6, [1, 2, 3, 4, .1]] ],
 
 ["Green_I","I","India Squad",1, [2, 1, [1, 1.1, 1.2]] ],
 ["Green_I1","I1","India One",0, [3, 2, [1, 1.1, 1.2]] ],
@@ -108,6 +107,7 @@ private ["_grp"];
     _grp = missionNamespace getVariable[(_x select 0),grpNull];
     if(!isNull _grp) then {
         _grp setGroupId [(_x select 1),"GroupColor0"];
+        _grp setVariable ["phx_groupIdentifier",_x select 0];
         _grp setVariable ["phx_LongName",_x select 2];
         _grp setVariable ["phx_gps_groupSize",_x select 3];
         _grp setVariable ["phx_radioSettings",_x select 4];
