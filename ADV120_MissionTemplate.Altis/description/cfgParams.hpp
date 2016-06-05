@@ -44,7 +44,7 @@ class Params {
       title = "Loadout Modset:";
         values[] = {0, 1, 2};
         texts[] = {"Vanilla", "RHS", "CUP"};
-        default = 2;
+        default = 1;
     };
     class phx_loadout_radio {
         title = "Radio Deployment:";
