@@ -1,6 +1,6 @@
 // Add clothing
 player forceAddUniform "rhsgref_uniform_ttsko_forest";
-player addVest "rhs_6b23_vydra_3m";
+player addVest "rhsgref_6b23_ttsko_forest_rifleman";
 player addBackpack "rhs_assault_umbts";
 player addHeadgear "rhsgref_6b27m_ttsko_forest";
 
