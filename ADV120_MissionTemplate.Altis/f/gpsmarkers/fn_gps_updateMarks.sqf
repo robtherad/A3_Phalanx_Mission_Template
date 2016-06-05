@@ -1,19 +1,18 @@
 fn_phx_updateVehMarks={
-    private ["_vehArray","_marker","_unitInside","_markerText","_veh"];
-    _vehArray = _this select 0;
+    private _vehArray = _this select 0;
     {
-        _veh = _x select 0;
-        _marker = str(_veh) + "_marker";
+        private _veh = _x select 0;
+        private _marker = str(_veh) + "_marker";
         if ("ItemGPS" in (assignedItems player)) then {
-            _unitInside = _veh getVariable "phx_UnitInside";
+            private _unitInside = _veh getVariable "phx_UnitInside";
             //Check to see if any units with markers attached are in a vehicle with a marker. If so attach their name to the vehicle marker.
             if (!isNil "_unitInside") then {
-                _markerText = (_veh getVariable "phx_MarkerName") + " (" + (_veh getVariable "phx_UnitInside") + ")";
+                private _markerText = (_veh getVariable "phx_MarkerName") + " (" + (_veh getVariable "phx_UnitInside") + ")";
                 _veh setVariable ["phx_UnitInside",nil];
                 _veh setVariable ["phx_LastInside",nil];
                 _marker setMarkerTextLocal _markerText;
             } else {
-                _markerText = (_veh getVariable "phx_MarkerName");
+                private _markerText = (_veh getVariable "phx_MarkerName");
                 _marker setMarkerTextLocal _markerText;
             };
             _marker setMarkerAlphaLocal 1;
@@ -24,12 +23,12 @@ fn_phx_updateVehMarks={
     } forEach _vehArray;
 };
 
-private ["_group","_marker","_marker2","_unit","_senior","_unitInside","_lastInside","_string"];
 { //forEach allGroups
-    if (!((groupID _x) in phx_ignoreMarkerArray)) then {
-        _group = _x;
-        _marker = _group getVariable "phx_gps_markerName";
-        _marker2 = _marker + "Size";
+    private _group = _x;
+    private _groupIdent = _group getVariable ["phx_groupIdentifier",groupID _group];
+    if ( !((_groupIdent) in phx_ignoreMarkerArray) || {!((groupID _group) in phx_ignoreMarkerArray)} ) then {
+        private _marker = _group getVariable "phx_gps_markerName";
+        private _marker2 = _marker + "Size";
         if ("ItemGPS" in (assignedItems player)) then { //Check if player has GPS
             if ((side (leader _x)) in phx_sidesVisibleToPlayer) then { //Check if player is supposed to be able to see this group
                 _marker setMarkerAlphaLocal 1; //If player has GPS and same side, show marker
@@ -37,8 +36,8 @@ private ["_group","_marker","_marker2","_unit","_senior","_unitInside","_lastIns
                 
                 { //forEach allUnits in _group
                     //Check members in group for GPS and update the marker to the position of the most senior member in the group who has GPS
-                    _unit = _x;
-                    _senior = _group getVariable ["phx_seniorGPS",objNull];
+                    private _unit = _x;
+                    private _senior = _group getVariable ["phx_seniorGPS",objNull];
                     if (!("ItemGPS" in (assignedItems _senior)) || (!alive _senior) || !(group _senior isEqualTo _group)) then { //Make sure most senior unit still has GPS and is alive
                         _group setVariable ["phx_seniorGPS",objNull];
                         _senior = objNull;
@@ -58,16 +57,16 @@ private ["_group","_marker","_marker2","_unit","_senior","_unitInside","_lastIns
                             _group setVariable ["phx_seniorGPS",_unit]; //no better match than _unit
                         };
                         if (vehicle _unit != _unit) then { //If unit isn't on foot and vehicle doesn't have a marker
-                            _unitInside = (vehicle _unit) getVariable "phx_UnitInside";
-                            _lastInside = (vehicle _unit) getVariable "phx_LastInside";
+                            private _unitInside = (vehicle _unit) getVariable "phx_UnitInside";
+                            private _lastInside = (vehicle _unit) getVariable "phx_LastInside";
                             if (isNil "_lastInside") then {_lastInside = "Nobody"};
-                            if ((!isNil "_unitInside") && (_lastInside != groupID _group)) then {
-                                _string = ((vehicle _unit) getVariable "phx_UnitInside") + " | " + (groupID _group);
+                            if ((!isNil "_unitInside") && (_lastInside != _groupIdent)) then {
+                                private _string = ((vehicle _unit) getVariable "phx_UnitInside") + " | " + (groupID _group);
                                 (vehicle _unit) setVariable ["phx_UnitInside",_string];
-                                (vehicle _unit) setVariable ["phx_LastInside",groupID _group];
+                                (vehicle _unit) setVariable ["phx_LastInside",_groupIdent];
                             } else {
-                                (vehicle _unit) setVariable ["phx_UnitInside",groupID _group];
-                                (vehicle _unit) setVariable ["phx_LastInside",groupID _group];
+                                (vehicle _unit) setVariable ["phx_UnitInside",_groupIdent];
+                                (vehicle _unit) setVariable ["phx_LastInside",_groupIdent];
                             };
                             if (!isNil "phx_sideVehArray") then {
                                 if (vehicle _unit in phx_sideVehArray2) then {

@@ -37,7 +37,8 @@ phx_gps_iteration = 0;
 //CREATE NEW MARKERS
 //Infantry
 { //forEach allGroups
-    if (!((groupID _x) in phx_ignoreMarkerArray)) then {
+    private _groupIdent = _x getVariable ["phx_groupIdentifier",groupID _x];
+    if ( !((_groupIdent) in phx_ignoreMarkerArray) || {!((groupID _x) in phx_ignoreMarkerArray)} ) then {
         _markerName = str(phx_gps_iteration) + "_marker";
         _groupSize = _x getVariable ["phx_gps_groupSize",4];
         _x setVariable ["phx_gps_markerName",_markerName];
@@ -52,7 +53,6 @@ phx_gps_iteration = 0;
         _marker setMarkerShapeLocal "ICON";
         _marker setMarkerColorLocal (_markerFaction select 0);
         _marker setMarkerTypeLocal (_markerFaction select 1);
-        //_marker setMarkerTextLocal (groupID _x);
         _marker setMarkerAlphaLocal 0;
         _marker setMarkerSizeLocal [.75,.75];
         _marker setMarkerTextLocal (groupID _x);
