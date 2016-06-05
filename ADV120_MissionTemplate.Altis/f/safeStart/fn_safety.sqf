@@ -16,11 +16,12 @@ switch (_this select 0) do
         if (isNil "f_eh_safetyMan") then {
             f_eh_safetyMan = player addEventHandler["Fired", {
                 deletevehicle (_this select 6);
-                hint format ["FIRED %1\n\n%2",CBA_missionTime,_this];
-                systemChat format ["Weapon: %1",(_this select 1)];
-                if ((_this select 1) == ("Throw" || "Put")) then {
-                    systemChat format ["player addMagazine %1",(_this select 5)];
+                "phx_safeStartTextLayer" cutText ["SAFESTART ACTIVE", "PLAIN", 0];
+                "phx_safeStartTextLayer" cutFadeOut 3;
+                if ((_this select 1) == "Throw" || {(_this select 1) == "Put"}) then {
                     player addMagazine (_this select 5);
+                } else {
+                    player setAmmo [primaryWeapon player, 1000000];
                 };
             }];
         };
