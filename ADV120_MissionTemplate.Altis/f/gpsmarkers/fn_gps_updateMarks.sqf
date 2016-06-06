@@ -26,7 +26,7 @@ fn_phx_updateVehMarks={
 { //forEach allGroups
     private _group = _x;
     private _groupIdent = _group getVariable ["phx_groupIdentifier",groupID _group];
-    if ( !((_groupIdent) in phx_ignoreMarkerArray) || {!((groupID _group) in phx_ignoreMarkerArray)} ) then {
+    if !( ((_groupIdent) in phx_ignoreMarkerArray) || {((groupID _group) in phx_ignoreMarkerArray)} ) then {
         private _marker = _group getVariable "phx_gps_markerName";
         private _marker2 = _marker + "Size";
         if ("ItemGPS" in (assignedItems player)) then { //Check if player has GPS

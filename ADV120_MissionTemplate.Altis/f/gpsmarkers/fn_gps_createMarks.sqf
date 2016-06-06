@@ -38,7 +38,7 @@ phx_gps_iteration = 0;
 //Infantry
 { //forEach allGroups
     private _groupIdent = _x getVariable ["phx_groupIdentifier",groupID _x];
-    if ( !((_groupIdent) in phx_ignoreMarkerArray) || {!((groupID _x) in phx_ignoreMarkerArray)} ) then {
+    if !( ((_groupIdent) in phx_ignoreMarkerArray) || {((groupID _x) in phx_ignoreMarkerArray)} ) then {
         _markerName = str(phx_gps_iteration) + "_marker";
         _groupSize = _x getVariable ["phx_gps_groupSize",4];
         _x setVariable ["phx_gps_markerName",_markerName];
