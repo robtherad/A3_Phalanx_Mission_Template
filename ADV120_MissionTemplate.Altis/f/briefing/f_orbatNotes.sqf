@@ -22,15 +22,15 @@ _generateORBAT = {
                 switch (_groupSize) do {
                     case 0: {_groupString = _groupString + format["    "]; _changeColor = false;};
                     case 1: {_groupString = _groupString + format["<br />- %1<br />    ",_longName]; _changeColor = true;};
-                    case 2: {_groupString = _groupString + format["<br /><br /><font size='16'>%1</font><br />    ",_longName]; _changeColor = true;};
-                    case 3: {_groupString = _groupString + format["<br /><br /><br />%1<br />    ",_longName]; _changeColor = true;};
+                    case 2: {_groupString = _groupString + format["<br /><br /><font size='18'>%1</font><br />    ",_longName]; _changeColor = true;};
+                    case 3: {_groupString = _groupString + format["<br /><br /><br /><font size='20'>%1</font><br />    ",_longName]; _changeColor = true;};
                 };
             } else {
                 switch (_groupSize) do {
                     case 0: {_groupString = _groupString + format["    ",_longName]; _changeColor = false;};
                     case 1: {_groupString = _groupString + format["- %1<br />    ",_longName]; _changeColor = true;};
-                    case 2: {_groupString = _groupString + format["<font size='16'>%1</font><br />    ",_longName]; _changeColor = true;};
-                    case 3: {_groupString = _groupString + format["%1<br />    ",_longName]; _changeColor = true;};
+                    case 2: {_groupString = _groupString + format["<font size='18'>%1</font><br />    ",_longName]; _changeColor = true;};
+                    case 3: {_groupString = _groupString + format["<font size='20'>%1</font><br />    ",_longName]; _changeColor = true;};
                 };
             };
             
@@ -86,7 +86,7 @@ _generateORBAT = {
             if (isNil "_freq") then {
                 _groupString = _groupString + format ["%1 --", _name];
             } else {
-                _groupString = _groupString + format ["%1<font size='12'> - %2 MHz -- </font>", _name, _freq];
+                _groupString = _groupString + format ["<font size='16'>%1</font><font size='14'> - %2 MHz </font><font size='12'>- %3 men</font>:  ", _name, _freq, (count units _x)];
             };
             
             // Add group members
