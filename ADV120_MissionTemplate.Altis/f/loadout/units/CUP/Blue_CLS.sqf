@@ -22,6 +22,5 @@ player linkItem "ItemWatch";
 if (phx_loadout_radio isEqualTo 0) then {
     player linkItem "ItemRadio";
 };
-[player,"MedB"] call bis_fnc_setUnitInsignia;
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.
