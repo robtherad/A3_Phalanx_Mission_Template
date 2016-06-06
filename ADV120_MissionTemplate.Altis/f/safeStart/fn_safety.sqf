@@ -14,7 +14,16 @@ switch (_this select 0) do
     
         // Delete bullets from fired weapons
         if (isNil "f_eh_safetyMan") then {
-            f_eh_safetyMan = player addEventHandler["Fired", {deletevehicle (_this select 6);}];
+            f_eh_safetyMan = player addEventHandler["Fired", {
+                deletevehicle (_this select 6);
+                "phx_safeStartTextLayer" cutText ["SAFESTART ACTIVE", "PLAIN", 0];
+                "phx_safeStartTextLayer" cutFadeOut 3;
+                if ((_this select 1) == "Throw" || {(_this select 1) == "Put"}) then {
+                    player addMagazine (_this select 5);
+                } else {
+                    player setAmmo [primaryWeapon player, 1000000];
+                };
+            }];
         };
 
         // Disable guns and damage for vehicles if player is crewing a vehicle

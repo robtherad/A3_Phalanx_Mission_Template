@@ -7,7 +7,7 @@ class Params {
         default = -1;
     };
     class phx_core_weatherSettings {
-        title = "Time of Day:";
+        title = "Weather:";
         values[] = {-1, 0, 1, 2, 3, 4};
         texts[] = {"Mission Weather (DEFAULT)", "Light Fog", "Fog", "Light Rain", "Rain", "Clear"};
         default = -1;
@@ -44,7 +44,7 @@ class Params {
       title = "Loadout Modset:";
         values[] = {0, 1, 2};
         texts[] = {"Vanilla", "RHS", "CUP"};
-        default = 2;
+        default = 1;
     };
     class phx_loadout_radio {
         title = "Radio Deployment:";

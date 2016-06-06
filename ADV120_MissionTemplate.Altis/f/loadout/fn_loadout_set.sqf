@@ -61,7 +61,7 @@ removeGoggles player;
      case "B_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]};
      case "B_soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]};
      case "b_soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
-     case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]};
+     case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
     };
 
     // Generate loadout briefing page.
