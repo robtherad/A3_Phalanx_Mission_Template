@@ -163,5 +163,11 @@ if (count _items > 0) then {
 // ====================================================================================
 // ADD DIARY SECTION
 // Wait for the briefing script to finish, then add the created text
-waitUntil {!isNil "PHX_Diary"};
-player createDiaryRecord ["PHX_Diary", ["Loadout", "NOTE: The loadout shown below is only accurate at mission start.<br/>"+ _visText + _text]];
+[{
+    params ["_args", "_handle"];
+    if (!isNil "PHX_Diary") then {
+        [_handle] call CBA_fnc_removePerFrameHandler;
+    
+        player createDiaryRecord ["PHX_Diary", ["Loadout", "NOTE: The loadout shown below is only accurate at mission start.<br/>"+ _visText + _text]];
+    };
+}, 0, []] call CBA_fnc_addPerFrameHandler;
