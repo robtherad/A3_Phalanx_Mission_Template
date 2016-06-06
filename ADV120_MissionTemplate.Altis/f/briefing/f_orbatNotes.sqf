@@ -47,7 +47,6 @@ _generateORBAT = {
                     phx_colorArrayUsed = [];
                     phx_colorArray = phx_colorArrayBase;
                 };
-                diag_log format["f_orbatNotes DEBUG: phx_colorArray:%1 -- phx_colorArrayUsed:%2 -- phx_orbat_lastUsedColor:%3",phx_colorArray,phx_colorArrayUsed,phx_orbat_lastUsedColor];
                 _color = phx_colorArray select 0;
                 phx_colorArrayUsed pushBack _color;
                 phx_orbat_lastUsedColor = [_color];
