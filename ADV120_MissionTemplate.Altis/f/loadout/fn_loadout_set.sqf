@@ -62,6 +62,11 @@ removeGoggles player;
      case "B_soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]};
      case "b_soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
      case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
+     // Virtual Spectator Slots
+     case "VirtualSpectator_F": {
+        player linkItem "ItemMap";
+        missionNamespace setVariable ["phx_loadoutAssigned",true];
+     };
     };
 
     // Generate loadout briefing page.
