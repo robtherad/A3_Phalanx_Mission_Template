@@ -51,6 +51,9 @@ _generateORBAT = {
                 phx_colorArrayUsed pushBack _color;
                 phx_orbat_lastUsedColor = [_color];
             } else {
+                if (isNil "phx_orbat_lastUsedColor") then {
+                    phx_orbat_lastUsedColor = ["#FFFFFF"];
+                };
                 if (count phx_colorArray isEqualTo 0) then {
                     phx_colorArrayUsed = [];
                 };
