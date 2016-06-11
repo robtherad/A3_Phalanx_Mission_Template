@@ -65,6 +65,7 @@ removeGoggles player;
      // Virtual Spectator Slots
      case "VirtualSpectator_F": {
         player linkItem "ItemMap";
+        phx_isSpectator = true;
         missionNamespace setVariable ["phx_loadoutAssigned",true];
      };
     };
