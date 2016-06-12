@@ -19,7 +19,7 @@ if(isNull _unit ) then {_unit = cameraOn;f_cam_isJIP=true;};
 // escape the script if you are not a seagull unless forced
 if (typeof _unit != "seagull" && !_forced || !hasInterface) ExitWith {};
 // disable this to instantly switch to the spectator script.
-waituntil {missionnamespace getvariable ["BIS_fnc_feedback_allowDeathScreen",true] || isNull (_oldUnit) || f_cam_isJIP || _forced };
+// waituntil {missionnamespace getvariable ["BIS_fnc_feedback_allowDeathScreen",true] || isNull (_oldUnit) || f_cam_isJIP || _forced };
 
 // ====================================================================================
 
@@ -32,22 +32,45 @@ if(!isnil "BIS_fnc_feedback_allowPP") then {
 if(f_cam_isJIP || _forced) then {
   ["F_ScreenSetup",false] call BIS_fnc_blackOut;
   systemChat "Initializing Spectator Script";
-  uiSleep 3;
+  // uiSleep 3;
   ["F_ScreenSetup"] call BIS_fnc_blackIn;
 };
 //diag_log "fn_camInit: JIP check";
 
 // Create a Virtual Agent to act as our player to make sure we get to keep Draw3D
 if(isNil "f_cam_VirtualCreated") then {
+  phx_debugOldUnit = _oldUnit;
+  phx_debugUnit = _unit;
+  
+  // Creates a virtual unit on the player's side and places it where he died.
   createCenter sideLogic;
-  _newGrp = createGroup sideLogic;
-  _newUnit = _newGrp createUnit ["VirtualCurator_F", [0,0,5], [], 0, "FORM"];
+  private _newGrp = createGroup sideLogic;
+  private _newUnit = "";
+  private _pos = "";
+  if (!isNull _oldUnit) then {
+    _pos = (getPos _oldUnit);
+  } else {
+    _pos = [0,0,5];
+  };
+  if (isNil "phx_spect_playerGroup") then {
+    phx_spect_playerGroup = _newGrp;
+  };
+  private _group = phx_spect_playerGroup;
+  switch (side phx_spect_playerGroup) do {
+    case WEST: {_newUnit = _group createUnit ["B_VirtualCurator_F", _pos, [], 0, "FORM"];};
+    case EAST: {_newUnit = _group createUnit ["O_VirtualCurator_F", _pos, [], 0, "FORM"];};
+    case INDEPENDENT: {_newUnit = _group createUnit ["I_VirtualCurator_F", _pos, [], 0, "FORM"];};
+    case CIVILIAN: {_newUnit = _group createUnit ["C_VirtualCurator_F", _pos, [], 0, "FORM"];};
+    default {_newUnit = _group createUnit ["VirtualCurator_F", _pos, [], 0, "FORM"];};
+  };
+  phx_debugNewUnit = _newUnit;
   _newUnit allowDamage false;
   _newUnit hideObjectGlobal true;
   _newUnit enableSimulationGlobal false;
-  _newUnit setpos [0,0,5];
+  _newUnit setUnitPos "DOWN";
   selectPlayer _newUnit;
-  waituntil{player == _newUnit};
+  waituntil {player == _newUnit};
+  [_newUnit] call f_fnc_disableCollisionSpect; 
   deleteVehicle _unit;
   f_cam_VirtualCreated = true;
 };
@@ -75,6 +98,8 @@ _listBox = 2100;
 lbClear _listBox;
 // set inital values.
 #include "macros.hpp"
+player setVariable ["phx_isUnitSpecator",true,true];
+f_cam_originalPosition = getPos player;
 f_cam_controls = [F_CAM_HELPFRAME,F_CAM_HELPBACK,F_CAM_MOUSEHANDLER,F_CAM_UNITLIST,F_CAM_MODESCOMBO,F_CAM_SPECTEXT,F_CAM_SPECHELP,F_CAM_HELPCANCEL,F_CAM_HELPCANCEL,F_CAM_MINIMAP,F_CAM_FULLMAP,F_CAM_BUTTIONFILTER,F_CAM_BUTTIONTAGS,F_CAM_BUTTIONTAGSNAME,F_CAM_BUTTIONFIRSTPERSON,F_CAM_DIVIDER];
 f_cam_units = [];
 f_cam_players = [];

@@ -325,10 +325,37 @@ case "KeyDown":
              _handled = true;
         };
         case 25: // P
-        {
-            f_cam_muteSpectators = !f_cam_muteSpectators;
-            [player, f_cam_muteSpectators] call TFAR_fnc_forceSpectator;
-            systemChat format ["Spectators Muted = %1",!f_cam_muteSpectators];
+        {   
+            if (isNil "f_cam_nextVoiceChange" || {diag_tickTime > f_cam_nextVoiceChange}) then {
+                f_cam_nextVoiceChange = diag_tickTime + 2;
+                
+                f_cam_muteSpectators = !f_cam_muteSpectators;
+                [player, f_cam_muteSpectators] call TFAR_fnc_forceSpectator;
+       
+                if !(f_cam_muteSpectators) then {
+                    systemChat "You are now listening to LIVE PLAYER VOICE CHAT.";
+                    
+                    player setVariable ["tf_unable_to_use_radio",true];
+                    player setVariable ["tf_globalVolume", 0.0, true];
+                    
+                    // Add PFH that updates player position since TFAR works off that.
+                    [{
+                        params ["_args", "_handle"];
+                        
+                        if !(f_cam_muteSpectators) then {
+                            player setPos (getPos f_cam_camera);
+                        } else {
+                            player setPos f_cam_originalPosition;
+                            [_handle] call CBA_fnc_removePerFrameHandler;
+                        };
+                    }, 0, []] call CBA_fnc_addPerFrameHandler;
+                } else {
+                    systemChat "You are now listening to SPECTATOR VOICE CHAT.";
+                    player setVariable ["tf_globalVolume", 1.0, true];
+                };
+            } else {
+                systemChat format["Please wait %1 second(s) to change voice modes again.",(diag_tickTime-f_cam_nextVoiceChange)];
+            };
         };
         case 29: // CTRL
         {

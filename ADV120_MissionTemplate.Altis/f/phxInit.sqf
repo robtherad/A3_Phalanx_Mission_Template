@@ -5,7 +5,7 @@ This file will start all scripts part of the default phx template. Call this fil
 
 */
 //====================================================================================================
-//Initialize Variables - End conditions
+// Initialize Variables - End conditions
 phx_missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
 phx_missionRunTime = ["phx_missionTimelimit",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
 phx_missionRuntimeMins = phx_missionRunTime + phx_missionSafeTime;
@@ -14,7 +14,11 @@ phx_alertEnd = 0; // Time elapsed warning
 phx_alertSoon = 0; // 15 minute warning
 
 //====================================================================================================
-//difficulty Message
+// Initialize Spectator Variables
+phx_spect_playerGroup = group player;
+
+//====================================================================================================
+// Difficulty Message
 if (isServer) then {
     [] spawn {
         sleep 1;
@@ -31,11 +35,11 @@ if (isServer) then {
 };
 
 //====================================================================================================
-//Cancel unneeded calculations
+// Cancel unneeded calculations
 disableRemoteSensors true;
 
 //====================================================================================================
-//Pre Briefing Client Scripts
+// Pre Briefing Client Scripts
 if (hasInterface) then {
     phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
     phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
@@ -43,7 +47,7 @@ if (hasInterface) then {
 };
 
 //====================================================================================================
-//Pre Briefing Server Scripts
+// Pre Briefing Server Scripts
 if (isServer && isNil "phx_serverInit") then {
     phx_end_checkTime = [phx_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
     phx_end_checkAlive = [phx_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
@@ -52,17 +56,17 @@ if (isServer && isNil "phx_serverInit") then {
 };
 
 //====================================================================================================
-//Wait for mission to start
+// Wait for mission to start
 waitUntil {CBA_missionTime > 0};
 
 //====================================================================================================
-//Post Briefing Client Scripts
+// Post Briefing Client Scripts
 if (hasInterface) then {
     call phx_fnc_gps_init;
 };
 
 //====================================================================================================
-//Disable AI contact reports
+// Disable AI contact reports
 player setspeaker "NoVoice";
 showSubtitles false;
 enableSentences false;
