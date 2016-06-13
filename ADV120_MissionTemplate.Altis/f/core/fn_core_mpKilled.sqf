@@ -9,10 +9,14 @@ Contains the unit itself in case of collisions
 */
 
 //No need for server to be running this script.
-if (isDedicated) exitWith {};
+if (!hasInterface) exitWith {};
 
 _unit = _this select 0;
 _killer = _this select 1;
+
+{
+    unassignItem _x;
+} forEach (assignedItems _unit);
 
 showSubtitles false; //Apparently when you get a team kill it changes this variable?
 
