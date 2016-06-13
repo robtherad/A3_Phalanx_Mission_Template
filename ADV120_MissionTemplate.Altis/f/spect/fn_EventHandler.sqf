@@ -343,7 +343,19 @@ case "KeyDown":
                         params ["_args", "_handle"];
                         
                         if !(f_cam_muteSpectators) then {
-                            player setPos (getPos f_cam_camera);
+                            if (f_cam_mode isEqualTo 3) then {
+                                // Freecam
+                                player setPos (getPos f_cam_freecamera);
+                            } else {
+                                // Chase cam
+                                player setPos (getPos f_cam_camera);
+                                private _camTarget = player getVariable ["phx_spect_watchedPlayer",objNull];
+                                if !(_camTarget isEqualTo f_cam_curTarget) then {
+                                    player setVariable ["phx_spect_watchedPlayer",f_cam_curTarget];
+                                    _camTarget = f_cam_curTarget;
+                                    // Get unit's radio stuff and set it up on player
+                                };
+                            };
                         } else {
                             player setPos f_cam_originalPosition;
                             [_handle] call CBA_fnc_removePerFrameHandler;

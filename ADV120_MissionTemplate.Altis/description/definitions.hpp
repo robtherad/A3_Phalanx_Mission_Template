@@ -7,11 +7,11 @@ class Header {
 Saving = 0;
 enableItemsDropping = 0;
 disabledAI = 1;
-enableDebugConsole = 1;
+enableDebugConsole = 2;
 
-respawn = 1;
+respawn = 2;
 respawndelay = 3;
-respawnOnStart = 0;
-respawnTemplates[] = {"Seagull", "f_spectator"};
+respawnOnStart = -1;
+respawnTemplates[] = {"Instant", "f_spectator"};
 
 disableChannels[]={0,2,3,4,5,6};

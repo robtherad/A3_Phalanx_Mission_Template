@@ -7,6 +7,9 @@
 // Setup the variables
 if (isNil "f_var_mission_timer") then {
     f_var_mission_timer = ["f_param_mission_timer",10] call BIS_fnc_getParamValue;
+    diag_log format["f_safeStart: variable was nil, setting to - %1", f_var_mission_timer];
+} else {
+    diag_log format["f_safeStart: variable was - %1", f_var_mission_timer];
 };
 
 // ====================================================================================
@@ -23,6 +26,7 @@ if (f_var_mission_timer > 0) then
 
     // Enable invincibility for players
     if (hasInterface) then {
+        diag_log format["f_safeStart: Calling fn_safety with TRUE"];
         [true] call f_fnc_safety;
     };
 };

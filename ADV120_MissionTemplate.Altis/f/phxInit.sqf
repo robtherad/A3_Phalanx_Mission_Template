@@ -12,11 +12,17 @@ phx_missionRuntimeMins = phx_missionRunTime + phx_missionSafeTime;
 phx_alertOver = 1; // Time elapsed warning
 phx_alertEnd = 0; // Time elapsed warning
 phx_alertSoon = 0; // 15 minute warning
+diag_log format["phxInit: added endConditions variables"];
 
 //====================================================================================================
 // Initialize Spectator Variables
-phx_spect_playerGroup = group player;
-
+if (hasInterface) then {
+    [] spawn {
+        waitUntil {sleep 0.1; diag_log format["phxInit SPAWN: group is null"]; !isNull (group player)};
+        phx_spect_playerGroup = group player;
+        diag_log format["phxInit SPAWN: added spectator group variable"];
+    };
+};
 //====================================================================================================
 // Difficulty Message
 if (isServer) then {
@@ -31,6 +37,7 @@ if (isServer) then {
         };
         _hintStr = "Mission Difficulty Setting = " + _diff;
         [_hintStr,15] remoteExecCall ["phx_fnc__hintThenClear", 0];
+        diag_log format["phxInit: displayed difficulty message"];
     };
 };
 
@@ -44,6 +51,7 @@ if (hasInterface) then {
     phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
     phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
     phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHandler;
+    diag_log format["phxInit: added client PFH's"];
 };
 
 //====================================================================================================
@@ -52,6 +60,7 @@ if (isServer && isNil "phx_serverInit") then {
     phx_end_checkTime = [phx_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
     phx_end_checkAlive = [phx_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
 
+    diag_log format["phxInit: added server PFH's"];
     phx_serverInit = true; //Set this so that the server stuff only runs once
 };
 
@@ -63,6 +72,7 @@ waitUntil {CBA_missionTime > 0};
 // Post Briefing Client Scripts
 if (hasInterface) then {
     call phx_fnc_gps_init;
+    diag_log format["phxInit: started post briefing client scripts"];
 };
 
 //====================================================================================================
@@ -72,3 +82,4 @@ showSubtitles false;
 enableSentences false;
 enableRadio false;
 player disableConversation true;
+diag_log format["phxInit: disabled AI voices"];

@@ -3,6 +3,11 @@
 */
 params ["_newSpectator"];
 
+if (isServer) then {
+    _newSpectator hideObjectGlobal true;
+    _newSpectator enableSimulationGlobal false;
+};
+
 if (_newSpectator isEqualTo player) exitWith {};
 diag_log format ["fn_disableCollisionSpect - params: %1",_this];
 diag_log format ["fn_disableCollisionSpect - _newSpectator: %1",_newSpectator];

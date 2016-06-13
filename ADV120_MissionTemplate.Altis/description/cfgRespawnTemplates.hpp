@@ -1,5 +1,5 @@
 class CfgRespawnTemplates {
-    class Seagull {
+    class Instant {
         onPlayerRespawn = "";
     };
     class f_spectator {

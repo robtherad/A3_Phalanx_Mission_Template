@@ -16,26 +16,26 @@ if (!hasInterface) exitWith {};
         diag_log format["JIP Check: Player is spectator."];
         phx_isSpectator = true;
         [_handle] call CBA_fnc_removePerFrameHandler;
-    };
-    
-    // Player's in singleplayer, there is no JIP
-    if (!isMultiplayer && {!(_typeOf isEqualTo "VirtualSpectator_F")} ) then {
-        diag_log format["JIP Check: Game is singleplayer, removing PFH."];
-        [_handle] call CBA_fnc_removePerFrameHandler;
-    };
-    
-    // Variable set, game hasn't started yet. Player must not be a JIP. Remove PFH
-    if (!phx_hasGameStarted && {isMultiplayer} && {!(_typeOf isEqualTo "VirtualSpectator_F")} ) then {
-        [_handle] call CBA_fnc_removePerFrameHandler; 
-        phx_didJipCheck = true;
-    };
-    
-    // Game started, player is JIP, put him in spectate
-    if ( ((phx_hasGameStarted) && (isNil "phx_didJipCheck")) && {isMultiplayer} && {!(_typeOf isEqualTo "VirtualSpectator_F")} ) then {
-        phx_didJipCheck = true;
-        player setPos [-1000,-1000,0];
-        player setVariable ["phx_loadoutAssigned",false];
-        [player,objNull,0,0,true] call f_fnc_CamInit;
-        [_handle] call CBA_fnc_removePerFrameHandler;
+    } else {
+        // Player's in singleplayer, there is no JIP
+        if (!isMultiplayer) then {
+            diag_log format["JIP Check: Game is singleplayer, removing PFH."];
+            [_handle] call CBA_fnc_removePerFrameHandler;
+        };
+        
+        // Variable set, game hasn't started yet. Player must not be a JIP. Remove PFH
+        if (!phx_hasGameStarted && {isMultiplayer}) then {
+            [_handle] call CBA_fnc_removePerFrameHandler; 
+            phx_didJipCheck = true;
+        };
+        
+        // Game started, player is JIP, put him in spectate
+        if (((phx_hasGameStarted) && (isNil "phx_didJipCheck")) && {isMultiplayer}) then {
+            phx_didJipCheck = true;
+            player setPos [-1000,-1000,0];
+            player setVariable ["phx_loadoutAssigned",false];
+            [player,objNull,0,0,true] call f_fnc_CamInit;
+            [_handle] call CBA_fnc_removePerFrameHandler;
+        };
     };
 }, 0, [_this]] call CBA_fnc_addPerFrameHandler;
