@@ -9,7 +9,7 @@ if (isNil "phx_isSpectator") then {
     phx_isSpectator = true;
 };
 diag_log format["fn_camInit: _this = %1",_this];
-
+_this spawn {
 _unit = [_this, 0, player,[objNull]] call BIS_fnc_param;
 _oldUnit = [_this, 1, objNull,[objNull]] call BIS_fnc_param;
 _forced = [_this, 4, false,[false]] call BIS_fnc_param;
@@ -68,7 +68,7 @@ diag_log "fn_camInit: JIP check";
   // uiSleep 3;
   selectPlayer _newUnit;
   waituntil {player == _newUnit};
-  [_newUnit] call f_fnc_disableCollisionSpect; 
+  [_newUnit] call f_fnc_disableCollisionsSpect; 
   deleteVehicle _unit;
   diag_log "fn_camInit: Create virtual player";
 
@@ -211,6 +211,8 @@ f_cam_GetCurrentCam = {
   diag_log "fn_camInit: Set up camera functions";
 // =============================================================================
 
+uisleep 1;
+player forceAddUniform "U_I_Protagonist_VR";
 // create the UI
 createDialog "f_spec_dialog";
 // add keyboard events
@@ -263,3 +265,4 @@ f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
  ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
  ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
    diag_log "fn_camInit: Added onEachFrame handlers";
+};

@@ -68,6 +68,7 @@ removeGoggles player;
      case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
      // Virtual Spectator Slots
      case "VirtualSpectator_F": {
+        player forceAddUniform "U_I_Protagonist_VR";
         player linkItem "ItemMap";
         phx_isSpectator = true;
         missionNamespace setVariable ["phx_loadoutAssigned",true];
