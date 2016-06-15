@@ -1,14 +1,10 @@
 if (!hasInterface) exitWith {};
 
-diag_log format["fn_loadout_set: adding loadout"];
-
 private _char = typeOf player;
 //Get radio and map parameters from the slot screen. If the parameters don't exist then they default to giving everybody a map and radio.
 phx_loadout_radio = ["phx_loadout_radio",0] call BIS_fnc_getParamValue;
 phx_loadout_map = ["phx_loadout_map",0] call BIS_fnc_getParamValue;
 phx_loadout_gps = ["phx_loadout_gps",1] call BIS_fnc_getParamValue;
-
-diag_log format["fn_loadout_set: _typeOf:%1 -- _assigned:%2",_char,missionNamespace getVariable ["loadout_assigned","Nope!"]];
 
 // Ensure script is run only once.
 if (!isNil "loadout_assigned") exitWith {};
@@ -34,7 +30,7 @@ removeGoggles player;
 
 [{
     params ["_char", "_loadout"];
-    diag_log format["fn_loadout_set: execNextFrame _this:%1",_this];
+    
     switch (_char) do {
      //Red - CSAT/EAST - OPF_F
      case "O_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_PL.sqf",_loadout]};
@@ -67,15 +63,20 @@ removeGoggles player;
      case "b_soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
      case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
      // Virtual Spectator Slots
-     case "VirtualSpectator_F": {
+     case "VirtualMan_F": {
         player forceAddUniform "U_I_Protagonist_VR";
         player linkItem "ItemMap";
-        phx_isSpectator = true;
         missionNamespace setVariable ["phx_loadoutAssigned",true];
+        
+        // Waits until mission starts and then forces player into F3 spectator instead of EG spectator
+        [{(CBA_missionTime > 0) && (!isNull player) && (cameraOn isEqualTo player)}, {
+            [{
+                [player, objNull, 0, 0, true] call f_fnc_camInit;
+            }, [], 1] call CBA_fnc_waitAndExecute;
+        }] call CBA_fnc_waitUntilAndExecute;
      };
     };
 
     // Generate loadout briefing page.
     call phx_fnc_loadout_notes;
-    diag_log format["fn_loadout_set: added notes"];
 }, [_char, _loadout]] call CBA_fnc_execNextFrame;

@@ -16,6 +16,4 @@ class fspectator
     class ForceExit{};
     class HandleMenu{};
     class showMenu{};
-    class disableCollisionsSpect{};
-    class disableCollisions{};
 };

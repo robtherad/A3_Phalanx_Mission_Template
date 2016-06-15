@@ -9,9 +9,10 @@ enableItemsDropping = 0;
 disabledAI = 1;
 enableDebugConsole = 2;
 
-respawn = 2;
+respawn = 3;
+respawnDialog = 0;
 respawndelay = 3;
 respawnOnStart = -1;
-respawnTemplates[] = {"Instant", "f_spectator"};
+respawnTemplates[] = {"f_spectator"};
 
-disableChannels[]={0,2,3,4,5,6};
+disableChannels[]={{0,true,true},{2,true,true},{4,true,true},{5,true,true},{6,true,true}};

@@ -3,7 +3,6 @@
 //=====================================================================================
 
 // Exit if server
-diag_log format["fn_safety: _this - %1",_this];
 if (!hasInterface) exitwith {};
 waitUntil {!isNull player};
 switch (_this select 0) do
@@ -12,7 +11,6 @@ switch (_this select 0) do
     case true:
     {
         phx_safeStartEnabled = true;
-        diag_log format["fn_safety: phx_safeStartEnabled - %1",phx_safeStartEnabled];
         
         // Delete bullets from fired weapons
         if (isNil "f_eh_safetyMan") then {
@@ -35,7 +33,6 @@ switch (_this select 0) do
                     };
                 };
             }];
-            diag_log format["fn_safety: Adding Fired EH ID- %1",f_eh_safetyMan];
         };
 
         // Disable guns and damage for vehicles if player is crewing a vehicle
@@ -55,7 +52,6 @@ switch (_this select 0) do
     // Turn safety off
     case false;
     default {
-        diag_log format["fn_safety: phx_safeStartEnabled - false"];
         // Allow player to fire weapons
         if !(isNil "f_eh_safetyMan") then {
             player removeEventhandler ["Fired", f_eh_safetyMan];
