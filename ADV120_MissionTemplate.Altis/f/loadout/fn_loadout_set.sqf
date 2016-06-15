@@ -72,7 +72,7 @@ removeGoggles player;
         [{(CBA_missionTime > 0) && (!isNull player) && (cameraOn isEqualTo player)}, {
             [{
                 [player, objNull, 0, 0, true] call f_fnc_camInit;
-            }, [], 1] call CBA_fnc_waitAndExecute;
+            }] call CBA_fnc_execNextFrame;
         }] call CBA_fnc_waitUntilAndExecute;
      };
     };

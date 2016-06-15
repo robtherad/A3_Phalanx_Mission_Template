@@ -26,7 +26,7 @@
     if (!hasInterface) ExitWith {diag_log "fn_CamInit: Already ran, exiting early."};
 
     // ====================================================================================
-    
+    cutText ["","BLACK FADED"];
     // Move unit off the battlefield just in case
     _unit setPos [-1000,-1000,5];
     
@@ -198,65 +198,69 @@
           _camera
         };
 
-        // =============================================================================
-        player forceAddUniform "U_I_Protagonist_VR";
-        // create the UI
-        createDialog "f_spec_dialog";
-        // add keyboard events
-        // hide minimap
-        ((findDisplay 9228) displayCtrl 1350) ctrlShow false;
-        ((findDisplay 9228) displayCtrl 1350) mapCenterOnCamera false;
-
-        // hide big map
-        ((findDisplay 9228) displayCtrl 1360) ctrlShow false;
-        ((findDisplay 9228) displayCtrl 1360) mapCenterOnCamera false;
-
-        ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
-        f_cam_helptext = "<t color='#EAA724'>Press F1 to see more keys.<br />Hold right-click to pan the camera.<br />Use the scroll wheel or numpad+/- to zoom in and out.<br />Use ctrl + rightclick to fov zoom<br />Press H to show and close the help window.<br />Press M to toggle between no map,minimap and full size map.<br />T for switching on tracers on the map<br/>Space to switch to freecam <br/>Use the left and right arrow keys to adjust size of player tags.</t>";
-        ((findDisplay 9228) displayCtrl 1310) ctrlSetStructuredText parseText (f_cam_helptext);
-        // create the camera and set it up.
-        f_cam_camera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
-
-        f_cam_fakecamera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
-
-        f_cam_curTarget = _oldUnit;
-        f_cam_freecamera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
-        f_cam_camera camCommit 0;
-        f_cam_fakecamera camCommit 0;
-        f_cam_camera cameraEffect ["internal","back"];
-        f_cam_camera camSetTarget f_cam_fakecamera;
-        f_cam_camera camSetFov 1.2;
-        f_cam_freecamera camSetFov 1.2;
-        f_cam_zeusKey = 21;
-        if( count (actionKeys "curatorInterface") > 0 ) then {
-            f_cam_zeusKey = (actionKeys "curatorInterface") select 0;
-        };
-        f_cam_MouseMoving = false;
-        cameraEffectEnableHUD true;
-        showCinemaBorder false;
-        f_cam_fired = [];
-        {
-          _event = _x addEventHandler ["fired",{f_cam_fired = f_cam_fired - [objNull];f_cam_fired pushBack (_this select 6)}];
-          _x setVariable ["f_cam_fired_eventid",_event];
-
-        } foreach (allunits + vehicles);
-
-        // ====================================================================================
-        // spawn sub scripts
-        call f_fnc_ReloadModes;
-        lbSetCurSel [2101,0];
-
-        f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
-         ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
-         ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
-        
         [{
-            // Join group in correct slot
-            player joinAsSilent [phx_spect_playerGroup, phx_spect_playerGroupNumber];
-        }, []] call CBA_fnc_execNextFrame;
-        
-        // Add player to the spectator list kept on the server
-        phx_spectatorPV = player;
-        publicVariableServer "phx_spectatorPV";
+            params ["_oldUnit"];
+            // =============================================================================
+            cutText ["","BLACK IN"];
+            player forceAddUniform "U_I_Protagonist_VR";
+            // create the UI
+            createDialog "f_spec_dialog";
+            // add keyboard events
+            // hide minimap
+            ((findDisplay 9228) displayCtrl 1350) ctrlShow false;
+            ((findDisplay 9228) displayCtrl 1350) mapCenterOnCamera false;
+
+            // hide big map
+            ((findDisplay 9228) displayCtrl 1360) ctrlShow false;
+            ((findDisplay 9228) displayCtrl 1360) mapCenterOnCamera false;
+
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
+            f_cam_helptext = "<t color='#EAA724'>Press F1 to see more keys.<br />Hold right-click to pan the camera.<br />Use the scroll wheel or numpad+/- to zoom in and out.<br />Use ctrl + rightclick to fov zoom<br />Press H to show and close the help window.<br />Press M to toggle between no map,minimap and full size map.<br />T for switching on tracers on the map<br/>Space to switch to freecam <br/>Use the left and right arrow keys to adjust size of player tags.</t>";
+            ((findDisplay 9228) displayCtrl 1310) ctrlSetStructuredText parseText (f_cam_helptext);
+            // create the camera and set it up.
+            f_cam_camera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
+
+            f_cam_fakecamera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
+
+            f_cam_curTarget = _oldUnit;
+            f_cam_freecamera = "camera" camCreate [position _oldUnit select 0,position _oldUnit select 1,3];
+            f_cam_camera camCommit 0;
+            f_cam_fakecamera camCommit 0;
+            f_cam_camera cameraEffect ["internal","back"];
+            f_cam_camera camSetTarget f_cam_fakecamera;
+            f_cam_camera camSetFov 1.2;
+            f_cam_freecamera camSetFov 1.2;
+            f_cam_zeusKey = 21;
+            if( count (actionKeys "curatorInterface") > 0 ) then {
+                f_cam_zeusKey = (actionKeys "curatorInterface") select 0;
+            };
+            f_cam_MouseMoving = false;
+            cameraEffectEnableHUD true;
+            showCinemaBorder false;
+            f_cam_fired = [];
+            {
+              private _event = _x addEventHandler ["fired",{f_cam_fired = f_cam_fired - [objNull];f_cam_fired pushBack (_this select 6)}];
+              _x setVariable ["f_cam_fired_eventid",_event];
+
+            } foreach (allunits + vehicles);
+
+            // ====================================================================================
+            // spawn sub scripts
+            call f_fnc_ReloadModes;
+            lbSetCurSel [2101,0];
+
+            f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
+             ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
+             ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
+            
+            [{
+                // Join group in correct slot
+                player joinAsSilent [phx_spect_playerGroup, phx_spect_playerGroupNumber];
+            }, []] call CBA_fnc_execNextFrame;
+            
+            // Add player to the spectator list kept on the server
+            phx_spectatorPV = player;
+            publicVariableServer "phx_spectatorPV";
+        }, [_oldUnit], 1] call CBA_fnc_waitAndExecute;
     }, [_unit, _oldUnit]] call CBA_fnc_waitUntilAndExecute;
 }, _this] call CBA_fnc_directCall;
