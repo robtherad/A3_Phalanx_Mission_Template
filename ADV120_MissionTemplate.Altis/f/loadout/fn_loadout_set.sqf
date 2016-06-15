@@ -63,10 +63,17 @@ removeGoggles player;
      case "b_soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
      case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
      // Virtual Spectator Slots
-     case "VirtualSpectator_F": {
+     case "VirtualMan_F": {
+        player forceAddUniform "U_I_Protagonist_VR";
         player linkItem "ItemMap";
-        phx_isSpectator = true;
         missionNamespace setVariable ["phx_loadoutAssigned",true];
+        
+        // Waits until mission starts and then forces player into F3 spectator instead of EG spectator
+        [{(CBA_missionTime > 0) && (!isNull player) && (cameraOn isEqualTo player)}, {
+            [{
+                [player, objNull, 0, 0, true] call f_fnc_camInit;
+            }, [], 1] call CBA_fnc_waitAndExecute;
+        }] call CBA_fnc_waitUntilAndExecute;
      };
     };
 

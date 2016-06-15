@@ -104,13 +104,17 @@ _groups = [
 private ["_grp"];
 {
     // Check first if the group exists
-    _grp = missionNamespace getVariable[(_x select 0),grpNull];
+    _x params ["_identifier", "_shortName", "_longName", "_groupSize", "_radioArray"];
+    _grp = missionNamespace getVariable[_identifier,grpNull];
     if(!isNull _grp) then {
-        _grp setGroupId [(_x select 1),"GroupColor0"];
-        _grp setVariable ["phx_groupIdentifier",_x select 0];
-        _grp setVariable ["phx_LongName",_x select 2];
-        _grp setVariable ["phx_gps_groupSize",_x select 3];
-        _grp setVariable ["phx_radioSettings",_x select 4];
+        if !((groupID _grp) isEqualTo _shortName) then {
+            _grp setGroupIdGlobal [_shortName,"GroupColor0"];
+            _grp setVariable ["phx_groupIDSet",true,true];
+        };
+        _grp setVariable ["phx_groupIdentifier",_identifier];
+        _grp setVariable ["phx_LongName",_longName];
+        _grp setVariable ["phx_gps_groupSize",_groupSize];
+        _grp setVariable ["phx_radioSettings",_radioArray];
     };
 } forEach _groups;
 

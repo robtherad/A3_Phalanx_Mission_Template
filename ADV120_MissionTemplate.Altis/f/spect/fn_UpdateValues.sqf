@@ -50,7 +50,7 @@ while {true} do
     // ====================================================================================
     // Check it and see if they have been added already
     {
-        if(!(_x in f_cam_listUnits) && ({alive _x} count units _x) > 0 ) then
+        if(!(_x in f_cam_listUnits) && ({ private _spectator = _x getVariable ["phx_isUnitSpecator",false]; (alive _x) && (!_spectator) } count units _x) > 0 ) then
         {
             _text = toString(toArray(groupID _x) - [45]);
             _index = lbAdd [_listBox,_text];
@@ -111,8 +111,7 @@ while {true} do
                 f_cam_listUnits = f_cam_listUnits - [_x];
                 [] call f_cam_checkIndex;
             };
-            if(!alive _x) then
-            {
+            if (!alive _x || isNull _x) then {
                 if(_index >= 0) then
                 {
                     lbDelete [_listBox,_index];

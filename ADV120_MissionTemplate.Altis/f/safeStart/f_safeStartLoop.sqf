@@ -7,7 +7,7 @@ if !(isServer) exitWith {};
 
 // Redundant sleep to give everything a second to settle
 sleep 2;
-
+publicVariable "f_var_mission_timer";
 while {f_var_mission_timer > 0} do {
 
     // Broadcast remaining time to players

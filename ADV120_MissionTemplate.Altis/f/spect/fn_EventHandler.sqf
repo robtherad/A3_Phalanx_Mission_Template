@@ -325,10 +325,106 @@ case "KeyDown":
              _handled = true;
         };
         case 25: // P
-        {
-            f_cam_muteSpectators = !f_cam_muteSpectators;
-            [player, f_cam_muteSpectators] call TFAR_fnc_forceSpectator;
-            systemChat format ["Spectators Muted = %1",!f_cam_muteSpectators];
+        {   
+            if (isNil "f_cam_nextVoiceChange" || {diag_tickTime > f_cam_nextVoiceChange}) then {
+                f_cam_nextVoiceChange = diag_tickTime + 2;
+                
+                f_cam_muteSpectators = !f_cam_muteSpectators;
+                [player, f_cam_muteSpectators] call TFAR_fnc_forceSpectator;
+       
+                if !(f_cam_muteSpectators) then {
+                    systemChat "You are now listening to LIVE PLAYER VOICE CHAT.";
+                    
+                    player setVariable ["tf_unable_to_use_radio", true];
+                    player setVariable ["tf_voiceVolume", 0.0, true];
+                    
+                    // Add PFH that updates player position since TFAR works off that.
+                    [{
+                        params ["_args", "_handle"];
+                        
+                        if !(f_cam_muteSpectators) then {
+                            if (f_cam_mode isEqualTo 3) then {
+                                // Freecam
+                                player setPos (getPos f_cam_freecamera);
+                                
+                            } else {
+                                // Chase cam
+                                player setPos (getPos f_cam_camera);
+                                PHX_camTarget = player getVariable ["phx_spect_watchedPlayer",objNull];
+                                if !(PHX_camTarget isEqualTo f_cam_curTarget) then {
+                                    player setVariable ["phx_spect_watchedPlayer",f_cam_curTarget];
+                                    diag_log format["spectListen: PHX_camTarget: %1",PHX_camTarget];
+                                    
+                                    // Get list of unit's radios
+                                    private _itemArray = f_cam_curTarget call TFAR_fnc_radiosListSorted;
+                                    diag_log format["spectListen: _itemArray: %1",_itemArray];
+                                    private _radioArray = [];
+                                    {
+                                        private _splitClass = _x splitString "_";
+                                        if ( (_splitClass select 0) isEqualTo "tf") then {
+                                            _radioArray pushBackUnique _x;
+                                        };
+                                    } forEach _itemArray;
+                                    diag_log format["spectListen: _radioArray: %1",_radioArray];
+                                    
+                                    // Remove player's current radios
+                                    if (!isNil "phx_spect_radioArray") then {phx_spect_radioArray = [];};
+                                    {player removeItem _x;} forEach phx_spect_radioArray;
+                                    
+                                    // Add unit's radios to player
+                                    {
+                                        private _splitRadio = (_x splitString "_");
+                                        private _joinedRadio = format["%1_%2",_splitRadio select 0, _splitRadio select 1];
+                                        player addItem _joinedRadio;
+                                        diag_log format["spectListen: ADDING RADIO TO SPECTATOR: %1",_joinedRadio];
+                                    } forEach _radioArray;
+                                    
+                                    // Add a CBA PFH that will copy the camera target's radio info into the spectator's radios once they are added by TFAR.
+                                    if (isNil "phx_spect_addingRadios" && !(count _radioArray isEqualTo 0)) then {
+                                        phx_spect_addingRadios = true;
+                                        [{
+                                            params ["_args","_handle"];
+                                            _args params ["_giveUpTime", "_radioArray"];
+                                            
+                                            if (diag_tickTime > _giveUpTime) then {
+                                                phx_spect_addingRadios = nil;
+                                                diag_log format["spectListen PFH: Giving up."];
+                                                [_handle] call CBA_fnc_removePerFrameHandler;
+                                            } else {
+                                                // Wait for player's radio count to match unit's radio count
+                                                private _playerRadios = player call TFAR_fnc_radiosListSorted;
+                                                diag_log format["spectListen PFH: Player radio list: %1",_playerRadios];
+                                                if ( ((count _playerRadios) isEqualTo (count _radioArray)) ) then {
+                                                    diag_log format["spectListen PFH: Player radio list: %1",_playerRadios];
+                                                    private _playerRadioList = _playerRadios;
+                                                    {
+                                                        if ( [_x, (_playerRadioList select 0)] call TFAR_fnc_isSameRadio ) then {
+                                                            [_x, _playerRadioList select 0] call TFAR_fnc_CopySettings;
+                                                            diag_log format["spectListen PFH: Copying settings from %1 to %2",_x, _playerRadioList select 0];
+                                                            _playerRadioList = _playerRadioList - [_playerRadioList select 0];
+                                                        };
+                                                        phx_spect_radioArray = player call TFAR_fnc_radiosListSorted;
+                                                        [_handle] call CBA_fnc_removePerFrameHandler;
+                                                    } forEach _radioArray;
+                                                };
+                                            };
+                                        }, 0.1, [diag_tickTime+10, _radioArray]] call CBA_fnc_addPerFrameHandler;
+                                    };
+                                };
+                            };
+                            
+                        } else {
+                            player setPos f_cam_originalPosition;
+                            [_handle] call CBA_fnc_removePerFrameHandler;
+                        };
+                    }, 0, []] call CBA_fnc_addPerFrameHandler;
+                } else {
+                    systemChat "You are now listening to SPECTATOR VOICE CHAT.";
+                    player setVariable ["tf_globalVolume", 1.0, true];
+                };
+            } else {
+                systemChat format["Please wait %1 second(s) to change voice modes again.",(diag_tickTime-f_cam_nextVoiceChange)];
+            };
         };
         case 29: // CTRL
         {
