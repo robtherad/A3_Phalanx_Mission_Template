@@ -31,7 +31,6 @@ addMissionEventHandler ["HandleDisconnect",{
 
     if (!isNil "f_var_mission_timer" && {f_var_mission_timer >= 0}) then {
         deleteVehicle _unit;
-        diag_log format["PHX fn_serverJIP: %1 disconnected during safestart. Deleting body.",_name];
     };
 }];
 
@@ -39,14 +38,10 @@ addMissionEventHandler ["HandleDisconnect",{
 "phx_JIP_playerConnected" addPublicVariableEventHandler {
 	params ["_varName", "_jipPlayer"];
     
-    diag_log format["PHX serverJIP: JIP Player: _jipPlayer:%1",_jipPlayer];
-    
     phx_JIP_latestJIPplayer = _jipPlayer;
     if (isNil "phx_spect_spectatorList") then {phx_spect_spectatorList = [];};
     [{
         [phx_JIP_latestJIPplayer, phx_spect_spectatorList] remoteExec ["phx_fnc_disableCJIP",0];
-        "FUCK THIS SHIT!" remoteExec ["hint",0];
-        diag_log "PHX serverJip: Ran execNextFrame crap.";
     }] call CBA_fnc_execNextFrame;
 };
 

@@ -43,11 +43,10 @@ if (!hasInterface) exitWith {};
             phx_didJipCheck = true;
             [_handle] call CBA_fnc_removePerFrameHandler;
             diag_log format["PHX JIP Check: Game started, removing PFH, adding waitUntilAndExec."];
-            [{diag_log "PHX JIP Check: Waiting for non-null player."; (!isNull player) && (player == player)}, {
+            [{(!isNull player) && (player == player)}, {
                 // Execution
                 player setPos [-1000,-1000,0];
                 player setVariable ["phx_loadoutAssigned",false];
-                diag_log format["PHX JIP Check: waitUntilAndExec passed: Spawning spectator script."];
                 [player,objNull,0,0,true] spawn f_fnc_CamInit;
             }, []] call CBA_fnc_waitUntilAndExecute;
         };

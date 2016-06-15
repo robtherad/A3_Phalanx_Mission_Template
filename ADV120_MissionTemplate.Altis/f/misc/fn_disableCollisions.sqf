@@ -9,8 +9,7 @@ if (isServer) then {
 };
 
 if (_newSpectator isEqualTo player) exitWith {};
-diag_log format ["fn_disableCSpect - params: %1",_this];
-diag_log format ["fn_disableCSpect - _newSpectator: %1",_newSpectator];
+
 {
     if (local _x) then {
         _newSpectator disableCollisionWith _x;

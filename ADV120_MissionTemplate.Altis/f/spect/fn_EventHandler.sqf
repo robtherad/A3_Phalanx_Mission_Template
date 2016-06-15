@@ -353,11 +353,9 @@ case "KeyDown":
                                 PHX_camTarget = player getVariable ["phx_spect_watchedPlayer",objNull];
                                 if !(PHX_camTarget isEqualTo f_cam_curTarget) then {
                                     player setVariable ["phx_spect_watchedPlayer",f_cam_curTarget];
-                                    diag_log format["spectListen: PHX_camTarget: %1",PHX_camTarget];
                                     
                                     // Get list of unit's radios
                                     private _itemArray = f_cam_curTarget call TFAR_fnc_radiosListSorted;
-                                    diag_log format["spectListen: _itemArray: %1",_itemArray];
                                     private _radioArray = [];
                                     {
                                         private _splitClass = _x splitString "_";
@@ -365,7 +363,6 @@ case "KeyDown":
                                             _radioArray pushBackUnique _x;
                                         };
                                     } forEach _itemArray;
-                                    diag_log format["spectListen: _radioArray: %1",_radioArray];
                                     
                                     // Remove player's current radios
                                     if (!isNil "phx_spect_radioArray") then {phx_spect_radioArray = [];};
@@ -376,7 +373,6 @@ case "KeyDown":
                                         private _splitRadio = (_x splitString "_");
                                         private _joinedRadio = format["%1_%2",_splitRadio select 0, _splitRadio select 1];
                                         player addItem _joinedRadio;
-                                        diag_log format["spectListen: ADDING RADIO TO SPECTATOR: %1",_joinedRadio];
                                     } forEach _radioArray;
                                     
                                     // Add a CBA PFH that will copy the camera target's radio info into the spectator's radios once they are added by TFAR.
@@ -388,19 +384,15 @@ case "KeyDown":
                                             
                                             if (diag_tickTime > _giveUpTime) then {
                                                 phx_spect_addingRadios = nil;
-                                                diag_log format["spectListen PFH: Giving up."];
                                                 [_handle] call CBA_fnc_removePerFrameHandler;
                                             } else {
                                                 // Wait for player's radio count to match unit's radio count
                                                 private _playerRadios = player call TFAR_fnc_radiosListSorted;
-                                                diag_log format["spectListen PFH: Player radio list: %1",_playerRadios];
                                                 if ( ((count _playerRadios) isEqualTo (count _radioArray)) ) then {
-                                                    diag_log format["spectListen PFH: Player radio list: %1",_playerRadios];
                                                     private _playerRadioList = _playerRadios;
                                                     {
                                                         if ( [_x, (_playerRadioList select 0)] call TFAR_fnc_isSameRadio ) then {
                                                             [_x, _playerRadioList select 0] call TFAR_fnc_CopySettings;
-                                                            diag_log format["spectListen PFH: Copying settings from %1 to %2",_x, _playerRadioList select 0];
                                                             _playerRadioList = _playerRadioList - [_playerRadioList select 0];
                                                         };
                                                         phx_spect_radioArray = player call TFAR_fnc_radiosListSorted;

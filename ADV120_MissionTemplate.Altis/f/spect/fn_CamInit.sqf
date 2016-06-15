@@ -23,7 +23,7 @@
     // if they are jip, these are null
     if (isNull _unit) then {_unit = cameraOn;f_cam_isJIP=true;};
     // escape the script if you are not a seagull unless forced
-    if (!hasInterface) ExitWith {diag_log "fn_CamInit: Already ran, exiting early."};
+    if (!hasInterface) exitWith {};
 
     // ====================================================================================
     cutText ["","BLACK FADED"];
