@@ -111,8 +111,7 @@ while {true} do
                 f_cam_listUnits = f_cam_listUnits - [_x];
                 [] call f_cam_checkIndex;
             };
-            if(!alive _x) then
-            {
+            if (!alive _x || isNull _x) then {
                 if(_index >= 0) then
                 {
                     lbDelete [_listBox,_index];
