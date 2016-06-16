@@ -52,6 +52,28 @@ if (hasInterface) then {
     phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
     phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
     phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHandler;
+    
+    // Add action for raising/lowering headset
+    [] spawn {
+        waitUntil {!isNull player};
+        phx_radio_loweredHeadset = true;
+        phx_radio_lowerHeadsetAction = player addAction ["Lower Headset", {  
+            phx_radio_loweredHeadset = !phx_radio_loweredHeadset;
+            if !(phx_radio_loweredHeadset) then {
+                // Lower volume
+                {
+                    [_x,2] call TFAR_fnc_setSwVolume;
+                } forEach (player call TFAR_fnc_radiosListSorted);
+                player setUserActionText [phx_radio_lowerHeadsetAction, "Raise Headset"];
+            } else {
+                // Boost volume back up
+                {
+                    [_x,6] call TFAR_fnc_setSwVolume;
+                } forEach (player call TFAR_fnc_radiosListSorted);
+                player setUserActionText [phx_radio_lowerHeadsetAction, "Lower Headset"];
+            };
+        }, [], 0, false, true, "", "(count (player call TFAR_fnc_radiosListSorted)) > 0"];
+    };
 };
 
 //====================================================================================================
