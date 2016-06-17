@@ -7,7 +7,7 @@ class Header {
 Saving = 0;
 enableItemsDropping = 0;
 disabledAI = 1;
-enableDebugConsole = 2;
+enableDebugConsole = 1;
 
 respawn = 3;
 respawnDialog = 0;
