@@ -4668,7 +4668,7 @@ class Mission
 			};
 			isPlayable=1;
 			id=448;
-			type="VirtualSpectator_F";
+			type="VirtualMan_F";
 			atlOffset=185.63884;
 			class CustomAttributes
 			{
@@ -4778,7 +4778,7 @@ class Mission
 			};
 			isPlayable=1;
 			id=449;
-			type="VirtualSpectator_F";
+			type="VirtualMan_F";
 			atlOffset=185.64728;
 			class CustomAttributes
 			{
@@ -4888,7 +4888,7 @@ class Mission
 			};
 			isPlayable=1;
 			id=450;
-			type="VirtualSpectator_F";
+			type="VirtualMan_F";
 			atlOffset=185.77641;
 			class CustomAttributes
 			{
@@ -4998,7 +4998,7 @@ class Mission
 			};
 			isPlayable=1;
 			id=451;
-			type="VirtualSpectator_F";
+			type="VirtualMan_F";
 			atlOffset=185.92693;
 			class CustomAttributes
 			{

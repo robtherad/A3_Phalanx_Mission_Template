@@ -4,7 +4,8 @@ _fullmapWindow = _this select 0;
 _camera = ([] call f_cam_GetCurrentCam);
 _fullmapWindow drawIcon ["\A3\ui_f\data\GUI\Rsc\RscDisplayMissionEditor\iconCamera_ca.paa", [0,0,0,1],getpos _camera ,20,20,getDir _camera,"",0];
 {
-    if(alive _x) then {
+    private _isSpectator = _x getVariable ["phx_isUnitSpecator",false];
+    if(alive _x && {!_isSpectator}) then {
         _name = "";
         _color = switch (side _x) do {
             case blufor: {f_cam_blufor_color};
@@ -14,7 +15,7 @@ _fullmapWindow drawIcon ["\A3\ui_f\data\GUI\Rsc\RscDisplayMissionEditor\iconCame
             default {f_cam_empty_color};
         };
         if(isPlayer _x) then {_name = name _x};
-        if(leader _x == _x && {isPlayer _x} count units _x > 0) then {_name = format["%1 - %2",toString(toArray(groupID (group _x)) - [45]),_name]};
+        if(leader _x == _x && {private _isSpectator = _x getVariable ["phx_isUnitSpecator",false]; (isPlayer _x) && (!_isSpectator)} count units _x > 0) then {_name = format["%1 - %2",toString(toArray(groupID (group _x)) - [45]),_name]};
         if(vehicle _x != _x && crew (vehicle _x) select 0 == _x || vehicle _x == _x) then {
             _icon = (vehicle _x getVariable ["f_cam_icon",""]);
             if(_icon == "") then {_icon = gettext (configfile >> "CfgVehicles" >> typeOf (vehicle _x) >> "icon");vehicle _x setVariable ["f_cam_icon",_icon]};

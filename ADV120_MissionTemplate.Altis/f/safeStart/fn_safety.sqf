@@ -4,24 +4,33 @@
 
 // Exit if server
 if (!hasInterface) exitwith {};
-
+waitUntil {!isNull player};
 switch (_this select 0) do
 {
     // Turn safety on
     case true:
     {
         phx_safeStartEnabled = true;
-    
+        
         // Delete bullets from fired weapons
         if (isNil "f_eh_safetyMan") then {
             f_eh_safetyMan = player addEventHandler["Fired", {
-                deletevehicle (_this select 6);
+                params ["_unit", "_weapon", "_muzzle", "_mode", "_ammo", "_magazine", "_projectile"];
+                
+                deletevehicle _projectile;
                 "phx_safeStartTextLayer" cutText ["SAFESTART ACTIVE", "PLAIN", 0];
                 "phx_safeStartTextLayer" cutFadeOut 3;
-                if ((_this select 1) == "Throw" || {(_this select 1) == "Put"}) then {
-                    player addMagazine (_this select 5);
+                if (_weapon isEqualTo "Throw" || {_weapon isEqualTo "Put"}) then {
+                    player addMagazine _magazine;
                 } else {
-                    player setAmmo [primaryWeapon player, 1000000];
+                    private _ammo = player ammo _weapon;
+                    if (_ammo > 0) then {
+                        player setAmmo [_weapon, _ammo+1];
+                    } else {
+                        player addMagazine _magazine;
+                        player removeWeapon _weapon;
+                        player addWeapon _weapon;
+                    };
                 };
             }];
         };

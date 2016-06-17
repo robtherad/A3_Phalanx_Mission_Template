@@ -9,16 +9,14 @@ if(!f_cam_toggleTags || f_cam_mapMode == 2 ) exitWith{};
     _isPlayerGroup = false;
     {
         _distToCam = (call f_cam_GetCurrentCam) distance _x;
-        if(isPlayer _x) then {_isPlayerGroup = true};
-        if(_distToCam < 250) then {
+        private _isSpectator = _x getVariable ["phx_isUnitSpecator",false];
+        if( (isPlayer _x) && {!_isSpectator} ) then {_isPlayerGroup = true};
+        if( (_distToCam < 250) && {!_isSpectator} ) then {
             _drawUnits pushBack _x;
-            if (_distToCam > 200) then {
+        } else {
+            if ( ((leader _x) isEqualTo _x) && {!_isSpectator}) then {
                 _drawGroup = true;
             };
-        }
-        else
-        {
-            _drawGroup = true;
         };
     } foreach units _x;
     _color = switch (side _x) do {

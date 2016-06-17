@@ -11,6 +11,7 @@ _generateORBAT = {
     // Loop through the group, print out group ID, leader name and medics if present
     {
         if !((count units _x) isEqualTo 0) then {
+            waitUntil {_x getVariable ["phx_groupIDSet",false]};
             // Don't apply leading line breaks to first group.
             private _groupSize = _x getVariable ["phx_gps_groupSize",0];
             private _name = groupID _x;
@@ -35,7 +36,7 @@ _generateORBAT = {
             };
             
             // Highlight the player's group with a different color (based on the player's side)
-            private _highlightColor = "#FFFFFF";
+            private _highlightColor = "#2AA5A5";
             
             private _color = "#FFFFFF";
             if (_changeColor) then {
