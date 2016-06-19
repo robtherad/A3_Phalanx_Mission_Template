@@ -47,3 +47,11 @@ class misc {
     class disableCJIP{};
     class disableCollisions{};
 };
+class sector {
+    file = "f\sector";
+    class createSector{};
+    class pointsDisplay{};
+    class sectorInit{};
+    class titleTextSector{};
+    class watchSector{};
+};
