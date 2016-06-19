@@ -1,6 +1,6 @@
 [] spawn {
 
-waitUntil {!isNil PHX_diary};
+waitUntil {!isNil "PHX_diary"};
 
 private _settingsBrief ="
 <br/>

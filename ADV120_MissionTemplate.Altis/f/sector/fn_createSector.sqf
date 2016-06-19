@@ -58,6 +58,11 @@ phx_sector_endPoints = (phx_sector_quickestTime * 60) * _delay;
     _marker setMarkerType "hd_dot";
     _marker setMarkerText (triggerText _x + " - Neutral");
 
+    // Create flag
+    _flag = createVehicle ["Flag_White_F", (getPos _x), [], 0, "CAN_COLLIDE"];
+    _flag allowDamage false;
+    _x setVariable ["phx_sector_flagPole",_flag,true];
+    
     // Set sector status to neutral for later
     _x setVariable ["phx_sector_curOwner",3,true];
     _x setVariable ["phx_sector_lastOwner",3];

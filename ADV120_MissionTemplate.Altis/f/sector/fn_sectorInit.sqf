@@ -1,3 +1,5 @@
+#include "settings.sqf"
+
 if (isServer) then {
     call phx_fnc_createSector;
 };
