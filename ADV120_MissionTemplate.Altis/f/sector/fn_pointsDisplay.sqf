@@ -7,8 +7,7 @@ Runs on clients.
 if (!hasInterface) exitWith {};
 
 // Make sure the sector control script has been running long enough
-phx_show_captureUI = true;
-phx_show_timeUI = false;
+phx_show_timeUI = true;
 private _totalCapTime = ["phx_auto_sectorTime",25] call BIS_fnc_getParamValue;
 
 phx_auto_westPointsPublic = 0;
@@ -20,7 +19,7 @@ phx_auto_eastPointsPublic = 0;
     
     disableSerialization;
     
-    if (phx_show_captureUI || {phx_show_timeUI}) then {
+    if (phx_show_timeUI) then {
         // Figure out time left for both teams
         {       
             _x params ["_stringVar", "_pointsVar", "_teamVar"];
