@@ -2,7 +2,7 @@
 
 Simply click the link below to download the template. The master branch is always the most up to date, stable, version of the template. 
 
-### [Download latest template version - v5](https://github.com/robtherad/A3_Phalanx_Mission_Template/archive/master.zip)
+### [Download latest template version - v6](https://github.com/robtherad/A3_Phalanx_Mission_Template/archive/master.zip)
 
 ---
 
