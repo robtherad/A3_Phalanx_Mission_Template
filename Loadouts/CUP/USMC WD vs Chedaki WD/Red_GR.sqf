@@ -15,15 +15,15 @@ player addWeapon "CUP_arifle_AK107_GL";
 for "_i" from 1 to 4 do {player addItemToBackpack "CUP_1Rnd_SMOKE_GP25_M";};
 for "_i" from 1 to 4 do {player addItemToBackpack "CUP_IlumFlareWhite_GP25_M";};
 
-// Add Items
+// Add items
 if (phx_loadout_map isEqualTo 0) then {
-    player linkItem "ItemMap";
-    if (phx_loadout_gps isEqualTo 0) then {player linkItem "ItemGPS";};
-};
-player linkItem "ItemCompass";
-player linkItem "ItemWatch";
+    ["ItemMap"] call phx_fnc_loadout_addItem;
+    if (phx_loadout_gps isEqualTo 0) then {
+        ["ItemGPS"] call phx_fnc_loadout_addItem;
+    } else {player unlinkItem "ItemGPS";};
+} else {player unlinkItem "ItemMap";player unlinkItem "ItemGPS";};
 if (phx_loadout_radio isEqualTo 0) then {
-    player linkItem "ItemRadio";
-};
+    ["ItemRadio"] call phx_fnc_loadout_addItem;
+} else {player unlinkItem "ItemRadio";};
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.

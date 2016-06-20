@@ -22,6 +22,7 @@ class loadout {
     file = "f\loadout";
     class loadout_set{postInit = 1;};
     class loadout_notes{};
+    class loadout_addItem{};
 };
 class gpsmarkers {
     file = "f\gpsmarkers";
