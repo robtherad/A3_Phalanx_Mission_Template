@@ -10,7 +10,7 @@ _ai = [];
         if ( { private _spectator = _x getVariable ["phx_isUnitSpecator",false]; (isPlayer _x) && (!_spectator) } count (units _x) > 0 ) then {
             _players pushBack _x;
         } else {
-            if !(isPlayer _x) then {
+            if !( {isPlayer _x} count (units _x) > 0 ) then {
                 _ai pushBack _x;
             };
         };

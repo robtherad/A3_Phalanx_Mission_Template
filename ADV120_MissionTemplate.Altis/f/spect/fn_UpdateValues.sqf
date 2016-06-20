@@ -83,7 +83,7 @@ while {true} do
         _index = _x GetVariable ["f_spect_listBoxIndex",-1];
         if(typeName _x == "GROUP") then
         {
-            if(_index >= 0 && ({private _spectator = _x getVariable ["phx_isUnitSpecator",false]; !_isSpectator && {alive _x}} count units _x) > 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then
+            if(_index >= 0 && ({private _spectator = _x getVariable ["phx_isUnitSpecator",false]; !_spectator && {alive _x}} count units _x) > 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then
             {
                 // there is no lbSetText, so just punt it out of the list and fix it up there..
                 lbDelete [_listBox,_index];
