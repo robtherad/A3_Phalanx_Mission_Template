@@ -25,6 +25,24 @@ _fullmapWindow drawIcon ["\A3\ui_f\data\GUI\Rsc\RscDisplayMissionEditor\iconCame
 
 } foreach allunits;
 
+// Display sectors on spectator map
+if (!isNil "phx_sector_triggerArray") then {
+    {
+        private _owner = _x getVariable "phx_sector_lastOwner";
+        private _iconName = triggerText _x;
+        private _color = f_cam_gray_color;
+        switch (_owner) do {
+            case 0: { _color = f_cam_blufor_color; _iconName = format["%1 - BLUFOR",_iconName]; };
+            case 1: { _color = f_cam_opfor_color; _iconName = format["%1 - REDFOR",_iconName]; };
+            case 2: { _color = f_cam_gray_color; _iconName = format["%1 - CONTESTED",_iconName]; };
+            case 3: { _color = f_cam_gray_color; _iconName = format["%1 - Neutral",_iconName]; };
+            default { _color = f_cam_gray_color; _iconName = format["%1",_iconName]; };
+        };
+        _color set [3,1];
+        _fullmapWindow drawIcon ["\A3\ui_f\data\map\markers\military\flag_ca.paa",_color,getpos _x ,20,20,0,_iconName,2,0.04,"TahomaB"];
+    } forEach phx_sector_triggerArray;
+};
+
 f_cam_fired = f_cam_fired - [objNull];
 if(f_cam_tracerOn) then {
     {
