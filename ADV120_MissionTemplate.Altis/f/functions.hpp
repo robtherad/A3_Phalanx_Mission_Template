@@ -22,6 +22,7 @@ class loadout {
     file = "f\loadout";
     class loadout_set{postInit = 1;};
     class loadout_notes{};
+    class loadout_addItem{};
 };
 class gpsmarkers {
     file = "f\gpsmarkers";
@@ -46,4 +47,12 @@ class misc {
     class disableCSpect{};
     class disableCJIP{};
     class disableCollisions{};
+};
+class sector {
+    file = "f\sector";
+    class createSector{};
+    class pointsDisplay{};
+    class sectorInit{};
+    class titleTextSector{};
+    class watchSector{};
 };

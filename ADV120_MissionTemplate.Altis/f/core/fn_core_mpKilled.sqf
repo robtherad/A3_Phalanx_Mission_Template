@@ -14,10 +14,6 @@ if (!hasInterface) exitWith {};
 _unit = _this select 0;
 _killer = _this select 1;
 
-{
-   _unit unassignItem _x;
-} forEach (assignedItems _unit);
-
 showSubtitles false; //Apparently when you get a team kill it changes this variable?
 
 //Make sure variable 'phx_kills' isn't empty. If so, initialize.

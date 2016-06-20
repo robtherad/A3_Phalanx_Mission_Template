@@ -16,3 +16,6 @@ respawnOnStart = -1;
 respawnTemplates[] = {"f_spectator"};
 
 disableChannels[]={{0,true,true},{2,true,true},{4,true,true},{5,true,true},{6,true,true}};
+
+corpseManagerMode = 0;
+wreckManagerMode = 0;

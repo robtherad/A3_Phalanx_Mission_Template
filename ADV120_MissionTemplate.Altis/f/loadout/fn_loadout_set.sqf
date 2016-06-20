@@ -20,8 +20,6 @@ _loadout = switch (_loadout) do {
 
 // Remove Stuff
 removeAllWeapons player;
-removeAllItems player;
-removeAllAssignedItems player;
 removeUniform player;
 removeVest player;
 removeBackpack player;
