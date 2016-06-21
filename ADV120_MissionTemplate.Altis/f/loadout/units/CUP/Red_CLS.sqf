@@ -12,6 +12,7 @@ for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
 for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
 player addWeapon "CUP_arifle_AK107";
 for "_i" from 1 to 4 do {player addItemToVest "CUP_30Rnd_545x39_AK_M";};
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

@@ -13,6 +13,7 @@ for "_i" from 1 to 9 do {player addItemToBackpack "CUP_30Rnd_556x45_Stanag";};
 player addWeapon "CUP_arifle_M16A4_Base";
 player addItemToBackpack "CUP_M136_M";
 player addWeapon "CUP_launch_M136";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

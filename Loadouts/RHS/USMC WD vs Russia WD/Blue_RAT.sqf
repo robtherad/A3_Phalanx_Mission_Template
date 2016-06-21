@@ -13,6 +13,7 @@ for "_i" from 1 to 4 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stana
 player addWeapon "rhs_weap_m16a4_carryhandle";
 player addItemToBackpack "rhs_m136_hedp_mag";
 player addWeapon "rhs_weap_M136_hedp";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

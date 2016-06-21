@@ -11,6 +11,7 @@ for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 9 do {player addItemToVest "30Rnd_65x39_caseless_mag";};
 for "_i" from 1 to 4 do {player addItemToVest "30Rnd_65x39_caseless_mag_Tracer";};
 player addWeapon "arifle_MX_F";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

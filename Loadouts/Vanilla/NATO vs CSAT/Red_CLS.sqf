@@ -11,6 +11,7 @@ for "_i" from 1 to 4 do {player addItemToBackpack "30Rnd_65x39_caseless_green_ma
 for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
 for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
 player addWeapon "arifle_Katiba_F";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

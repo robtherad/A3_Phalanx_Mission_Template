@@ -12,6 +12,7 @@ for "_i" from 1 to 2 do {player addItemToBackpack "100Rnd_65x39_caseless_mag";};
 player addItemToVest "100Rnd_65x39_caseless_mag";
 player addWeapon "arifle_MX_SW_F";
 player addItemToVest "100Rnd_65x39_caseless_mag";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {
