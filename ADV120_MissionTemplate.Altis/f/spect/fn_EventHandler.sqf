@@ -335,7 +335,7 @@ case "KeyDown":
                 if !(f_cam_muteSpectators) then {
                     systemChat "You are now listening to LIVE PLAYER VOICE CHAT.";
                     
-                    player setVariable ["tf_unable_to_use_radio", true];
+                    player setVariable ["tf_unable_to_use_radio", true, true];
                     player setVariable ["tf_voiceVolume", 0.0, true];
                     
                     // Add PFH that updates player position since TFAR works off that.
@@ -412,7 +412,8 @@ case "KeyDown":
                     }, 0, []] call CBA_fnc_addPerFrameHandler;
                 } else {
                     systemChat "You are now listening to SPECTATOR VOICE CHAT.";
-                    player setVariable ["tf_globalVolume", 1.0, true];
+                    player setVariable ["tf_unable_to_use_radio", false, true];
+                    player setVariable ["tf_voiceVolume", 1.0, true];
                 };
             } else {
                 systemChat format["Please wait %1 second(s) to change voice modes again.",(diag_tickTime-f_cam_nextVoiceChange)];
