@@ -1,15 +1,12 @@
 // F3 - Simple Wounding System -- Modified by robtherad
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
-_unit = _this;
 
 // handles the woundeffect
-[_unit] spawn {
-    params ["_unit"];
-
-    while {alive _unit} do {
-        _downed = _unit getVariable ["phx_revive_down",false];
-        _bleeding = _unit getVariable ["phx_revive_bleeding",false];
+[] spawn {
+    while {alive player && {isNil "phx_isSpectator"}} do {
+        _downed = player getVariable ["phx_revive_down",false];
+        _bleeding = player getVariable ["phx_revive_bleeding",false];
         if (_downed || _bleeding) then {
             [] call phx_fnc_WoundedEffect;
         };
@@ -18,25 +15,39 @@ _unit = _this;
 };
 
 // ticker for life, calculates death and blood.
-while {alive _unit} do {
-    _downed = _unit getVariable ["phx_revive_down",false];
-    _bleeding = _unit getVariable ["phx_revive_bleeding",false];
-    _blood = _unit getVariable ["phx_revive_blood",100];
-    if (_bleeding && damage _unit < 0.26) then {
-        // stops units from not being able to first aid.
-        _unit setdamage 0.26;
+while {alive player && {isNil "phx_isSpectator"}} do {
+    // Fetch variables
+    _downed = player getVariable ["phx_revive_down",false];
+    _bleeding = player getVariable ["phx_revive_bleeding",false];
+    _blood = player getVariable ["phx_revive_blood",100];
+    _bleedRate = 0.833;
+    if !(player getVariable ["phx_revive_bleedFast",true]) then {
+        _bleedRate = 0.208;
     };
+    
     if (_downed || _bleeding) then {
-        // blood loss
-        _unit setVariable ["phx_revive_blood",_blood - 0.6 max 0];
-        if (damage _unit < 0.251) then { _unit setDamage 0.251};
-        if (getBleedingRemaining _unit <= 0) then {        _unit setBleedingRemaining 10;};
+        // Blood Loss
+        player setVariable ["phx_revive_blood",_blood - _bleedRate max 0];
+        if (damage player < 0.26) then {player setDamage 0.26;}; // Make sure player can stop his own bleeding with a FAK
+        if (getBleedingRemaining player <= 0) then {player setBleedingRemaining 10;}; // Make sure blood drips out of player
+        
     } else {
-        // blood regens.
-        _unit setVariable ["phx_revive_blood",_blood + 0.6 min 100];
+        // Blood regen
+        player setVariable ["phx_revive_blood",_blood + 0.1 min 100];
     };
-    if (_blood <= 0) then {
-        _unit setdamage 1;
+    
+    // Display warning if blood level is getting low
+    if (_blood <= 10 && {_bleeding} && {!(player getVariable ["phx_revive_bloodLossWarning",false])} ) then {
+        titleText ["You are feeling weak... Maybe you should stop your bleeding.", "PLAIN DOWN"];
+        player setVariable ["phx_revive_bloodLossWarning",true];
     };
+    
+    // Reset blood loss warning
+    if (!_bleeding && {_blood > 10} && {player getVariable ["phx_revive_bloodLossWarning",false]} ) then {
+        
+    };
+    
+    // Player bled out, RIP
+    if (_blood <= 0) then {player setdamage 1;};
     sleep 1;
 };

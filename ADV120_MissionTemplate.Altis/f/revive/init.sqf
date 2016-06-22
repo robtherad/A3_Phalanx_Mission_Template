@@ -3,63 +3,48 @@
 // ====================================================================================
 if (!hasInterface) ExitWith {};
 
+waitUntil {!isNull player};
+
 // add briefing
 if (isNil "phx_revive_briefing") then {phx_revive_briefing = true;};
 if (isNil "phx_revive_extraFAK") then {phx_revive_extraFAK = 0};
 
 if (phx_revive_briefing) then {
     [] spawn {
-        waitUntil {!isNull player};
         waitUntil {!isNil "PHX_Diary"};
-        _bstr = format ["<br/>OVERVIEW<br/>
-When a player is wounded to the point of being 'incapacitated' they become a casualty. Casualties are prone and unable to move.
+        _bstr = format ["OVERVIEW<br/>
+    When a player is wounded to the point of being 'incapacitated' they become a casualty. Casualties are prone and unable to move or speak. Certain wounds such as headshots have a high chance of instantly killing a player instead of causing them to become a casualty.
 <br/><br/>
 TREATING CASUALTIES<br/>
-Players equipped with at least 1 x FAK can treat a casualty by moving next to them and selecting the relevant action menu option. Treatment uses up 1 x FAK.
-<br/><br/>
-DRAGGING CASUALTIES<br/>
-Players can drag a casualty by moving next to them and selecting the relevant action menu option. Whilst dragging, the player has an action menu option for releasing the casualty.
+    Players can use a First Aid Kit on a casualty to slow their rate of blood loss, consuming the First Aid Kit in the process. Players equipped with a Medikit can revive a casualty by moving close to the casualty and using the revive action.
 <br/><br/>
 BLEEDING OUT<br/>
-An incapacitated player only has a few minutes before her/his wounds become fatal and they die.
+    A casualty only has a few minutes before their wounds become fatal. Without any intervention, a casualty can survive for up to 2 minutes. If a player uses a First Aid Kit on a casualty, the casualty's rate of blood loss will slow, allowing the casualty to survive for up to 8 minutes. A casualty's ability to survive for longer periods of time while bleeding out depends on how long, and how recently, they were previously wounded. A fresh casualty should survive for the full duration, but a player who becomes a casualty multiple times within a short time period will have a shorter window for getting treatment each time they go down.
+<br/><br/>
+DRAGGING CASUALTIES<br/>
+    Players can drag a casualty by moving next to them and selecting the relevant action menu option. Whilst dragging, the player has an action menu option for releasing the casualty.
 <br/><br/>
 CREDITS<br/>
-Based on the F3 framework's Simple Wounding System. Modified for Phalanx by robtherad."];
+    Based on the F3 Mission Framework's Simple Wounding System. Modified for Phalanx by robtherad."];
         player createDiaryRecord ["PHX_Diary", ["Revive Info",_bstr]];
     };
 };
 
-// lets wait a bit.
-sleep 5;
-
-// default variables.
+// Initialize variables
 player setVariable ["phx_revive_down",false];
 player setVariable ["phx_revive_bleeding",false];
+player setVariable ["phx_revive_bleedFast",true];
 player setVariable ["phx_revive_blood",100]; // other player dont need know this
 player setVariable ["phx_revive_dragging",nil];
 
 // Lifeticker, manages bleeding and blood values.
-player spawn phx_fnc_LifeTick;
-
+[] spawn phx_fnc_LifeTick;
 
 // HandleHeal needs to be on the player you heal.
 {
     _x setVariable ["phx_revive_down",false];
+    _x setVariable ["phx_revive_bleedFast",true];
     _x setVariable ["phx_revive_bleeding",false];
-    _x addEventHandler ["HandleHeal",{_this call phx_fnc_OnHeal}];
-    
-    // Drag Action.
-    _addIndex = _x addAction [
-        format ["<t color='#7f0000'>Drag %1</t>", 
-        name _x],
-        {[_this, "phx_fnc_OnDrag", [_this select 0,_this select 1],false] spawn BIS_fnc_MP;}, 
-        nil, 
-        6, 
-        false, 
-        true, 
-        "", 
-        "_var = _this getVariable ['phx_revive_dragging',nil];_target distance _this < 2 && isNil '_var' && _target getVariable['phx_revive_down',false] && !(_this getVariable ['phx_revive_down',false])"
-    ];
 } forEach playableUnits;
 
 // defines the PP effects for the downed effect.

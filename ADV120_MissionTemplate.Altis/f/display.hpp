@@ -1,13 +1,3 @@
-showHUD[] = {
-	true,	// Scripted HUD (same as showHUD command)
-	true,	// Vehicle + soldier info
-	true,	// Vehicle radar [HIDDEN]
-	true,	// Vehicle compass [HIDDEN]
-	true,	// Tank direction indicator
-	true,	// Commanding menu
-	false,	// Group Bar
-	true	// HUD Weapon Cursors
-};
 class RscTitles {
     class timeleftStructText {
         idd = 9913;

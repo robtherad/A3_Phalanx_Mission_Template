@@ -13,7 +13,7 @@ if (hasInterface) then {phx_playerBoundsCheck_PFH = [phx_fnc_core_playerBoundsCh
 [] execVM "f\briefing\f_orbatNotes.sqf";
 
 // Call the safeStart
-[] execVM "f\safeStart\f_safeStart.sqf";
+// [] execVM "f\safeStart\f_safeStart.sqf";
 
 // Call PHX Template
 [] execVM "f\phxInit.sqf";

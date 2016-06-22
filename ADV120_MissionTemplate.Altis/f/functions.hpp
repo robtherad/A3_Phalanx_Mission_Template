@@ -65,7 +65,8 @@ class revive {
     class OnDrag{};
     class LifeTick {};
     class OnDeath {};
-    class OnHeal {};
     class OnDamage{};
     class SetBleeding{};
+    class OnRevive{};
+    class OnSlowBleeding{};
 };

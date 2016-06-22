@@ -6,8 +6,8 @@ params ["_veh", "_caller", "_actionID"];
 
 {
     if (_x getVariable ["phx_revive_down",false]) then {
-        _x action ["eject",_veh];
-        sleep 0.2;
+        moveOut _x;
+        waitUntil {isNull objectParent _x};
         _x switchmove "acts_InjuredLookingRifle02";
     };
 } forEach crew _veh;
