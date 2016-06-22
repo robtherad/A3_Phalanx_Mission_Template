@@ -12,6 +12,7 @@ for "_i" from 1 to 5 do {player addItemToVest "30Rnd_65x39_caseless_green_mag_Tr
 for "_i" from 1 to 3 do {player addItemToBackpack "150Rnd_93x64_Mag";};
 player addWeapon "arifle_Katiba_F";
 for "_i" from 1 to 5 do {player addItemToVest "30Rnd_65x39_caseless_green";};
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

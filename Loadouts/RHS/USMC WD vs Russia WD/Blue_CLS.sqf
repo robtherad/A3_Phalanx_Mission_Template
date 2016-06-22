@@ -11,6 +11,7 @@ for "_i" from 1 to 4 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stana
 for "_i" from 1 to 1 do {player addItemToBackpack "Medikit";};
 for "_i" from 1 to 10 do {player addItemToBackpack "FirstAidKit";};
 player addWeapon "rhs_weap_m16a4_carryhandle";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

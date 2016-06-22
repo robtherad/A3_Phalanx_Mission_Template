@@ -10,6 +10,7 @@ for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 3 do {player addItemToBackpack "CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M";};
 player addWeapon "CUP_lmg_PKM";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

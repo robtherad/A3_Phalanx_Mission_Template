@@ -12,6 +12,7 @@ player addItemToVest "150Rnd_762x54_Box";
 for "_i" from 1 to 3 do {player addItemToBackpack "150Rnd_762x54_Box";};
 player addWeapon "LMG_Zafir_F";
 player addItemToVest "150Rnd_762x54_Box";
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {

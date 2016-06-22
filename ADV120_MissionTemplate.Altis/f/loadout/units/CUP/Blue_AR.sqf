@@ -11,6 +11,7 @@ for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 3 do {player addItemToBackpack "CUP_200Rnd_TE4_Red_Tracer_556x45_M249";};
 player addWeapon "CUP_lmg_M249_E2";
 for "_i" from 1 to 1 do {player addItemToVest "CUP_200Rnd_TE4_Red_Tracer_556x45_M249";};
+player removeWeapon "Binocular";
 
 // Add items
 if (phx_loadout_map isEqualTo 0) then {
