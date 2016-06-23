@@ -12,17 +12,9 @@ for "_i" from 1 to 5 do {player addItemToVest "30Rnd_556x45_Stanag_Tracer_Red";}
 for "_i" from 1 to 3 do {player addItemToBackpack "CUP_100Rnd_TE4_LRT4_Red_Tracer_762x51_Belt_M";};
 player addWeapon "CUP_arifle_M16A4_Base";
 for "_i" from 1 to 4 do {player addItemToVest "CUP_30Rnd_556x45_Stanag";};
-player addWeapon "Binocular";
 
 // Add items
-if (phx_loadout_map isEqualTo 0) then {
-    ["ItemMap"] call phx_fnc_loadout_addItem;
-    if (phx_loadout_gps isEqualTo 0) then {
-        ["ItemGPS"] call phx_fnc_loadout_addItem;
-    } else {player unlinkItem "ItemGPS";};
-} else {player unlinkItem "ItemMap";player unlinkItem "ItemGPS";};
-if (phx_loadout_radio isEqualTo 0) then {
-    ["ItemRadio"] call phx_fnc_loadout_addItem;
-} else {player unlinkItem "ItemRadio";};
+phx_loadout_addBinocular = "Binocular";
+call phx_fnc_loadout_handleItems;
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.
