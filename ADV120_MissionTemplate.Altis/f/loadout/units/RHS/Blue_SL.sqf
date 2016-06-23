@@ -1,3 +1,6 @@
+// Set unit level -- 0=Default, 1=TL, 2=SL+
+phx_loadout_unitLevel = 2;
+
 // Add clothing
 player forceAddUniform "rhs_uniform_FROG01_wd";
 player addVest "rhsusf_spc_rifleman";
@@ -14,17 +17,9 @@ for "_i" from 1 to 4 do {player addItemToVest "1Rnd_Smoke_Grenade_shell";};
 for "_i" from 1 to 4 do {player addItemToVest "UGL_FlareWhite_F";};
 player addWeapon "rhs_weap_m16a4_carryhandle_M203";
 for "_i" from 1 to 6 do {player addItemToBackpack "rhs_mag_30Rnd_556x45_M855A1_Stanag";};
-player addWeapon "Binocular";
 
 // Add items
-if !(phx_loadout_map isEqualTo 3) then {
-    ["ItemMap"] call phx_fnc_loadout_addItem;
-    if !(phx_loadout_gps isEqualTo 3) then {
-        ["ItemGPS"] call phx_fnc_loadout_addItem;
-    } else {player unlinkItem "ItemGPS";};
-} else {player unlinkItem "ItemMap";player unlinkItem "ItemGPS";};
-if !(phx_loadout_radio isEqualTo 3) then {
-    ["ItemRadio"] call phx_fnc_loadout_addItem;
-} else {player unlinkItem "ItemRadio";};
+phx_loadout_addBinocular = "Binocular";
+call phx_fnc_loadout_handleItems;
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.

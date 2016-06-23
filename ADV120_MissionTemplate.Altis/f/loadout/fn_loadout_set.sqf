@@ -1,20 +1,30 @@
 if (!hasInterface) exitWith {};
 
+// Ensure script is run only once.
+if (!isNil "phx_loadout_assigned") exitWith {};
+phx_loadout_assigned = false;
+
 private _char = typeOf player;
 //Get radio and map parameters from the slot screen. If the parameters don't exist then they default to giving everybody a map and radio.
 phx_loadout_radio = ["phx_loadout_radio",0] call BIS_fnc_getParamValue;
 phx_loadout_map = ["phx_loadout_map",0] call BIS_fnc_getParamValue;
-phx_loadout_gps = ["phx_loadout_gps",1] call BIS_fnc_getParamValue;
+phx_loadout_gps = ["phx_loadout_gps",0] call BIS_fnc_getParamValue;
+phx_loadout_watch = ["phx_loadout_watch",0] call BIS_fnc_getParamValue;
+phx_loadout_compass = ["phx_loadout_compass",0] call BIS_fnc_getParamValue;
 
-// Ensure script is run only once.
-if (!isNil "loadout_assigned") exitWith {};
-loadout_assigned = false;
+/*
+    Acceptable Values for unit level:
+    0 - Regular unit
+    1 - Team Leader
+    2 - Squad Leader or Higher
+    
+    Set the default unit level          */
+phx_loadout_unitLevel = 0;
 
 private _loadout = ["phx_loadout_modSet",1] call BIS_fnc_getParamValue;
 _loadout = switch (_loadout) do {
     case 0: {"Vanilla"}; // Vanilla A3
     case 1: {"RHS"}; // RHS
-    case 2: {"CUP"}; // CUP
     default {"Vanilla"};
 };
 
