@@ -1,6 +1,7 @@
 // F3 - Simple Wounding System -- Modified by robtherad
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
+if (!hasInterface) exitWith {};
 
 params ["_unit", "_bool"];
 
@@ -55,8 +56,13 @@ if (_bool && {alive _unit}) then {
     };
     
     // Prevent AI from shooting downed players
-    _unit setVariable ["phx_revive_down",true];
     _unit setCaptive 1;
+    
+    // Update downed variable
+    _unit setVariable ["phx_revive_down",true];
+    if (local _unit && {_unit isEqualTo player}) then {
+        missionNamespace setVariable ["phx_revive_down",true];
+    };
     
     if (local _unit && {isPlayer _unit}) then {
         // If the unit is local and a player, remove their magazines (otherwise they can throw grenades while down)
@@ -79,7 +85,7 @@ if (_bool && {alive _unit}) then {
         
         // Disable the action menu
         showHUD false;
-        _unit setVariable ["phx_revive_hiddenHud",true];
+        missionNamespace setVariable ["phx_revive_hiddenHud",true];
     };
 
     if !(isNull objectParent _unit) then {
@@ -122,7 +128,12 @@ if (_bool && {alive _unit}) then {
     // Unit is already not down, no need to run again
     if (!(_unit getVariable ["phx_revive_down",false])) exitWith {};
 
+    // Update downed variable
     _unit setVariable ["phx_revive_down",false];
+    if (local _unit && {_unit isEqualTo player}) then {
+        missionNamespace setVariable ["phx_revive_down",false];
+    };
+    
     // If the unit is not in a vehicle, play pretty animation otherwise just reset to thier default animation
     if (isNull objectParent _unit) then {
         _unit switchmove "AinjPpneMstpSnonWnonDnon_rolltofront";
@@ -152,13 +163,17 @@ if (_bool && {alive _unit}) then {
             _unit addMagazine _x;
         } forEach _mags;
         
+        // Reset the respawn variable
+        player setVariable ["phx_revive_respawnRevive",true];
+        missionNamespace setVariable ["phx_revive_respawnRevive",true];
+        
         // Re-enable TFAR speech
         player setVariable ["tf_unable_to_use_radio", false, true];
         player setVariable ["tf_voiceVolume", 1.0, true];
         
         // Re-enable HUD
         showHUD [true, true, true, true, true, true, false, true];
-        _unit setVariable ["phx_revive_hiddenHud",false];
+        missionNamespace setVariable ["phx_revive_hiddenHud",false];
         
         // Reset the PP
         phx_revive_UncToggle = true;

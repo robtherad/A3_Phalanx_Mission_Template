@@ -1,36 +1,52 @@
 // F3 - Simple Wounding System -- Modified by robtherad
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
+if (!hasInterface) exitWith {};
+
 params ["_unit", "_selection", "_damage"];
 
-private _totalDamage = damage _unit + _damage;
+if !(_unit isEqualTo player) exitWith {_damage};
 
+private _totalDamage = damage _unit + _damage;
 if (_totalDamage >= 1 && {!(_unit getVariable ["phx_revive_downed",false])}) then {
     // Determine if player should be instantly killed or not based on where he got shot
     private _instantKill = false;
     private _randomNumber = random 100;
-    switch (_selection) do {
-        case "head":    {if (_randomNumber > 10) then {_instantKill = true; diag_log format ["phx_revive_OnDamage: Headshot (>10) - Number: %1",_randomNumber];};}; // 90% chance of instant death
-        case "arms":    {}; // 0% chance of instant death
-        case "legs":    {}; // 0% chance of instant death
-        case "body":    {if (_randomNumber > 95) then {_instantKill = true;}; diag_log format ["phx_revive_OnDamage: Body Shot (>95) - Number: %1",_randomNumber];}; // 5% chance of instant death
-        case "spine1":  {}; // 0% chance of instant death
-        case "spine2":  {}; // 0% chance of instant death
-        case "spine3":  {}; // 0% chance of instant death
-    };
-    
-    if (!_instantKill) then {
-        if (!(_unit getVariable ["phx_revive_down",false])) then {
-            [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
-
-            // Make sure the unit doesn't die from this hit or any following hits for the next second or so
-            _damage = 0;
-            _unit spawn {
-                _this allowDamage false;
-                sleep 1;
-                _this allowDamage true
-            };
+    if (_damage > 0.2) then {
+        diag_log format["phx_revive_OnDamage: _damage: %1 -- _selection: %2",_damage,_selection];
+        switch (_selection) do {
+            case "head":    {if (_randomNumber > 10) then {_instantKill = true; diag_log format ["phx_revive_OnDamage: Headshot (>10) - Number: %1",_randomNumber];};}; // 90% chance of instant death
+            case "arms":    {}; // 0% chance of instant death
+            case "legs":    {}; // 0% chance of instant death
+            case "body":    {if (_randomNumber > 95) then {_instantKill = true;}; diag_log format ["phx_revive_OnDamage: Body Shot (>95) - Number: %1",_randomNumber];}; // 5% chance of instant death
+            case "spine1":  {}; // 0% chance of instant death
+            case "spine2":  {}; // 0% chance of instant death
+            case "spine3":  {}; // 0% chance of instant death
         };
+    };
+    diag_log format ["phx_revive_OnDamage: _instantKill: %1",_instantKill];
+    if (!_instantKill) then {
+        diag_log format ["phx_revive_OnDamage: FALSE - phx_revive_down: %1",(_unit getVariable ["phx_revive_down",false])];
+        if (!(_unit getVariable ["phx_revive_down",false])) then {
+                missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout _unit]; // So we can get the linkeditems back
+                [_unit, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
+                [_unit] spawn {
+                    params ["_unit"];
+                    diag_log format ["phx_revive_OnDamage: _unit: %1",_unit];
+                    waitUntil {isNull _unit}; // Wait for body to get deleted after player respawns
+                    [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
+                };
+        } else {
+            diag_log format ["phx_revive_OnDamage: FALSE - Player already down, RIP."];
+            // Player's already reviveable, shouldn't be reviveable again
+            _unit setVariable ["phx_revive_respawnRevive",false];
+            missionNamespace setVariable ["phx_revive_respawnRevive",false];
+        };
+    } else {
+        diag_log format ["phx_revive_OnDamage: TRUE - Unit is going to die."];
+        // Player got instantly killed, shouldn't be reviveable
+        _unit setVariable ["phx_revive_respawnRevive",false];
+        missionNamespace setVariable ["phx_revive_respawnRevive",false];
     };
 };
 

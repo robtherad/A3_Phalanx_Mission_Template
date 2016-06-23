@@ -1,7 +1,8 @@
 // F3 - Simple Wounding System -- Modified by robtherad
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
-// Called
+if (!hasInterface) exitWith {};
+
 params ["_downedUnit", "_healingUnit"];
 
 if !("FirstAidKit" in (items _healingUnit)) exitWith {};

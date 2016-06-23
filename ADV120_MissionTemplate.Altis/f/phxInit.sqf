@@ -72,7 +72,7 @@ if (hasInterface) then {
             params ["_args", "_handle"];
             _args params ["_showHUDArray"];
             
-            if (!(shownHUD isEqualTo _showHUDArray) && {!(player getVariable ["phx_revive_hiddenHUD",false])}) then {
+            if (!(shownHUD isEqualTo _showHUDArray) && {!(missionNamespace getVariable ["phx_revive_hiddenHUD",false])}) then {
                 showHUD _showHUDArray;
             };
             

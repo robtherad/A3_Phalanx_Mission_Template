@@ -2,6 +2,8 @@
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 // Triggered by an addAction on a vehicle with downed players. Ejects all downed players from that vehicle.
+if (!hasInterface) exitWith {};
+
 params ["_veh", "_caller", "_actionID"];
 
 {

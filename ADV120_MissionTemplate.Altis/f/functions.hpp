@@ -22,7 +22,7 @@ class loadout {
     file = "f\loadout";
     class loadout_set{postInit = 1;};
     class loadout_notes{};
-    class loadout_handleItems{};
+    class loadout_addItem{};
 };
 class gpsmarkers {
     file = "f\gpsmarkers";
@@ -58,7 +58,8 @@ class sector {
 };
 class revive {
     file = "f\revive";
-    class SetDowned {};
+    class AddLinkedItems{};
+    class SetDowned{};
     class WoundedEffect{};
     class HasWounded{};
     class EjectWounded{};

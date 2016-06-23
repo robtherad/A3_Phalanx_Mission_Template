@@ -1,6 +1,8 @@
 // F3 - Simple Wounding System -- Modified by robtherad
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
+if (!hasInterface) exitWith {};
+
 params ["_downedUnit", "_reviverUnit"];
 
 if (!local _reviverUnit) exitWith {};

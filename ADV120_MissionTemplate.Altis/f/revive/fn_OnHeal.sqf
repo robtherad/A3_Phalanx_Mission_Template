@@ -2,6 +2,7 @@
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 // runs on the healer.
+if (!hasInterface) exitWith {};
 
 _ret = true; // Let the engine take care of the healing
 _this spawn {

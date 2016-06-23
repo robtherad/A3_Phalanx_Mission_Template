@@ -32,15 +32,19 @@ CREDITS<br/>
 
 // Initialize variables
 player setVariable ["phx_revive_down",false];
+phx_revive_down = false;
 player setVariable ["phx_revive_bleeding",false];
+phx_revive_bleeding = false;
 player setVariable ["phx_revive_bleedFast",true];
-player setVariable ["phx_revive_blood",100]; // other player dont need know this
+phx_revive_bleedFast = true;
+phx_revive_blood = 100;
 player setVariable ["phx_revive_dragging",nil];
+player setVariable ["phx_revive_respawnRevive",true];
+phx_revive_respawnRevive = true;
 
 // Lifeticker, manages bleeding and blood values.
 [] spawn phx_fnc_LifeTick;
 
-// HandleHeal needs to be on the player you heal.
 {
     _x setVariable ["phx_revive_down",false];
     _x setVariable ["phx_revive_bleedFast",true];
@@ -55,5 +59,4 @@ phx_revive_UncToggle = false;
 phx_revive_damageValue = 1.1;
 
 // Eventhandlers for the player.
-player addEventHandler ["killed", {_this call phx_fnc_OnDeath}];
 player addEventHandler ["HandleDamage",{_this call phx_fnc_OnDamage}];

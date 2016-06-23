@@ -2,6 +2,8 @@
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 // I don't know how this works but it does ;)
+if (!hasInterface) exitWith {};
+
 _damage = phx_revive_damageValue;
 if (!phx_revive_UncToggle) then {
     phx_revive_UncCC ppEffectAdjust [1,1,0,[0.17, 0.0008, 0.0008, 0.001 max (1 min ((0.05/(_damage-0.8))-0.25))],[0.17, 0.0008, 0.0008, 1],[1, 1, 1, 0]];
