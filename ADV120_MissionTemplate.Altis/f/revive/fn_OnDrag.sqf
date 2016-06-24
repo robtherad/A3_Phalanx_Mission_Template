@@ -13,9 +13,13 @@ if (_dragger isEqualTo player) then {
 
 // the dragger gets a release option.
 if (local _dragger) then {
-    _dragger addAction [
+    private _dragIndex = _dragger addAction [
         format["<t color='#FF4040'>Release</t> %1",name _unit],
-        {(_this select 1) setVariable ["phx_revive_dragging",nil];(_this select 1) removeAction (_this select 2);}, 
+        {
+            (_this select 1) removeAction (_this select 2);
+            (_this select 1) setVariable ["phx_revive_dragIndex",-1];
+            (_this select 1) setVariable ["phx_revive_dragging",nil,true];
+        }, 
         nil, 
         6, 
         false, 
@@ -23,7 +27,8 @@ if (local _dragger) then {
         "", 
         "true"
     ];
-
+    _unit setVariable ["phx_revive_dragIndex",_dragIndex];
+    
     switch (currentWeapon _dragger) do {
         case (primaryWeapon _dragger): {
             _dragger switchMove "acinpknlmstpsraswrfldnon";
@@ -64,16 +69,36 @@ if (local _unit) then {
         // Remove PFH - No need to keep checking
         [_handle] call CBA_fnc_removePerFrameHandler;
     
-        // Release unit
-        _dragger setVariable ["phx_revive_dragging",nil,true];
-        detach _draggedUnit;
-        _newPos = _dragger modelToWorld [0,2,0];
-        _draggedUnit setPos _newPos;
+        // Check to see if action was removed
+        private _dragIndex = (_unit getVariable ["phx_revive_dragIndex",_dragIndex])
+        if (_dragIndex > -1) then {
+            _unit removeAction _dragIndex;
+            _unit setVariable ["phx_revive_dragIndex",-1];
+            _dragger setVariable ["phx_revive_dragging",nil,true];
+        };
+    
+        if (isNull objectParent _dragger) then {
+            // Dragger isn't in vehicle
+            
+            // Release unit
+            detach _draggedUnit;
+            _newPos = _dragger modelToWorld [0,2,0];
+            _draggedUnit setPos _newPos;
 
-        // If dragger didn't go down then play release animation on unit
-        if (!(_dragger getVariable ["phx_revive_down",false])) then {
-            _draggedUnit switchMove "AinjPpneMstpSnonWrflDb_release";
-            diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","draggedRelease",_draggedUnit];
+            // If dragger didn't go down then play release animation on unit
+            if (!(_dragger getVariable ["phx_revive_down",false])) then {
+                _draggedUnit switchMove "AinjPpneMstpSnonWrflDb_release";
+                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","draggedRelease",_draggedUnit];
+            };
+        } else {
+            // Dragger is in vehicle
+            detach _draggedUnit;
+            
+            // If dragger didn't go down then play release animation on unit
+            if (!(_dragger getVariable ["phx_revive_down",false])) then {
+                _draggedUnit switchMove "AinjPpneMstpSnonWrflDb_release";
+                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","draggedRelease",_draggedUnit];
+            };
         };
         
         // Wait 0.1 seconds for the releasing animation to finish
