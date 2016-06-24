@@ -53,7 +53,7 @@ removeGoggles player;
      case "O_HeavyGunner_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MG.sqf",_loadout]};
      case "O_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AG.sqf",_loadout]};
      case "O_Soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_RAT.sqf",_loadout]};
-     case "O_Soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AM.sqf",_loadout]};
+     case "O_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AM.sqf",_loadout]};
      case "O_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]};
      //Blue - NATO/WEST - BLU_F
      case "B_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_PL.sqf",_loadout]};
@@ -68,7 +68,7 @@ removeGoggles player;
      case "B_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AG.sqf",_loadout]};
      case "B_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]};
      case "B_soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]};
-     case "B_Soldier_unarmed_f": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
+     case "B_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
      case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
      // Virtual Spectator Slots
      case "VirtualMan_F": {
