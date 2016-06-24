@@ -78,15 +78,15 @@ if ((missionNamespace getVariable ["phx_loadout_addNVG",false]) isEqualType "") 
     private _hasNVG = false;
     {
         if (_x in (assignedItems player)) then {
-            if (_x isEqualTo phx_loadout_addBinocular) then {
+            if (_x isEqualTo phx_loadout_addNVG) then {
                 _hasNVG = true;
             } else {
-                player removeWeapon _x;
+                player unlinkItem _x;
             };
         };
-    } forEach phx_loadout_binocularArray;
+    } forEach phx_loadout_addNVG;
     if !(_hasNVG) then {
-        player addWeapon phx_loadout_addBinocular;
+        player linkItem phx_loadout_addNVG;
     };
 } else {
     {
