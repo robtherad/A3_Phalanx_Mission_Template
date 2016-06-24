@@ -8,7 +8,10 @@ params ["_unit", "_selection", "_damage"];
 if !(_unit isEqualTo player) exitWith {_damage};
 
 private _totalDamage = damage _unit + _damage;
-if (_totalDamage >= 1 && {!(_unit getVariable ["phx_revive_downed",false])}) then {
+if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["phx_revive_down",false])} && {diag_frameNo > missionNamespace getVariable ["phx_revive_lastDamageFrameNo",0]}) then {
+    // Set the frame number of the last significant damage that should have killed the player into a variable. This prevents multiple _instantKill dice rolls from happening from the same damage source, as long as all the damage is applied in one frame.
+    missionNamespace setVariable ["phx_revive_lastDamageFrameNo",diag_frameNo];
+    
     // Determine if player should be instantly killed or not based on where he got shot
     private _instantKill = false;
     private _randomNumber = random 100;
@@ -26,31 +29,44 @@ if (_totalDamage >= 1 && {!(_unit getVariable ["phx_revive_downed",false])}) the
     };
     diag_log format ["phx_revive_OnDamage: _instantKill: %1",_instantKill];
     if (!_instantKill) then {
-        diag_log format ["phx_revive_OnDamage: FALSE - phx_revive_down: %1",(_unit getVariable ["phx_revive_down",false])];
-        if (!(_unit getVariable ["phx_revive_down",false])) then {
-                missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout _unit]; // So we can get the linkeditems back
-                [_unit, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
+        // Player wasn't instantly killed
+        if (!(missionNamespace getVariable ["phx_revive_down",false])) then {
+            // Player isn't down
+            if !(isNull objectParent _unit) then {
+                // Player is in a vehicle, skip the ragdoll part and just set them as downed
+                _damage = 0;
+                [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
+                
+                // Stop player from dying from followup shots for a short period
                 [_unit] spawn {
                     params ["_unit"];
-                    diag_log format ["phx_revive_OnDamage: _unit: %1",_unit];
+                    _unit allowDamage false;
+                    sleep 1;
+                    _unit allowDamage true;
+                };
+            } else {
+                // Player is not in a vehicle, apply full damage and add a function to 
+                [_unit] spawn {
+                    params ["_unit"];
                     waitUntil {isNull _unit}; // Wait for body to get deleted after player respawns
                     [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
                 };
+            };
         } else {
-            diag_log format ["phx_revive_OnDamage: FALSE - Player already down, RIP."];
-            // Player's already reviveable, shouldn't be reviveable again
+            // Player's already down, shouldn't be reviveable again
             _unit setVariable ["phx_revive_respawnRevive",false];
             missionNamespace setVariable ["phx_revive_respawnRevive",false];
+            diag_log "OnDamage: respawnRevive:false --- Already reviveable, go into death mode";
         };
     } else {
-        diag_log format ["phx_revive_OnDamage: TRUE - Unit is going to die."];
         // Player got instantly killed, shouldn't be reviveable
         _unit setVariable ["phx_revive_respawnRevive",false];
         missionNamespace setVariable ["phx_revive_respawnRevive",false];
+        diag_log "OnDamage: respawnRevive:false --- Player got instant killed";
     };
 };
 
-if (isBleeding _unit && {_unit getVariable ["phx_revive_bleeding",false]}) then {
+if (isBleeding _unit && {!(missionNamespace getVariable ["phx_revive_bleeding",false])}) then {
     [_unit, true, true] remoteExec ["phx_fnc_SetBleeding", 0];
 };
 _damage

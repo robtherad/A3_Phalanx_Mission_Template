@@ -7,7 +7,9 @@ params ["_unit", "_bool"];
 
 // ====================================================================================
 if (_bool && {alive _unit}) then {
-    /// Check if they already down, don't down them again.
+    // Put the unit down
+    
+    // Check if they already down, don't down them again.
     if (_unit getVariable ["phx_revive_down",false]) exitWith {};
     
     // Reset downed player's damage
@@ -24,7 +26,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
         ];
         _unit setVariable ["phx_revive_bleedIndex",_bleedIndex];
         
@@ -37,7 +39,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
         ];
         _unit setVariable ["phx_revive_reviveIndex",_reviveIndex];
         
@@ -50,7 +52,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target}"
+            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
         ];
         _unit setVariable ["phx_revive_dragIndex",_dragIndex];
     };
@@ -64,7 +66,11 @@ if (_bool && {alive _unit}) then {
         missionNamespace setVariable ["phx_revive_down",true];
     };
     
-    if (local _unit && {isPlayer _unit}) then {
+    if (_unit isEqualTo player) then {
+        // Make it so player can't be downed again if they die
+        player setVariable ["phx_revive_respawnRevive",false];
+        missionNamespace setVariable ["phx_revive_respawnRevive",false];
+        
         // If the unit is local and a player, remove their magazines (otherwise they can throw grenades while down)
         private _magazineList = [];
         {
@@ -91,18 +97,22 @@ if (_bool && {alive _unit}) then {
     if !(isNull objectParent _unit) then {
         // If unit is in a vehicle, try to find a death animation
         private _animList = getArray (configfile >> "CfgMovesMaleSdr" >> "States" >> animationState _unit >> "interpolateTo");
-        private _newAnim = (_animList select 0);
+        private _newAnim = "passenger_inside_2_Die";
         private _newAnimSelected = false;
         {
-            if (_x isEqualType "" && {!_newAnimSelected}) then {
+            if (_x isEqualType "") then {
                 if (["die",toLower(_x)] call bis_fnc_inString) then {
                     _newAnim = _x;
                     _newAnimSelected = true;
                 };
             };
+            if (_newAnimSelected) exitWith {};
         } forEach _animList;
+        if (isNil "_newAnim") then {_newAnim = ""};
         _unit switchMove _newAnim;
-
+        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2",_newAnim,_unit];
+        // diag_log format ["setDowned: Anim Change -- _unit:%1 -- _newAnim:%2",_unit, _newAnim];
+        
         // Make sure 'Pull Out' action only gets added once
         if !((vehicle _unit) getVariable ["phx_revive_pullIndex",-1] >= 0) then {
             _pullIndex = (vehicle _unit) addAction [
@@ -113,59 +123,69 @@ if (_bool && {alive _unit}) then {
                 false, 
                 true, 
                 "", 
-                "_target distance _this < 5 && [_target] call phx_fnc_HasWounded"
+                "((_target distance _this) < 5) && {[_target] call phx_fnc_HasWounded} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
             ];
             (vehicle _unit) setVariable ["phx_revive_pullIndex",_pullIndex];
         };
     } else {
         // Unit isn't in a vehicle, play regular death anim
         _unit switchMove "acts_InjuredLookingRifle02";
+        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","RegularInjured",_unit];
+        // diag_log format ["setDowned: Anim Change -- _unit:%1 -- _newAnim:%2",_unit, "acts_InjuredLookingRifle02"];
         _unit setDir ((getDir _unit) + 180);
     };
     
 } else { 
+    // Get the unit up
 
     // Unit is already not down, no need to run again
     if (!(_unit getVariable ["phx_revive_down",false])) exitWith {};
 
-    // Update downed variable
+    // Update downed variables
     _unit setVariable ["phx_revive_down",false];
-    if (local _unit && {_unit isEqualTo player}) then {
+    if (_unit isEqualTo player) then {
         missionNamespace setVariable ["phx_revive_down",false];
     };
     
-    // If the unit is not in a vehicle, play pretty animation otherwise just reset to thier default animation
+    // If the unit is not in a vehicle, play pretty animation otherwise just reset to their default animation
     if (isNull objectParent _unit) then {
         _unit switchmove "AinjPpneMstpSnonWnonDnon_rolltofront";
+        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","rollToFront",_unit];
+        // diag_log format ["setDowned False: NoVeh Anim Change -- _unit:%1 -- _newAnim:%2",_unit, "AinjPpneMstpSnonWnonDnon_rolltofront"];
     } else {
         _unit switchmove "";
+        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","empty",_unit];
+        // diag_log format ["setDowned False: Veh Anim Change -- _unit:%1 -- _newAnim:%2",_unit, ""];
     };
     
-    // Clean up
+    // Make AI shoot again
     _unit setCaptive 0;
-    // Remove drag action
+    
+    // Remove actions
     private _dragIndex = _unit getVariable ["phx_revive_dragIndex",-1];
     if (_dragIndex >= 0) then {_unit removeAction _dragIndex};
     _unit setVariable ["phx_revive_dragIndex",-1];
-    // Remove revive action
+
     private _reviveIndex = _unit getVariable ["phx_revive_reviveIndex",-1];
     if (_reviveIndex >= 0) then {_unit removeAction _reviveIndex;};
     _unit setVariable ["phx_revive_reviveIndex",-1];
-    // Remove slow bleed action
+
     private _bleedIndex = _unit getVariable ["phx_revive_bleedIndex",-1];
     if (_bleedIndex >= 0) then {_unit removeAction _bleedIndex;};
     _unit setVariable ["phx_revive_bleedIndex",-1];
     
-    if (local _unit) then {
+    // Do extra stuff if player is unit
+    if (_unit isEqualTo player) then {
         // Return taken magazines
         private _mags = _unit getVariable ["phx_revive_down_mags",magazines _unit];
         {
             _unit addMagazine _x;
         } forEach _mags;
         
-        // Reset the respawn variable
+        // Reset the respawn variables
         player setVariable ["phx_revive_respawnRevive",true];
         missionNamespace setVariable ["phx_revive_respawnRevive",true];
+        diag_log "SetDowned: respawnRevive:true --- Player got revived, give them another chance";
         
         // Re-enable TFAR speech
         player setVariable ["tf_unable_to_use_radio", false, true];
@@ -182,6 +202,8 @@ if (_bool && {alive _unit}) then {
         
         // Force him into prone otherwise he can get stuck in the rolltofrontanimation.
         _unit playMove "amovppnemstpsraswrfldnon";
+        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","rollToFrontPlayMove",_unit];
+        // diag_log format ["setDowned: Anim Change -- player -- _newAnim:%2",_unit, "amovppnemstpsraswrfldnon"];
         _unit setDamage 0;
     };
 };

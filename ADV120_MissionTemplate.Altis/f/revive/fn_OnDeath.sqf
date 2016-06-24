@@ -14,17 +14,14 @@ params [
     diag_log format["PHX OnDeath: respawnRevive: %2 -- _this: %1",_this,phx_revive_respawnRevive];
 
 if (phx_revive_respawnRevive) then {
-        diag_log format["PHX OnDeath: Alive? - this: %1",_this];
     waitUntil {!isNull _newUnit};
-        diag_log format["PHX OnDeath: Alive - newUnit is not null"];
+    
     // Get player back the same gear he had when he died
-    [_newUnit, [missionNamespace, "phx_revive_lastLoadout"], "linkeditems"] call BIS_fnc_loadInventory;
-    
-    private _loadout = missionNamespace getVariable ["phx_revive_loadout",[]]
+    [_newUnit, [missionNamespace, "phx_revive_lastLoadout"], ["linkeditems"]] call BIS_fnc_loadInventory;
+    private _loadout = missionNamespace getVariable ["phx_revive_loadout",[]];
     [_loadout] call phx_fnc_AddLinkedItems;
-    
-    // [_newUnit, [_loadout, false]] remoteExec ["setUnitLoadout", 0];
 
+    // Put player into a downed state
     [_newUnit, true] remoteExec ["phx_fnc_SetDowned", 0];
     
     // Move player into position and then delete old body
@@ -39,7 +36,6 @@ if (phx_revive_respawnRevive) then {
     _newUnit setVariable ["phx_revive_respawnRevive",phx_revive_respawnRevive];
     
 } else {
-        diag_log format["PHX OnDeath: Dead? - this: %1",_this];
     // If unit is down, unset them as down
     if (phx_revive_down) then {
         [_oldUnit, false] remoteExec ["phx_fnc_SetDowned", 0];

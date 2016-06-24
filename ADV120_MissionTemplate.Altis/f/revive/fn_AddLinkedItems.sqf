@@ -5,8 +5,6 @@
 if (!hasInterface) exitWith {};
 
 params ["_loadoutArray"];
-_loadoutArray params ["_rifleArray", "_launcherArray", "_pistolArray", "_uniformArray", "_vestArray", "_backpackArray", "_headgear", "_goggles" "_binocularArray", 
-
 private _assignedItemArray = _loadoutArray param [9,[],[[]]];
 
 if (count _assignedItemArray > 0) then {

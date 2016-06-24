@@ -4,41 +4,51 @@
 if (!hasInterface) exitWith {};
 
 // handles the woundeffect
-[] spawn {
-    while {isNil "phx_isSpectator"} do {
+[{
+    params ["_args", "_handle"];
+    
+    if (isNil "phx_isSpectator") then {
         _downed = missionNamespace getVariable ["phx_revive_down",false];
         _bleeding = missionNamespace getVariable ["phx_revive_bleeding",false];
         if (_downed || _bleeding) then {
             [] call phx_fnc_WoundedEffect;
         };
-        sleep 2.5;
+    } else {
+        [_handle] call CBA_fnc_removePerFrameHandler;
     };
-};
+}, 2.5, []] call CBA_fnc_addPerFrameHandler;
 
 // ticker for life, calculates death and blood.
-while {isNil "phx_isSpectator"} do {
-    if (alive player) then {
-        // Fetch variables
-        _downed = missionNamespace getVariable ["phx_revive_down",false];
-        _bleeding = missionNamespace getVariable ["phx_revive_bleeding",false];
-        _blood = missionNamespace getVariable ["phx_revive_blood",100];
-        _bleedRate = 0.833;
-        if !(player getVariable ["phx_revive_bleedFast",true]) then {
-            _bleedRate = 0.208;
-        };
-        
-        if (_downed || _bleeding) then {
-            // Blood Loss
-            missionNamespace setVariable ["phx_revive_blood",_blood - _bleedRate max 0];
-            if (damage player < 0.26) then {player setDamage 0.26;}; // Make sure player can stop his own bleeding with a FAK
-            if (getBleedingRemaining player <= 0) then {player setBleedingRemaining 10;}; // Make sure blood drips out of player
+[{
+    params ["_args", "_handle"];
+    
+    diag_log format ["%1 -- down:%2 -- bleeding:%3 -- blood:%4 -- bleedFast:%5 -- respawnRevive:%6",diag_ticktime, missionNamespace getVariable ["phx_revive_down",false], missionNamespace getVariable ["phx_revive_bleeding",false], missionNamespace getVariable ["phx_revive_blood",100], missionNamespace getVariable ["phx_revive_bleedFast",true], missionNamespace getVariable ["phx_revive_respawnRevive",false]];
+    
+    if (isNil "phx_isSpectator") then {
+        if (alive player) then {
+            // Fetch variables
+            _downed = missionNamespace getVariable ["phx_revive_down",false];
+            _bleeding = missionNamespace getVariable ["phx_revive_bleeding",false];
+            _blood = missionNamespace getVariable ["phx_revive_blood",100];
+            _bleedRate = 0.833;
+            if !(player getVariable ["phx_revive_bleedFast",true]) then {
+                _bleedRate = 0.208;
+            };
             
-        } else {
-            // Blood regen
-            missionNamespace setVariable ["phx_revive_blood",_blood + 0.1 min 100];
-        };
-        
-        /*
+            if (_downed || _bleeding) then {
+                // Blood Loss
+                missionNamespace setVariable ["phx_revive_blood",_blood - _bleedRate max 0];
+                if (damage player < 0.26) then {player setDamage 0.26;}; // Make sure player can stop his own bleeding with a FAK
+                if (getBleedingRemaining player <= 0) then {player setBleedingRemaining 10;}; // Make sure blood drips out of player
+                
+            } else {
+                // Blood regen
+                missionNamespace setVariable ["phx_revive_blood",_blood + 0.1 min 100];
+            };
+            
+            // ----------------------------------------------------------------------------------------------------
+            /*
+            // Bleed out warnings
             // Display warning if blood level is getting low
             if (_blood <= 10 && {_bleeding} && {!(player getVariable ["phx_revive_bloodLossWarning",false])} ) then {
                 titleText ["You are feeling weak... Maybe you should stop your bleeding.", "PLAIN DOWN"];
@@ -49,10 +59,17 @@ while {isNil "phx_isSpectator"} do {
             if (!_bleeding && {_blood > 10} && {player getVariable ["phx_revive_bloodLossWarning",false]} ) then {
                 
             };
-        */
-        
-        // Player bled out, RIP
-        if (_blood <= 0) then {player setdamage 1;};
+            */
+            // ----------------------------------------------------------------------------------------------------
+            
+            // Player bled out, RIP, no revive
+            if (_blood <= 0) then {
+                missionNamespace setVariable ["phx_revive_respawnRevive",false];
+                diag_log "LifeTick: respawnRevive:false --- Out of blood";
+                player setdamage 1;
+            };
+        };
+    } else {
+        [_handle] call CBA_fnc_removePerFrameHandler;
     };
-    sleep 1;
-};
+}, 1, []] call CBA_fnc_addPerFrameHandler;
