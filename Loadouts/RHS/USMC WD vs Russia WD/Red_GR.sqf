@@ -19,7 +19,6 @@ for "_i" from 1 to 4 do {player addItemToBackpack "rhs_30Rnd_545x39_AK_green";};
 player addWeapon "rhs_weap_ak74m_gp25";
 
 // Add items
-phx_loadout_addBinocular = "Binocular";
 call phx_fnc_loadout_handleItems;
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.
