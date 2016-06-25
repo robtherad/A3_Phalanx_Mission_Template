@@ -26,7 +26,7 @@ case "MouseButtonUp": {
     if (_args select 1 isEqualTo 1 && {f_cam_mode != 1}) then {
         _button = _args select 1;
         f_cam_MouseButton set [_button,false];
-         [] spawn f_fnc_HandleCamera;
+        [] spawn f_fnc_HandleCamera;
     };
     if (_args select 1 isEqualTo 1) then {
         if (f_cam_mode isEqualTo 1) then {
@@ -77,7 +77,7 @@ case "LBListSelChanged": {
             if (f_cam_mode isEqualTo 0 || f_cam_mode isEqualTo 1) then {
                 f_cam_curTarget = _unit;
                 if (f_cam_toggleCamera) then {
-                  f_cam_curTarget switchCamera "INTERNAL";
+                    f_cam_curTarget switchCamera "INTERNAL";
                 };
                 ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
             };
@@ -272,7 +272,13 @@ case "KeyDown": {
         case 42: { // SHIFT
             f_cam_shift_down = true;
             [] spawn f_fnc_HandleCamera;
-             _handled = true;
+            _handled = true;
+        };
+        case 56: { // ALT
+            f_cam_alt_down = true;
+            f_cam_sensitivity = 0.25;
+            [] spawn f_fnc_HandleCamera;
+            _handled = true;
         };
         case 25: { // P
             if (isNil "f_cam_nextVoiceChange" || {diag_tickTime > f_cam_nextVoiceChange}) then {
@@ -441,6 +447,11 @@ case "KeyUp": {
     switch (_key) do {
         case 42: {
             f_cam_shift_down = false;
+            _handled = true;
+        };
+        case 56: {
+            f_cam_alt_down = false;
+            f_cam_sensitivity = 1;
             _handled = true;
         };
         case 1: {

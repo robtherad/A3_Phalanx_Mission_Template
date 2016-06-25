@@ -124,6 +124,7 @@
         f_cam_angleY = 60;
         f_cam_ctrl_down = false;
         f_cam_shift_down = false;
+        f_cam_alt_down = false;
         f_cam_freecam_buttons = [false,false,false,false,false,false];
         f_cam_forcedExit = false;
         f_freecam_x_speed = 0;
@@ -153,6 +154,7 @@
         // Camera
         f_cam_angle = 360;
         f_cam_zoom = 3;
+        f_cam_sensitivity = 1;
         f_cam_height = 3;
         f_cam_fovZoom = 1.2;
         f_cam_scrollHeight = 0;

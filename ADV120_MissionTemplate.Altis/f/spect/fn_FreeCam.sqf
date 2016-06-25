@@ -52,31 +52,47 @@ if (f_cam_mode isEqualTo 3) then {
     _accel = 0.2 max (_height/8); // 0.8
     _accelshift = _accel*4.25;//2;
     if (f_cam_freecam_buttons select 0) then {// W
-        if (f_cam_shift_down) then {
+        if (f_cam_shift_down && {!f_cam_alt_down}) then {
             _mY = _accelshift;
         } else {
-            _mY = _accel;
+            if !(f_cam_alt_down) then {
+                _mY = _accel;
+            } else {
+                _mY = _accel*.5;
+            };  
         };
     };
     if (f_cam_freecam_buttons select 1) then {// S
-        if (f_cam_shift_down) then {
+        if (f_cam_shift_down && {!f_cam_alt_down}) then {
             _mY = -_accelshift;
         } else {
-            _mY = -_accel;
+            if !(f_cam_alt_down) then {
+                _mY = -_accel;
+            } else {
+                _mY = -_accel*.5;
+            };  
         };
     };
     if (f_cam_freecam_buttons select 2) then {// A
-        if (f_cam_shift_down) then {
+        if (f_cam_shift_down && {!f_cam_alt_down}) then {
             _mX = -_accelshift;
         } else {
-            _mX = -_accel;
+            if !(f_cam_alt_down) then {
+                _mX = -_accel;
+            } else {
+                _mX = -_accel*.5;
+            };  
         };
     };
     if (f_cam_freecam_buttons select 3) then {// D
-        if (f_cam_shift_down) then {
+        if (f_cam_shift_down && {!f_cam_alt_down}) then {
             _mX = _accelshift;
         } else {
-            _mX = _accel;
+            if !(f_cam_alt_down) then {
+                _mX = _accel;
+            } else {
+                _mX = _accel*.5;
+            };  
         };
     };
     if (f_cam_freecam_buttons select 4) then {// Q
