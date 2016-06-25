@@ -24,11 +24,11 @@ if (isNil {phx_kills}) then {
 };
 
 // Player has killed.
-if (vehicle player == _killer) then {
+if (vehicle player isEqualTo _killer && {!(_unit getVariable ["phx_revive_respawnRevive",false])}) then {
     // Check for friendly fire
-    if (side player == side _unit) then {
+    if (side group player isEqualTo side group _unit) then {
         phx_friendly = " - [FRIENDLY]";
-        if (player == _unit) then {
+        if (player isEqualTo _unit) then {
             phx_friendly = " - [SELF]";
         };
     } else {
@@ -43,12 +43,11 @@ if (vehicle player == _killer) then {
 };
 
 // Player has died and bypassed the revive script
-diag_log format["mpKilled: _unitPlayer:%1 -- respawnReviveCheck:%2",player == _unit,!(missionNamespace getVariable ["phx_revive_respawnRevive",false])];
-if (player == _unit && {!(missionNamespace getVariable ["phx_revive_respawnRevive",false])}) then {
+if (player isEqualTo _unit && {!(missionNamespace getVariable ["phx_revive_respawnRevive",false])}) then {
     // Check for friendly fire
-    if (side player == side _killer) then {
+    if ((side group player) isEqualTo (side group _killer)) then {
         phx_friendly = " - [FRIENDLY]";
-        if (player == _killer) then {
+        if (player isEqualTo _killer) then {
             phx_friendly = " - [SELF]";
         };
     } else {
