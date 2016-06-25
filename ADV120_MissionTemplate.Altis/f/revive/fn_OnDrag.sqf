@@ -12,13 +12,14 @@ if (_dragger isEqualTo player) then {
 };
 
 // the dragger gets a release option.
-if (local _dragger) then {
-    private _dragIndex = _dragger addAction [
+if (_dragger isEqualTo player) then {
+    private _releaseIndex = _dragger addAction [
         format["<t color='#FF4040'>Release</t> %1",name _unit],
         {
-            (_this select 1) removeAction (_this select 2);
-            (_this select 1) setVariable ["phx_revive_dragIndex",-1];
-            (_this select 1) setVariable ["phx_revive_dragging",nil,true];
+            params ["_unit", "_dragger", "_actionID"];
+            _dragger removeAction _actionID;
+            _dragger setVariable ["phx_revive_releaseIndex",-1];
+            _dragger setVariable ["phx_revive_dragging",nil,true];
         }, 
         nil, 
         6, 
@@ -27,21 +28,18 @@ if (local _dragger) then {
         "", 
         "true"
     ];
-    _unit setVariable ["phx_revive_dragIndex",_dragIndex];
+    _dragger setVariable ["phx_revive_releaseIndex",_releaseIndex];
     
     switch (currentWeapon _dragger) do {
         case (primaryWeapon _dragger): {
             _dragger switchMove "acinpknlmstpsraswrfldnon";
-            diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","draggingRifle",_dragger];
         };
        case (secondaryWeapon _dragger): {
             _dragger switchMove "AcinPknlMstpSnonWnonDnon";
-            diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","draggingLauncher",_dragger];
        };
     };
 };
 _unit switchMove "AinjPpneMrunSnonWnonDb";
-diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","dragged",_unit];
 
 if (local _unit) then {
     // setup the unit and all that fun stuff.
@@ -55,26 +53,18 @@ if (local _unit) then {
     params ["_args", "_handle"];
     _args params ["_dragger", "_draggedUnit"];
     
-    diag_log format["OnDrag PFH: 1:%1 - 2:%2 - 3:%3 - 4:%4 - 5:%5",
-        isNil {_dragger getVariable ["phx_revive_dragging",nil]}, 
-        !alive _dragger, 
-        _dragger getVariable ["phx_revive_down",false], 
-        !isNull objectParent _dragger,
-        isNil "_draggedUnit"
-    ];
-    
     if ( isNil {_dragger getVariable ["phx_revive_dragging",nil]} || {!alive _dragger} || {_dragger getVariable ["phx_revive_down",false]} || {!isNull objectParent _dragger} || {isNil "_draggedUnit"} ) then {
-        diag_log "OnDrag PFH: Conditions passed!";
-        
         // Remove PFH - No need to keep checking
         [_handle] call CBA_fnc_removePerFrameHandler;
     
         // Check to see if action was removed
-        private _dragIndex = (_unit getVariable ["phx_revive_dragIndex",_dragIndex])
-        if (_dragIndex > -1) then {
-            _unit removeAction _dragIndex;
-            _unit setVariable ["phx_revive_dragIndex",-1];
-            _dragger setVariable ["phx_revive_dragging",nil,true];
+        if (_dragger isEqualTo player) then {
+            private _getReleaseIndex = _dragger getVariable ["phx_revive_releaseIndex",-1];
+            if (_getReleaseIndex > -1) then {
+                _dragger removeAction _getReleaseIndex;
+                _dragger setVariable ["phx_revive_releaseIndex",-1];
+                _dragger setVariable ["phx_revive_dragging",nil,true];
+            };
         };
     
         if (isNull objectParent _dragger) then {
@@ -88,7 +78,6 @@ if (local _unit) then {
             // If dragger didn't go down then play release animation on unit
             if (!(_dragger getVariable ["phx_revive_down",false])) then {
                 _draggedUnit switchMove "AinjPpneMstpSnonWrflDb_release";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","draggedRelease",_draggedUnit];
             };
         } else {
             // Dragger is in vehicle
@@ -97,15 +86,12 @@ if (local _unit) then {
             // If dragger didn't go down then play release animation on unit
             if (!(_dragger getVariable ["phx_revive_down",false])) then {
                 _draggedUnit switchMove "AinjPpneMstpSnonWrflDb_release";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","draggedRelease",_draggedUnit];
             };
         };
         
         // Wait 0.1 seconds for the releasing animation to finish
         [{
             params ["_dragger", "_draggedUnit"];
-            
-            diag_log "OnDrag waitAndExecute: Waited. Executing.";
             
             // Set dragger as no longer busy so he can do other actions
             if (_dragger isEqualTo player) then {
@@ -115,20 +101,18 @@ if (local _unit) then {
             // Play animation depending upon if unit is down or not
             if (_draggedUnit getVariable ["phx_revive_down",false]) then {
                 _draggedUnit switchMove "acts_InjuredLookingRifle02";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","injuredNormalOnDrag",_draggedUnit];
                 _draggedUnit setDir ((getDir _draggedUnit) + 180);
             } else {
                 _draggedUnit switchMove "amovppnemstpsraswrfldnon";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","layonbackdrag??",_draggedUnit];
             };
 
-            // Play animation depending upon if dragger does down or not
-            if (_dragger getVariable ["phx_revive_down",false]) then {
-                _dragger switchMove "acts_InjuredLookingRifle02";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","injuredNormalOnDrag2",_dragger];
-            } else {
-                _dragger switchMove "";
-                diag_log format ["changedAnimation: _anim:%1 -- _draggedUnit:%2","emptyAnim",_dragger];
+            // Play animations if dragger isn't in a vehicle
+            if (isNull objectParent _dragger) then {
+                if (_dragger getVariable ["phx_revive_down",false]) then {
+                    _dragger switchMove "acts_InjuredLookingRifle02";
+                } else {
+                    _dragger switchMove "";
+                };
             };
         }, [_dragger, _draggedUnit], 0.1] call CBA_fnc_waitAndExecute;
     };

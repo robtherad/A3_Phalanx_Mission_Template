@@ -68,7 +68,7 @@ if (_bool && {alive _unit}) then {
     
     if (_unit isEqualTo player) then {
         // Make it so player can't be downed again if they die
-        player setVariable ["phx_revive_respawnRevive",false];
+        player setVariable ["phx_revive_respawnRevive",false,true];
         missionNamespace setVariable ["phx_revive_respawnRevive",false];
         
         // If the unit is local and a player, remove their magazines (otherwise they can throw grenades while down)
@@ -110,11 +110,9 @@ if (_bool && {alive _unit}) then {
         } forEach _animList;
         if (isNil "_newAnim") then {_newAnim = ""};
         _unit switchMove _newAnim;
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2",_newAnim,_unit];
-        // diag_log format ["setDowned: Anim Change -- _unit:%1 -- _newAnim:%2",_unit, _newAnim];
         
         // Make sure 'Pull Out' action only gets added once
-        if !((vehicle _unit) getVariable ["phx_revive_pullIndex",-1] >= 0) then {
+        if !((vehicle _unit) getVariable ["phx_revive_ejectIndex",-1] >= 0) then {
             _pullIndex = (vehicle _unit) addAction [
                 "<t color='#FF4040'>Pull out wounded</t>", 
                 {_this remoteExec ["phx_fnc_EjectWounded", 0];}, 
@@ -125,13 +123,11 @@ if (_bool && {alive _unit}) then {
                 "", 
                 "((_target distance _this) < 5) && {[_target] call phx_fnc_HasWounded} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
             ];
-            (vehicle _unit) setVariable ["phx_revive_pullIndex",_pullIndex];
+            (vehicle _unit) setVariable ["phx_revive_ejectIndex",_pullIndex];
         };
     } else {
         // Unit isn't in a vehicle, play regular death anim
         _unit switchMove "acts_InjuredLookingRifle02";
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","RegularInjured",_unit];
-        // diag_log format ["setDowned: Anim Change -- _unit:%1 -- _newAnim:%2",_unit, "acts_InjuredLookingRifle02"];
         _unit setDir ((getDir _unit) + 180);
     };
     
@@ -150,12 +146,8 @@ if (_bool && {alive _unit}) then {
     // If the unit is not in a vehicle, play pretty animation otherwise just reset to their default animation
     if (isNull objectParent _unit) then {
         _unit switchmove "AinjPpneMstpSnonWnonDnon_rolltofront";
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","rollToFront",_unit];
-        // diag_log format ["setDowned False: NoVeh Anim Change -- _unit:%1 -- _newAnim:%2",_unit, "AinjPpneMstpSnonWnonDnon_rolltofront"];
     } else {
         _unit switchmove "";
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","empty",_unit];
-        // diag_log format ["setDowned False: Veh Anim Change -- _unit:%1 -- _newAnim:%2",_unit, ""];
     };
     
     // Make AI shoot again
@@ -183,9 +175,8 @@ if (_bool && {alive _unit}) then {
         } forEach _mags;
         
         // Reset the respawn variables
-        player setVariable ["phx_revive_respawnRevive",true];
+        player setVariable ["phx_revive_respawnRevive",true,true];
         missionNamespace setVariable ["phx_revive_respawnRevive",true];
-        diag_log "SetDowned: respawnRevive:true --- Player got revived, give them another chance";
         
         // Re-enable TFAR speech
         player setVariable ["tf_unable_to_use_radio", false, true];
@@ -202,8 +193,6 @@ if (_bool && {alive _unit}) then {
         
         // Force him into prone otherwise he can get stuck in the rolltofrontanimation.
         _unit playMove "amovppnemstpsraswrfldnon";
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","rollToFrontPlayMove",_unit];
-        // diag_log format ["setDowned: Anim Change -- player -- _newAnim:%2",_unit, "amovppnemstpsraswrfldnon"];
         _unit setDamage 0;
     };
 };

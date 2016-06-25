@@ -8,7 +8,7 @@ params ["_unit", "_selection", "_damage"];
 if !(_unit isEqualTo player) exitWith {_damage};
 
 private _totalDamage = damage _unit + _damage;
-if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["phx_revive_down",false])} && {diag_frameNo > missionNamespace getVariable ["phx_revive_lastDamageFrameNo",0]}) then {
+if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["phx_revive_down",false])} && {diag_frameNo > missionNamespace getVariable ["phx_revive_lastDamageFrameNo",0]} && {!(_selection isEqualTo "")}) then {
     // Set the frame number of the last significant damage that should have killed the player into a variable. This prevents multiple _instantKill dice rolls from happening from the same damage source, as long as all the damage is applied in one frame.
     missionNamespace setVariable ["phx_revive_lastDamageFrameNo",diag_frameNo];
     
@@ -16,8 +16,9 @@ if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["ph
     private _instantKill = false;
     private _randomNumber = random 100;
     if (_damage > 0.2) then {
-        diag_log format["phx_revive_OnDamage: _damage: %1 -- _selection: %2",_damage,_selection];
+        diag_log format["phx_revive_OnDamage: _damage: %1 -- _selection: '%2'",_damage,_selection];
         switch (_selection) do {
+            case "face_hub"; 
             case "head":    {if (_randomNumber > 10) then {_instantKill = true; diag_log format ["phx_revive_OnDamage: Headshot (>10) - Number: %1",_randomNumber];};}; // 90% chance of instant death
             case "arms":    {}; // 0% chance of instant death
             case "legs":    {}; // 0% chance of instant death
@@ -54,15 +55,13 @@ if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["ph
             };
         } else {
             // Player's already down, shouldn't be reviveable again
-            _unit setVariable ["phx_revive_respawnRevive",false];
+            _unit setVariable ["phx_revive_respawnRevive",false,true];
             missionNamespace setVariable ["phx_revive_respawnRevive",false];
-            diag_log "OnDamage: respawnRevive:false --- Already reviveable, go into death mode";
         };
     } else {
         // Player got instantly killed, shouldn't be reviveable
-        _unit setVariable ["phx_revive_respawnRevive",false];
+        _unit setVariable ["phx_revive_respawnRevive",false,true];
         missionNamespace setVariable ["phx_revive_respawnRevive",false];
-        diag_log "OnDamage: respawnRevive:false --- Player got instant killed";
     };
 };
 

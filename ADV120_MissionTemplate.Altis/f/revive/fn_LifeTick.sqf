@@ -22,8 +22,6 @@ if (!hasInterface) exitWith {};
 [{
     params ["_args", "_handle"];
     
-    diag_log format ["%1 -- down:%2 -- bleeding:%3 -- blood:%4 -- bleedFast:%5 -- respawnRevive:%6",diag_ticktime, missionNamespace getVariable ["phx_revive_down",false], missionNamespace getVariable ["phx_revive_bleeding",false], missionNamespace getVariable ["phx_revive_blood",100], missionNamespace getVariable ["phx_revive_bleedFast",true], missionNamespace getVariable ["phx_revive_respawnRevive",false]];
-    
     if (isNil "phx_isSpectator") then {
         if (alive player) then {
             // Fetch variables
@@ -64,8 +62,8 @@ if (!hasInterface) exitWith {};
             
             // Player bled out, RIP, no revive
             if (_blood <= 0) then {
+                player setVariable ["phx_revive_respawnRevive",false,true];
                 missionNamespace setVariable ["phx_revive_respawnRevive",false];
-                diag_log "LifeTick: respawnRevive:false --- Out of blood";
                 player setdamage 1;
             };
         };

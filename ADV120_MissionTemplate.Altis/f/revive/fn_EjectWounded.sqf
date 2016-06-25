@@ -13,13 +13,12 @@ params ["_veh", "_caller"];
         };
         waitUntil {isNull objectParent _x}; // Wait until they aren't in the vehicle anymore
         _x switchmove "acts_InjuredLookingRifle02";
-        diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","ejectWoundedNormalInjury",_x];
     };
 } forEach crew _veh;
 
 // Remove eject action
-private _actionID = _veh getVariable ["phx_revive_pullIndex",-1];
+private _actionID = _veh getVariable ["phx_revive_ejectIndex",-1];
 if (_actionID > -1) then {
     _veh removeAction _actionID;
-    _veh setVariable ["phx_revive_pullIndex",-1];
+    _veh setVariable ["phx_revive_ejectIndex",-1];
 };

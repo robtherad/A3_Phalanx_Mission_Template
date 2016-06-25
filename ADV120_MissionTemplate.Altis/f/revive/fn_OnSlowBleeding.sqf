@@ -12,10 +12,8 @@ missionNamespace setVariable ["phx_revive_currentlyBusy",true];
 // Play healing animation
 if ((stance _healingUnit) isEqualTo "PRONE") then {
     _healingUnit playMove "AinvPpneMstpSlayWrflDnon_medicOther"; // Prone anim
-    diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","healingProne",_healingUnit];
 } else {
     _healingUnit playMove "ainvpknlmstpslaywrfldnon_medicother"; // Crouch anim
-    diag_log format ["changedAnimation: _anim:%1 -- _unit:%2","healingCrouch",_healingUnit];
 };
 waitUntil {(["medic",animationstate _healingUnit] call bis_fnc_inString)}; // Wait for healing animation to end
 waitUntil {!(["medic",animationstate _healingUnit] call bis_fnc_inString)}; // Wait for healing animation to end
@@ -29,7 +27,7 @@ if !("Medikit" in (items player)) exitWith {titleText ["Revive Failed - Medic do
 if !(isNull objectParent _healingUnit) exitWith {titleText ["Revive Failed - Medic got into a vehicle!", "PLAIN DOWN"];};
 if !(isNull objectParent _downedUnit) exitWith {titleText ["Revive Failed - The patient got into a vehicle!", "PLAIN DOWN"];};
 if (_healingUnit getVariable ["phx_revive_down",false] || !(alive _healingUnit)) exitWith {titleText ["Revive Failed - The medic went down while reviving!", "PLAIN DOWN"];};
-if (_downedUnit getVariable ["phx_revive_down",false]) exitWith {titleText ["Revive Failed - The patient was no longer down!", "PLAIN DOWN"];};
+if !(_downedUnit getVariable ["phx_revive_down",false]) exitWith {titleText ["Revive Failed - The patient was no longer down!", "PLAIN DOWN"];};
 if !(alive _downedUnit) exitWith {titleText ["Revive Failed - The patient is dead!", "PLAIN DOWN"];};
 // --------------------------------------------------
 

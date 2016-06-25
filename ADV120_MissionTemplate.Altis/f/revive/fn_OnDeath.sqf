@@ -11,8 +11,6 @@ params [
     ["_respawnDelay", 0, [0]]
 ];
 
-    diag_log format["PHX OnDeath: respawnRevive: %2 -- _this: %1",_this,phx_revive_respawnRevive];
-
 if (phx_revive_respawnRevive) then {
     waitUntil {!isNull _newUnit};
     
@@ -33,7 +31,7 @@ if (phx_revive_respawnRevive) then {
     _newUnit setVariable ["phx_revive_down",phx_revive_down, true];
     _newUnit setVariable ["phx_revive_bleeding",phx_revive_bleeding, true];
     _newUnit setVariable ["phx_revive_bleedFast",phx_revive_bleedFast, true];
-    _newUnit setVariable ["phx_revive_respawnRevive",phx_revive_respawnRevive];
+    _newUnit setVariable ["phx_revive_respawnRevive",phx_revive_respawnRevive, true];
     
 } else {
     // If unit is down, unset them as down

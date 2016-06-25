@@ -39,7 +39,7 @@ player setVariable ["phx_revive_bleedFast",true];
 phx_revive_bleedFast = true;
 phx_revive_blood = 100;
 player setVariable ["phx_revive_dragging",nil];
-player setVariable ["phx_revive_respawnRevive",true];
+player setVariable ["phx_revive_respawnRevive",true,true];
 phx_revive_respawnRevive = true;
 
 // Lifeticker, manages bleeding and blood values.
@@ -61,14 +61,18 @@ phx_revive_damageValue = 1.1;
 // Eventhandlers for the player.
 player addEventHandler ["HandleDamage",{_this call phx_fnc_OnDamage}];
 player addEventHandler ["InventoryClosed",{
-    missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
-    [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
-    missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
+    if (alive player) then {
+        missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
+        [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
+        missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
+    };
 }];
 player addEventHandler ["InventoryOpened",{
-    missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
-    [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
-    missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
+    if (alive player) then {
+        missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
+        [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
+        missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
+    };
 }];
 
 // Add a PFH to make sure the saved loadout is never more than ~30 seconds out of date
