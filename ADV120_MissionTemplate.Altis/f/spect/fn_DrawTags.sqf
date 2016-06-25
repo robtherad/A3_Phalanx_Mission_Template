@@ -11,7 +11,7 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
         _distToCam = (call f_cam_GetCurrentCam) distance _x;
         private _isSpectator = _x getVariable ["phx_isUnitSpecator",false];
         if ( (isPlayer _x) && {!_isSpectator} ) then {_isPlayerGroup = true};
-        if ( (_distToCam < 250) && {!_isSpectator} ) then {
+        if ( (_distToCam < 200) && {!_isSpectator} ) then {
             _drawUnits pushBack _x;
         } else {
             if ( ((leader _x) isEqualTo _x) && {!_isSpectator}) then {
