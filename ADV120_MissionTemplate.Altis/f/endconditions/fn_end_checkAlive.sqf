@@ -2,16 +2,16 @@
 
 _sideArray = [0,0,0];
 if (_bluforEliminatedMessage) then {
-    _aliveB = {side _x == west} count allUnits;
-    if (_aliveB == 0) then {_sideArray set [0,1];} else {_sideArray set [0,0];};
+    _aliveB = {_isSpectator = _x getVariable ["phx_isUnitSpectator",false]; side group _x isEqualTo west && !_isSpectator} count allUnits;
+    if (_aliveB isEqualTo 0) then {_sideArray set [0,1];} else {_sideArray set [0,0];};
 };
 if (_redforEliminatedMessage) then {
-    _aliveR = {side _x == east} count allUnits;
-    if (_aliveR == 0) then {_sideArray set [1,1];} else {_sideArray set [1,0];};
+    _aliveR = {_isSpectator = _x getVariable ["phx_isUnitSpectator",false]; side group _x isEqualTo east && !_isSpectator} count allUnits;
+    if (_aliveR isEqualTo 0) then {_sideArray set [1,1];} else {_sideArray set [1,0];};
 };
 if (_greenforEliminatedMessage) then {
-    _aliveG = {side _x == independent} count allUnits;
-    if (_aliveG == 0) then {_sideArray set [2,1];} else {_sideArray set [2,0];};
+    _aliveG = {_isSpectator = _x getVariable ["phx_isUnitSpectator",false]; side group _x isEqualTo independent && !_isSpectator} count allUnits;
+    if (_aliveG isEqualTo 0) then {_sideArray set [2,1];} else {_sideArray set [2,0];};
 };
 
 _hintStr = "";
