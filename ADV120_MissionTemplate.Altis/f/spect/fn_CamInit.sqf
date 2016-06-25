@@ -9,7 +9,6 @@
     if (isNil "phx_isSpectator") then {
         phx_isSpectator = true;
     };
-    // diag_log format["fn_camInit: _this = %1",_this];
 
     params [
         ["_unit", objNull, [objNull]],
@@ -34,14 +33,12 @@
       // disable effects death effects
       BIS_fnc_feedback_allowPP = false;
     };
-    // diag_log "fn_camInit: Stop feedback";
 
     if (f_cam_isJIP || _forced) then {
       ["F_ScreenSetup",false] call BIS_fnc_blackOut;
       systemChat "Initializing spectator script.";
       ["F_ScreenSetup"] call BIS_fnc_blackIn;
     };
-    // diag_log "fn_camInit: JIP check";
 
     // Creates a virtual unit on the player's side and places it where he died.
     createCenter sideLogic;
@@ -74,7 +71,7 @@
         player setspeaker "NoVoice";
         player disableConversation true;
         
-        if (isNull _oldUnit ) then {if(count playableUnits > 0) then {_oldUnit = (playableUnits select 0)} else {_oldUnit = (allUnits select 0)};};
+        if (isNull _oldUnit ) then {if (count playableUnits > 0) then {_oldUnit = (playableUnits select 0)} else {_oldUnit = (allUnits select 0)};};
         if (isNil "_oldUnit") then {
             createCenter civilian;
             private _grp = createGroup civilian;
@@ -166,13 +163,11 @@
 
         f_cam_ToggleFPCamera = {
             f_cam_toggleCamera = !f_cam_toggleCamera;
-            if(f_cam_toggleCamera) then {
+            if (f_cam_toggleCamera) then {
                 f_cam_mode = 1; //(view)
                 f_cam_camera cameraEffect ["terminate", "BACK"];
                 f_cam_curTarget switchCamera "internal";
-            }
-            else
-            {
+            } else {
                 f_cam_mode = 0;
                 f_cam_camera cameraEffect ["internal", "BACK"];
             };
@@ -231,7 +226,7 @@
             f_cam_camera camSetFov 1.2;
             f_cam_freecamera camSetFov 1.2;
             f_cam_zeusKey = 21;
-            if( count (actionKeys "curatorInterface") > 0 ) then {
+            if ( count (actionKeys "curatorInterface") > 0 ) then {
                 f_cam_zeusKey = (actionKeys "curatorInterface") select 0;
             };
             f_cam_MouseMoving = false;
@@ -250,8 +245,8 @@
             lbSetCurSel [2101,0];
 
             f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
-             ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
-             ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
+            ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
+            ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
             
             [{
                 // Join group in correct slot

@@ -77,7 +77,7 @@ removeGoggles player;
         missionNamespace setVariable ["phx_loadoutAssigned",true];
         
         // Waits until mission starts and then forces player into F3 spectator instead of EG spectator
-        [{(CBA_missionTime > 0) && (!isNull player) && (cameraOn isEqualTo player)}, {
+        [{(CBA_missionTime > 0) && {(!isNull player)} && {(cameraOn isEqualTo player)}}, {
             [{
                 [player, objNull, 0, 0, true] call f_fnc_camInit;
             }] call CBA_fnc_execNextFrame;

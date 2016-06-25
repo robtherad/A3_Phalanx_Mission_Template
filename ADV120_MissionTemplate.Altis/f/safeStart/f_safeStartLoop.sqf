@@ -24,7 +24,7 @@ while {f_var_mission_timer > 0} do {
 };
 
 //Once the mission timer has reached 0, disable the safeties
-if (f_var_mission_timer == 0) then {
+if (f_var_mission_timer isEqualTo 0) then {
         // Broadcast message to players
         [["SafeStartMissionStarting",["Mission starting now!"]],"bis_fnc_showNotification",true] call BIS_fnc_MP;
 

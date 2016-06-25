@@ -6,61 +6,54 @@
 _type = _this select 0;
 _args = _this select 1;
 _handled = true;
-switch (_type) do
-{
+switch (_type) do {
 // ==================================================================
 // handles the mouse.
-case "MouseButtonDown":
-{
-
-    if(_args select 1 == 1 && f_cam_mode != 1) then {
+case "MouseButtonDown": {
+    if (_args select 1 isEqualTo 1 && {f_cam_mode != 1}) then {
         _button = _args select 1;
         f_cam_MouseButton set [_button,true];
 
     };
-    if(_args select 1 == 1) then {
-        if(f_cam_mode == 1) then {
+    if (_args select 1 isEqualTo 1) then {
+        if (f_cam_mode isEqualTo 1) then {
             f_cam_ads = true;
             f_cam_curTarget switchCamera "gunner";
-        }
-    }
+        };
+    };
 };
-case "MouseButtonUp":
-{
-    if(_args select 1 == 1 && f_cam_mode != 1) then {
+case "MouseButtonUp": {
+    if (_args select 1 isEqualTo 1 && {f_cam_mode != 1}) then {
         _button = _args select 1;
         f_cam_MouseButton set [_button,false];
          [] spawn f_fnc_HandleCamera;
     };
-    if(_args select 1 == 1) then {
-        if(f_cam_mode == 1) then {
+    if (_args select 1 isEqualTo 1) then {
+        if (f_cam_mode isEqualTo 1) then {
             f_cam_ads = false;
             f_cam_curTarget switchCamera "internal";
-        }
-    }
+        };
+    };
 };
-case "MapZoom":
-{
+case "MapZoom": {
     f_cam_map_zoom = f_cam_map_zoom+((_args select 1)*0.05);
-    if(f_cam_map_zoom > 0.5) then {
+    if (f_cam_map_zoom > 0.5) then {
         f_cam_map_zoom = 0.5;
     };
-    if(f_cam_map_zoom < 0.05) then {
+    if (f_cam_map_zoom < 0.05) then {
         f_cam_map_zoom = 0.05;
     };
     _handled = true;
 };
-case "MouseMoving":
-{
+case "MouseMoving": {
     _x = _args select 1;
     _y = _args select 2;
     f_cam_mouseCord = [_x,_y];
     [] spawn f_fnc_HandleCamera;
 
 };
-case "MouseZChanged":
-{
-    if(!f_cam_ctrl_down) then {
+case "MouseZChanged": {
+    if (!f_cam_ctrl_down) then {
         switch (f_cam_mode) do {
             case 0: {
                 f_cam_zoom = ((f_cam_zoom - ((_args select 1)*f_cam_zoom/5)) max 0.1) min 650;
@@ -69,31 +62,26 @@ case "MouseZChanged":
                 f_cam_scrollHeight = (_args select 1);
             };
         };
-
-    }
-    else
-    {
+    } else {
         f_cam_fovZoom = ((f_cam_fovZoom - ((_args select 1)*f_cam_fovZoom/5)) max 0.1) min 1;
     };
-
 };
 
 // ==================================================================
 // handles dropboxes
-case "LBListSelChanged":
-{
-    if(count f_cam_listUnits > (_args select 1)) then {
+case "LBListSelChanged": {
+    if (count f_cam_listUnits > (_args select 1)) then {
         _unit = f_cam_listUnits select (_args select 1);
-        if(!isnil "_unit") then {
-            if(typeName _unit == "GROUP") then {_unit = leader _unit};
-            if(f_cam_mode == 0 || f_cam_mode == 1) then {
+        if (!isnil "_unit") then {
+            if (typeName _unit isEqualTo "GROUP") then {_unit = leader _unit};
+            if (f_cam_mode isEqualTo 0 || f_cam_mode isEqualTo 1) then {
                 f_cam_curTarget = _unit;
-                if(f_cam_toggleCamera) then {
+                if (f_cam_toggleCamera) then {
                   f_cam_curTarget switchCamera "INTERNAL";
                 };
                 ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
             };
-            if(f_cam_mode == 3) then {
+            if (f_cam_mode isEqualTo 3) then {
                 _pos = getpos _unit;
                 _x = _pos select 0;
                 _y = _pos select 1;
@@ -104,47 +92,36 @@ case "LBListSelChanged":
     ctrlEnable [2100, false];
     ctrlEnable [2100, true];
 };
-case "LBListSelChanged_modes":
-{
-
+case "LBListSelChanged_modes": {
     _index =  (_args select 1);
-    switch (_index) do
-    {
-        case f_cam_lb_toggletiWHIndex:
-        {
+    switch (_index) do {
+        case f_cam_lb_toggletiWHIndex: {
             f_cam_tiWHOn = !f_cam_tiWHOn;
-            if(f_cam_tiWHOn) then {
+            if (f_cam_tiWHOn) then {
                 f_cam_tiBHOn = false;
                 f_cam_nvOn = false;
                 true setCamUseTi 0;
-            }
-            else
-            {
+            } else {
                 camUseNVG false;
                 false setCamUseTi 0;
             };
             call F_fnc_ReloadModes;
-
         };
-        case f_cam_lb_toggletiBHIndex: // BlackHot
-        {
+        case f_cam_lb_toggletiBHIndex: { // BlackHot
             f_cam_tiBHOn = !f_cam_tiBHOn;
-            if(f_cam_tiBHOn) then {
+            if (f_cam_tiBHOn) then {
                 camUseNVG false;
                 f_cam_tiWHOn = false;
                 f_cam_nvOn = false;
                 true setCamUseTi 1;
-            }
-            else
-            {
+            } else {
                 camUseNVG false;
                 false setCamUseTi 0;
             };
             call F_fnc_ReloadModes;
 
         };
-        case f_cam_lb_toggleNormal:
-        {
+        case f_cam_lb_toggleNormal: {
                 false setCamUseTi 0;
                 camUseNVG false;
                 f_cam_tiWHOn = false;
@@ -152,55 +129,44 @@ case "LBListSelChanged_modes":
                 f_cam_nvOn = false;
             call F_fnc_ReloadModes;
         };
-        case f_cam_lb_toggletiNVIndex: // Nightvision
-        {
+        case f_cam_lb_toggletiNVIndex: { // Nightvision
             f_cam_nvOn = !f_cam_nvOn;
-            if(f_cam_nvOn) then {
+            if (f_cam_nvOn) then {
                 false setCamUseTi 0;
                 camUseNVG true;
                 f_cam_tiWHOn = false;
                 f_cam_tiBHOn = false;
-            }
-            else
-            {
+            } else {
                 camUseNVG false;
                 false setCamUseTi 0;
             };
             call F_fnc_ReloadModes;
-
         };
     };
 };
 // ==================================================================
 // handles keys
-case "KeyDown":
-{
+case "KeyDown": {
     _key = _args select 1;
     _handled = false;
-    if(!isNull (findDisplay 49)) exitWith {if(_key == 1) then {true}};
-    switch (_key) do
-    {
-        case 78: // numpad +
-        {
+    if (!isNull (findDisplay 49)) exitWith {if (_key isEqualTo 1) then {true}};
+    switch (_key) do {
+        case 78: { // numpad +
             f_cam_zoom = f_cam_zoom - 1;
             _handled = true;
         };
-        case 1:
-        {
+        case 1: {
             _handled = false;
         };
-        case f_cam_zeusKey:
-        {
-            if(serverCommandAvailable "#kick" || !isNull (getAssignedCuratorLogic player) ) then {
+        case f_cam_zeusKey: {
+            if (serverCommandAvailable "#kick" || !isNull (getAssignedCuratorLogic player) ) then {
                 // handler to check when we can return to the spectator system ( when zeus interface is closed and not remoteing controlling)
                 [] spawn {
                     _done = false;
                     waitUntil {sleep 0.1;!isNull (findDisplay 312)}; // wait until open
-                    while {!_done} do
-                    {
+                    while {!_done} do {
                         waitUntil {sleep 0.1;isNull (findDisplay 312)}; // then wait until its not open
-                        if(isnil "bis_fnc_moduleRemoteControl_unit") then // check if someone is being remote controled
-                        {
+                        if (isnil "bis_fnc_moduleRemoteControl_unit") then { // check if someone is being remote controled
                             [player,player,player,0,true] spawn F_fnc_CamInit; // if not retoggle
                             _done = true;
                         }; // restart spectator once exit.
@@ -212,7 +178,7 @@ case "KeyDown":
 
                 // black out the screen
                 ["F_ScreenSetup",false] call BIS_fnc_blackOut;
-                if(isNull (getAssignedCuratorLogic player)) then {
+                if (isNull (getAssignedCuratorLogic player)) then {
                     [[player,true,playableUnits],'f_fnc_zeusInit',false] spawn BIS_fnc_MP;
                 };
                 [] spawn {
@@ -221,76 +187,63 @@ case "KeyDown":
                     openCuratorInterface;
                 };
                 _handled = true;
-            }
-            else
-            {
+            } else {
                 _handled = true;
             };
         };
-        case 74: // numpad -
-        {
+        case 74: { // numpad -
             f_cam_zoom = f_cam_zoom + 1;
             f_cam_zoom = 0.3 max f_cam_zoom;
             _handled = true;
         };
-        case 20: // T
-        {
+        case 20: { // T
             f_cam_tracerOn = !f_cam_tracerOn;
-            if(f_cam_tracerOn) then {
+            if (f_cam_tracerOn) then {
                 systemChat "Tracers on map activated.";
             } else {
                 systemChat "Tracers on map deactivated.";
             };
             _handled = true;
         };
-        case 22: // U
-        {
+        case 22: { // U
             f_cam_hideUI = !f_cam_hideUI;
             [] spawn f_fnc_ToggleGUI;
             _handled = true;
         };
         // Freecam movement keys
-        case 17: // W
-        {
+        case 17: { // W
             f_cam_freecam_buttons set [0,true];
             _handled = true;
         };
-        case 31: // S
-        {
+        case 31: { // S
             f_cam_freecam_buttons set [1,true];
             _handled = true;
         };
-        case 30: // A
-        {
+        case 30: { // A
             f_cam_freecam_buttons set [2,true];
             _handled = true;
         };
-        case 32: // D
-        {
+        case 32: { // D
             f_cam_freecam_buttons set [3,true];
             _handled = true;
         };
-        case 49: // N
-        {
+        case 49: { // N
             _index = (lbCurSel 2101)+1;
-            if(_index >= (lbSize 2101 )) then { _index = 0};
+            if (_index >= (lbSize 2101 )) then { _index = 0};
             lbSetCurSel [2101,_index];
             _handled = true;
         };
-        case 16: // Q
-        {
+        case 16: { // Q
             f_cam_freecam_buttons set [4,true];
             _handled = true;
         };
-        case 44: // Z
-        {
+        case 44: { // Z
             f_cam_freecam_buttons set [5,true];
             _handled = true;
         };
-        case 57: // SPACE
-        {
+        case 57: { // SPACE
             f_cam_freecamOn = !f_cam_freecamOn;
-            if(f_cam_freecamOn) then {
+            if (f_cam_freecamOn) then {
                 f_cam_angleY = 10;
                 [f_cam_freecamera,f_cam_angleY,0] call BIS_fnc_setPitchBank;
                 f_cam_freecamera cameraEffect ["internal", "BACK"];
@@ -308,9 +261,7 @@ case "KeyDown":
             };
              _handled = true;
         };
-
-        case 35: //  H
-        {
+        case 35: { //  H
             ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\n\nPress 'F2' to hide this message and others like it.",15] call phx_fnc__hintThenClear;
             ctrlShow [1315, !ctrlVisible 1315];
             ctrlShow [1310, !ctrlVisible 1310];
@@ -318,14 +269,12 @@ case "KeyDown":
             ctrlShow [1305, !ctrlVisible 1305];
              _handled = true;
         };
-        case 42: // SHIFT
-        {
+        case 42: { // SHIFT
             f_cam_shift_down = true;
             [] spawn f_fnc_HandleCamera;
              _handled = true;
         };
-        case 25: // P
-        {   
+        case 25: { // P
             if (isNil "f_cam_nextVoiceChange" || {diag_tickTime > f_cam_nextVoiceChange}) then {
                 f_cam_nextVoiceChange = diag_tickTime + 2;
                 
@@ -346,7 +295,6 @@ case "KeyDown":
                             if (f_cam_mode isEqualTo 3) then {
                                 // Freecam
                                 player setPos (getPos f_cam_freecamera);
-                                
                             } else {
                                 // Chase cam
                                 player setPos (getPos f_cam_camera);
@@ -376,7 +324,7 @@ case "KeyDown":
                                     } forEach _radioArray;
                                     
                                     // Add a CBA PFH that will copy the camera target's radio info into the spectator's radios once they are added by TFAR.
-                                    if (isNil "phx_spect_addingRadios" && !(count _radioArray isEqualTo 0)) then {
+                                    if (isNil "phx_spect_addingRadios" && {!(count _radioArray isEqualTo 0)}) then {
                                         phx_spect_addingRadios = true;
                                         [{
                                             params ["_args","_handle"];
@@ -404,7 +352,6 @@ case "KeyDown":
                                     };
                                 };
                             };
-                            
                         } else {
                             player setPos f_cam_originalPosition;
                             [_handle] call CBA_fnc_removePerFrameHandler;
@@ -419,39 +366,33 @@ case "KeyDown":
                 systemChat format["Please wait %1 second(s) to change voice modes again.",(diag_tickTime-f_cam_nextVoiceChange)];
             };
         };
-        case 29: // CTRL
-        {
+        case 29: { // CTRL
             f_cam_ctrl_down = true;
             [] spawn f_fnc_HandleCamera;
              _handled = true;
         };
-        case 50: // M
-        {
+        case 50: { // M
             f_cam_mapMode = f_cam_mapMode +1;
-            if(f_cam_mapMode > 2) then {
+            if (f_cam_mapMode > 2) then {
                 f_cam_mapMode = 0;
             };
             switch (f_cam_mapMode) do
             {
                 // no maps
-                case 0:
-                {
+                case 0: {
                     ctrlShow [2110,true];
                     ctrlShow [2010,true];
                     ctrlShow [1350,false];
                     ctrlShow [1360,false];
                 };
-
-                case 1:
-                {
+                case 1: {
                     ctrlShow [2110,true];
                     ctrlShow [2010,true];
                     ctrlShow [1350,true];
                     ctrlShow [1360,false];
                 };
                 // big map
-                case 2:
-                {
+                case 2: {
                     ctrlShow [2110,false];
                     ctrlShow [2010,false];
                     ctrlShow [1350,false];
@@ -466,127 +407,100 @@ case "KeyDown":
             };
             _handled = true;
         };
-        case 205: //RIGHT ARROW KEY
-        {
+        case 205: { //RIGHT ARROW KEY
             if (f_cam_tagTextSize < .05) then {
                 f_cam_tagTextSize = f_cam_tagTextSize + .0005;
             } else {
                 f_cam_tagTextSize = .05;
             };
         };
-        case 203: //LEFT ARROW KEY
-        {
+        case 203: { //LEFT ARROW KEY
             if (f_cam_tagTextSize >= 0.0005) then {
                 f_cam_tagTextSize = f_cam_tagTextSize - .0005;
             } else {
                 f_cam_tagTextSize = 0;
             };
         };
-        case 59: // F1
-        {
+        case 59: { // F1
             ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\nPress 'F2' to clear hints.\n",15] call phx_fnc__hintThenClear;
         };
-        case 60: // F2
-        {
+        case 60: { // F2
             hint "";
         };
-        case 47: // V
-        {
+        case 47: { // V
             phx_show_timeUI = !phx_show_timeUI;
         };
     };
     _handled
 };
 
-
-case "KeyUp":
-{
-    if(!isNull (findDisplay 49)) exitWith {};
+case "KeyUp": {
+    if (!isNull (findDisplay 49)) exitWith {};
     _key = _args select 1;
     _handled = false;
-    switch (_key) do
-    {
-        case 42:
-        {
+    switch (_key) do {
+        case 42: {
             f_cam_shift_down = false;
             _handled = true;
         };
-        case 1:
-        {
+        case 1: {
             _handled = false;
         };
-        case 29:
-        {
+        case 29: {
             f_cam_ctrl_down = false;
             _handled = true;
         };
-        case 203:
-        {
+        case 203: {
             _handled = true;
         };
-        case 205:
-        {
+        case 205: {
             _handled = true;
         };
-        case 24:
-        {
+        case 24: {
             _handled = true;
         };
-        case 28:
-        {
+        case 28: {
             _handled = true;
         };
-        case 49:
-        {
+        case 49: {
             _handled = true;
         };
-        case 200:
-        {
+        case 200: {
             _handled = true;
         };
-        case 208:
-        {
+        case 208: {
             _handled = true;
         };
-        case 74:
-        {
+        case 74: {
             _handled = true;
         };
-        case 78:
-        {
+        case 78: {
             _handled = true;
         };
-        case 57:
-        {
+        case 57: {
             _handled = true;
         };
-        case 17:
-        {
+        case 17: {
             f_cam_freecam_buttons set [0,false];
             _handled = true;
         };
-        case 31:
-        {
+        case 31: {
             f_cam_freecam_buttons set [1,false];
             _handled = true;
         };
-        case 30:
-        {
+        case 30: {
             f_cam_freecam_buttons set [2,false];
             _handled = true;
         };
-        case 32:
-        {
+        case 32: {
             f_cam_freecam_buttons set [3,false];
             _handled = true;
         };
-        case 16:
-        {
+        case 16: {
             f_cam_freecam_buttons set [4,false];
             _handled = true;
         };
-        case 44:
-        {
+        case 44: {
             f_cam_freecam_buttons set [5,false];
             _handled = true;
         };
