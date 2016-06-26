@@ -68,7 +68,7 @@ _visText = "";
 _magVisText = "";
 {
     _icon = getText(configFile >> "CfgMagazines" >> (_x select 0) >> "picture");
-    if (_icon find ".paa" == -1) then { _icon = _icon + ".paa"};
+    if (_icon find ".paa" isEqualTo -1) then { _icon = _icon + ".paa"};
     _magVisText = _magVisText + "<img image='" + _icon + "' height=48 />";
     if ((_x select 1) > 1) then {
         _magVisText = _magVisText + format[" x%1",(_x select 1)];
@@ -93,7 +93,7 @@ if (count _weps > 0) then {
             ["UGL_F"] call _fnc_wepMags;
         };
         _icon = getText(configFile >> "CfgWeapons" >> _x >> "picture");
-        if (_icon find ".paa" == -1) then { _icon = _icon + ".paa"};
+        if (_icon find ".paa" isEqualTo -1) then { _icon = _icon + ".paa"};
         _visText = _visText + "<img image='" + _icon + "' height=48 />";
         
         // List weapon attachments
@@ -104,7 +104,7 @@ if (count _weps > 0) then {
         {
             if (typeName _x != typeName [] && {_x != ""}) then {
                 _icon = getText(configFile >> "CfgWeapons" >> _x >> "picture");
-                if (_icon find ".paa" == -1) then { _icon = _icon + ".paa"};
+                if (_icon find ".paa" isEqualTo -1) then { _icon = _icon + ".paa"};
                 _text = _text + format["<br/> |- %1",getText (configFile >> "CfgWeapons" >> _x >> "displayname")];
                 _visText = _visText + "<img image='" + _icon + "' height=48 />";
             };
@@ -132,7 +132,7 @@ _visText = _visText + _magVisText;
 // BACKPACK
 // Add lines for all other items
 
-if !(backpack player == "") then {
+if !(backpack player isEqualTo "") then {
     _text = _text + "<br/><font size='18'>BACKPACK [%FULL]:</font><br/>";
     _text = _text + format["%1 [%2",getText (configFile >> "CfgVehicles" >> (backpack player) >> "displayname"), 100*loadBackpack player]+"%]<br/>";
 };

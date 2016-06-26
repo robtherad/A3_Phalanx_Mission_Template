@@ -5,6 +5,8 @@ if (!isNil "phx_loadout_assigned") exitWith {};
 phx_loadout_assigned = false;
 
 private _char = typeOf player;
+_char = toLower _char;
+
 //Get radio and map parameters from the slot screen. If the parameters don't exist then they default to giving everybody a map and radio.
 phx_loadout_radio = ["phx_loadout_radio",0] call BIS_fnc_getParamValue;
 phx_loadout_map = ["phx_loadout_map",0] call BIS_fnc_getParamValue;
@@ -41,48 +43,49 @@ removeGoggles player;
     
     switch (_char) do {
      //Red - CSAT/EAST - OPF_F
-     case "O_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_PL.sqf",_loadout]};
-     case "O_Soldier_AR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AR.sqf",_loadout]};
-     case "O_medic_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CLS.sqf",_loadout]};
-     case "O_Soldier_A_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAR.sqf",_loadout]};
-     case "O_Soldier_SL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_SL.sqf",_loadout]};
-     case "O_Soldier_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_R.sqf",_loadout]};
-     case "O_Soldier_GL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_GR.sqf",_loadout]};
-     case "O_Soldier_TL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_TL.sqf",_loadout]};
-     case "O_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CE.sqf",_loadout]};
-     case "O_HeavyGunner_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MG.sqf",_loadout]};
-     case "O_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AG.sqf",_loadout]};
-     case "O_Soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_RAT.sqf",_loadout]};
-     case "O_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AM.sqf",_loadout]};
-     case "O_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]};
+     case toLower "O_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_PL.sqf",_loadout]};
+     case toLower "O_Soldier_AR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AR.sqf",_loadout]};
+     case toLower "O_medic_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CLS.sqf",_loadout]};
+     case toLower "O_Soldier_A_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAR.sqf",_loadout]};
+     case toLower "O_Soldier_SL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_SL.sqf",_loadout]};
+     case toLower "O_Soldier_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_R.sqf",_loadout]};
+     case toLower "O_Soldier_GL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_GR.sqf",_loadout]};
+     case toLower "O_Soldier_TL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_TL.sqf",_loadout]};
+     case toLower "O_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CE.sqf",_loadout]};
+     case toLower "O_HeavyGunner_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MG.sqf",_loadout]};
+     case toLower "O_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AG.sqf",_loadout]};
+     case toLower "O_Soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_RAT.sqf",_loadout]};
+     case toLower "O_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AM.sqf",_loadout]};
+     case toLower "O_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]};
      //Blue - NATO/WEST - BLU_F
-     case "B_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_PL.sqf",_loadout]};
-     case "B_soldier_AR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AR.sqf",_loadout]};
-     case "B_medic_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CLS.sqf",_loadout]};
-     case "B_soldier_AAR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAR.sqf",_loadout]};
-     case "B_Soldier_SL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_SL.sqf",_loadout]};
-     case "B_Soldier_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_R.sqf",_loadout]};
-     case "B_Soldier_GL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_GR.sqf",_loadout]};
-     case "B_Soldier_TL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_TL.sqf",_loadout]};
-     case "B_HeavyGunner_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MG.sqf",_loadout]};
-     case "B_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AG.sqf",_loadout]};
-     case "B_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]};
-     case "B_soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]};
-     case "B_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
-     case "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
+     case toLower "B_officer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_PL.sqf",_loadout]};
+     case toLower "B_soldier_AR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AR.sqf",_loadout]};
+     case toLower "B_medic_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CLS.sqf",_loadout]};
+     case toLower "B_soldier_AAR_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAR.sqf",_loadout]};
+     case toLower "B_Soldier_SL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_SL.sqf",_loadout]};
+     case toLower "B_Soldier_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_R.sqf",_loadout]};
+     case toLower "B_Soldier_GL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_GR.sqf",_loadout]};
+     case toLower "B_Soldier_TL_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_TL.sqf",_loadout]};
+     case toLower "B_HeavyGunner_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MG.sqf",_loadout]};
+     case toLower "B_Soldier_lite_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AG.sqf",_loadout]};
+     case toLower "B_engineer_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]};
+     case toLower "B_soldier_LAT_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]};
+     case toLower "B_Soldier_unarmed_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]};
+     case toLower "B_soldier_PG_F": {[] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]};
      // Virtual Spectator Slots
-     case "VirtualMan_F": {
+     case toLower "VirtualMan_F": {
         player forceAddUniform "U_I_Protagonist_VR";
         player linkItem "ItemMap";
         missionNamespace setVariable ["phx_loadoutAssigned",true];
         
         // Waits until mission starts and then forces player into F3 spectator instead of EG spectator
-        [{(CBA_missionTime > 0) && (!isNull player) && (cameraOn isEqualTo player)}, {
+        [{(CBA_missionTime > 0) && {(!isNull player)} && {(cameraOn isEqualTo player)}}, {
             [{
                 [player, objNull, 0, 0, true] call f_fnc_camInit;
             }] call CBA_fnc_execNextFrame;
         }] call CBA_fnc_waitUntilAndExecute;
      };
+     default {diag_log format["PHX fn_loadout_set: Unable to find player classname in list: %1",_char];};
     };
 
     // Generate loadout briefing page.

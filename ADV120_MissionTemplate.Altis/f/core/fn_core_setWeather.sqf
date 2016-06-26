@@ -1,6 +1,5 @@
-date params ["_year", "_month", "_day", "_hour", "_minute"];
-
 private _weather = ["phx_core_weatherSettings",-1] call BIS_fnc_getParamValue;
+
 if !(_weather isEqualTo -1) then {
     switch (_weather) do {
         case 0: { 0 setFog 0.4; 0 setRain 0; 0 setOvercast 0.4; }; // Light Fog

@@ -1,5 +1,5 @@
 if (!isServer) exitWith {};
 
 {
-    _x addEventHandler ["HandleScore",{0}];
+    _x addEventHandler ["HandleScore",{false}];
 } forEach (playableUnits + switchableUnits);
