@@ -84,7 +84,7 @@ if ((missionNamespace getVariable ["phx_loadout_addNVG",false]) isEqualType "") 
                 player unlinkItem _x;
             };
         };
-    } forEach phx_loadout_addNVG;
+    } forEach phx_loadout_nvgoggleArray;
     if !(_hasNVG) then {
         player linkItem phx_loadout_addNVG;
     };
