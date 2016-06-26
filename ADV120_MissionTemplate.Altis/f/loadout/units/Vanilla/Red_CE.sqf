@@ -15,6 +15,6 @@ player addWeapon "arifle_Katiba_F";
 player addItemToVest "30Rnd_65x39_caseless_green";
 
 // Add items
-call phx_fnc_loadout_handleItems;
+call phx_fnc_loadout_handleItems; // Add binocular/nvg variables above this line!
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.
