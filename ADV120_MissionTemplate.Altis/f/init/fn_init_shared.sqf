@@ -1,8 +1,6 @@
 //====================================================================================================
 // Shared Scripts
 
-diag_log format["sharedInit: canSuspend:%1",canSuspend];
-
 // Add event handlers for rating and score
 call phx_fnc_core_addRatingEH;
 call phx_fnc_core_addScoreEH;

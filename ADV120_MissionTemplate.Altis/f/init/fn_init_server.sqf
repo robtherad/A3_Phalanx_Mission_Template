@@ -1,8 +1,16 @@
 //====================================================================================================
 // Server Scripts
 if !(isServer) exitWith {};
-diag_log format["serverInit: canSuspend:%1",canSuspend];
-// Check ending conditions
+
+// Initialize Variables - End conditions
+phx_missionSafeTime = ["f_param_mission_timer",0] call BIS_fnc_getParamValue; //Default - 0 minute safestart
+phx_missionRunTime = ["phx_missionTimelimit",45] call BIS_fnc_getParamValue; //Default - 45 minute battle phase
+phx_missionRuntimeMins = phx_missionRunTime + phx_missionSafeTime;
+phx_alertOver = 1; // Time elapsed warning
+phx_alertEnd = 0; // Time elapsed warning
+phx_alertSoon = 0; // 15 minute warning
+
+// Start check ending conditions
 phx_end_checkTime = [phx_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
 phx_end_checkAlive = [phx_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
 

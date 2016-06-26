@@ -1,6 +1,6 @@
 //====================================================================================================
 // Client init - Player is not null by this point
-diag_log format["clientInit: canSuspend:%1",canSuspend];
+
 // Set loadouts
 call phx_fnc_loadout_set;
 
@@ -27,6 +27,11 @@ call phx_fnc_reviveInit;
 
 // Generate ORBAT page
 [] execVM "f\briefing\f_orbatNotes.sqf";
+
+// Initialize variables for spectator script later on
+phx_spect_playerGroup = group player;
+private _str = str player;
+phx_spect_playerGroupNumber = parseNumber (_str select [(_str find ":") + 1]);
 
 //====================================================================================================
 phx_clientInitFinished = true;

@@ -1,6 +1,6 @@
 //====================================================================================================
 // Scripts that need to run only after players load into the game world
-diag_log format["postBriefingInit: canSuspend:%1",canSuspend];
+
 if (hasInterface) then {
     // Start GPS script
     call phx_fnc_gps_init;
