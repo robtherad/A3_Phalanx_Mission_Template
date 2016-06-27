@@ -81,4 +81,5 @@ class revive {
     class SetBleeding{};
     class OnRevive{};
     class OnSlowBleeding{};
+    class ReviveInit{};
 };

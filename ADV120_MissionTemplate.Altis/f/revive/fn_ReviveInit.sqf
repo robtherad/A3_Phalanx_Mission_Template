@@ -3,8 +3,6 @@
 // ====================================================================================
 if (!hasInterface) ExitWith {};
 
-waitUntil {!isNull player};
-
 // add briefing
 if (isNil "phx_revive_briefing") then {phx_revive_briefing = true;};
 if (isNil "phx_revive_extraFAK") then {phx_revive_extraFAK = 0};
