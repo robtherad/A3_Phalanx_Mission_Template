@@ -44,11 +44,19 @@ switch (side group player) do {
     default {};
 };
 
-// Remove Stuff
+
+// Add stuff
+[{
+params ["_args", "_handle"];
+_args params ["_addGearTime","_frameAdded","_char", "_loadout"];
+
+if (diag_tickTime > _addGearTime && {diag_frameNo-10 > _frameAdded}) then {
+
 removeAllWeapons player;
 removeGoggles player;
 
-// Add stuff
+[_handle] call CBA_fnc_removePerFrameHandler;
+
 switch (_char) do {
     //----------------------------------------
     // REDFOR - CSAT/EAST - OPF_F
@@ -139,7 +147,6 @@ switch (_char) do {
     case toLower "B_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]
     };
-    
     //----------------------------------------
     // Spectator Slots
     case toLower "VirtualMan_F": {
@@ -162,3 +169,5 @@ switch (_char) do {
 
 // Generate loadout briefing page.
 call phx_fnc_loadout_notes;
+};
+}, 0, [(diag_tickTime+2.5),diag_frameno,_char,_loadout]] call CBA_fnc_addPerFrameHandler;
