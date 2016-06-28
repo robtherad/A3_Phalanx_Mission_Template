@@ -36,7 +36,7 @@ Excluding groups from being marked
 if (isDedicated) exitWith {};
 //Check to see if mission parameters have markers enabled - Default ON
 _useMarkers = ["phx_gps_markersEnabledParam",1] call BIS_fnc_getParamValue;
-if (_useMarkers == 0) exitWith {};
+if (_useMarkers isEqualTo 0) exitWith {};
 
 #include "settings.sqf";
 
@@ -54,7 +54,7 @@ if (!isNil "phx_sideVehArray") then {
         phx_sideVehArray2 pushBack _veh;
     } forEach phx_sideVehArray;
 };
-if (!isNil "_sidesVisibleToWest" && !isNil "_sidesVisibleToEast" && !isNil "_sidesVisibleToGuer") then {
+if (!isNil "_sidesVisibleToWest" && {!isNil "_sidesVisibleToEast"} && {!isNil "_sidesVisibleToGuer"}) then {
     //Set a variable that contains every side who's markers the player should be able to see
     switch (side player) do {
         case west: { phx_sidesVisibleToPlayer = _sidesVisibleToWest; };

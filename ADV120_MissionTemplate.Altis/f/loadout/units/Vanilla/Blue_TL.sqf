@@ -1,8 +1,7 @@
+phx_loadout_unitLevel = 1;
+
 // Add clothing
-player forceAddUniform "U_B_CombatUniform_mcam";
-player addVest "V_PlateCarrier1_rgr";
-player addBackpack "B_TacticalPack_mcamo";
-player addHeadgear "H_HelmetB_sand";
+call phx_fnc_loadout_handleClothing; // Add clothing variables above this line!
 
 // Add gear
 for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
@@ -14,17 +13,9 @@ for "_i" from 1 to 4 do {player addItemToVest "1Rnd_Smoke_Grenade_shell";};
 for "_i" from 1 to 4 do {player addItemToVest "UGL_FlareWhite_F";};
 player addWeapon "arifle_MX_GL_F";
 for "_i" from 1 to 6 do {player addItemToBackpack "30Rnd_65x39_caseless_mag";};
-player addWeapon "Binocular";
 
 // Add items
-if ((phx_loadout_map isEqualTo 0) or (phx_loadout_map isEqualTo 1)) then {
-    ["ItemMap"] call phx_fnc_loadout_addItem;
-    if ((phx_loadout_gps isEqualTo 0) or (phx_loadout_gps isEqualTo 1)) then {
-        ["ItemGPS"] call phx_fnc_loadout_addItem;
-    } else {player unlinkItem "ItemGPS";};
-} else {player unlinkItem "ItemMap";player unlinkItem "ItemGPS";};
-if ((phx_loadout_radio isEqualTo 0) or (phx_loadout_radio isEqualTo 1)) then {
-    ["ItemRadio"] call phx_fnc_loadout_addItem;
-} else {player unlinkItem "ItemRadio";};
+phx_loadout_addBinocular = "Binocular";
+call phx_fnc_loadout_handleItems; // Add binocular/nvg variables above this line!
 
 missionNamespace setVariable ["phx_loadoutAssigned",true]; //Place this at the end of the loadout script so other scripts can tell when the player's loadout has been set.

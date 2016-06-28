@@ -1,17 +1,26 @@
+class init {
+    file = "f\init";
+    class init_server{};
+    class init_client{};
+    class init_shared{};
+    class init_postBriefing{};
+};
 class core {
     file = "f\core";
-    class core_addKilledEH{postInit = 1;};
+    class core_addKilledEH{};
     class core_mpKilled{};
     class core_showTags{};
-    class core_addRatingEH{postInit = 1;};
-    class core_addScoreEH{postInit = 1;};
+    class core_addRatingEH{};
+    class core_addScoreEH{};
     class core_playerBoundsCheck{};
-    class core_setDate{postInit = 1;};
-    class core_setWeather{postInit = 1;};
+    class core_setDate{};
+    class core_setWeather{};
+    class core_shownHUDCheck{};
+    class core_headsetAction{};
 };
 class radios {
     file = "f\radios";
-    class radio_genFreqs{postInit = 1;};
+    class radio_genFreqs{};
     class radio_waitGear{};
     class radio_getChannels{};
     class radio_waitRadios{};
@@ -20,9 +29,11 @@ class radios {
 };
 class loadout {
     file = "f\loadout";
-    class loadout_set{postInit = 1;};
+    class loadout_set{};
     class loadout_notes{};
-    class loadout_addItem{};
+    class loadout_handleItems{};
+    class loadout_handleClothing{};
+    class loadout_checkLoadout{postInit = 1;};
 };
 class gpsmarkers {
     file = "f\gpsmarkers";
@@ -55,4 +66,20 @@ class sector {
     class sectorInit{};
     class titleTextSector{};
     class watchSector{};
+};
+class revive {
+    file = "f\revive";
+    class AddLinkedItems{};
+    class SetDowned{};
+    class WoundedEffect{};
+    class HasWounded{};
+    class EjectWounded{};
+    class OnDrag{};
+    class LifeTick {};
+    class OnDeath {};
+    class OnDamage{};
+    class SetBleeding{};
+    class OnRevive{};
+    class OnSlowBleeding{};
+    class ReviveInit{};
 };

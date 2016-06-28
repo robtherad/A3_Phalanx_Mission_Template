@@ -106,7 +106,7 @@ private ["_grp"];
     // Check first if the group exists
     _x params ["_identifier", "_shortName", "_longName", "_groupSize", "_radioArray"];
     _grp = missionNamespace getVariable[_identifier,grpNull];
-    if(!isNull _grp) then {
+    if (!isNull _grp) then {
         if !((groupID _grp) isEqualTo _shortName) then {
             _grp setGroupIdGlobal [_shortName,"GroupColor0"];
             _grp setVariable ["phx_groupIDSet",true,true];

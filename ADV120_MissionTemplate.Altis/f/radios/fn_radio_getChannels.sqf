@@ -7,7 +7,7 @@ switch (_side) do {
     default { titleText ["The game thinks you aren't one of the three teams!","PLAIN"]; };
 };
 //Error message
-if(isNil "phx_playerBaseChannel") exitWith {titleText ["Error! Default radio channels will not be set!","PLAIN DOWN",0.5];};
+if (isNil "phx_playerBaseChannel") exitWith {titleText ["Error! Default radio channels will not be set!","PLAIN DOWN",0.5];};
 
 phx_ch1 = phx_playerBaseChannel; //All players will be able to switch to channel 1 to get on platoon net.
 

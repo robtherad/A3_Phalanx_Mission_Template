@@ -23,7 +23,7 @@ if (isNil "phx_sector_quickestTime") then {
     // Time in minutes it would take to win if one team owned all points uncontested
     phx_sector_quickestTime = ["phx_sector_sectorTime",25] call BIS_fnc_getParamValue;
 };
-phx_sector_endPoints = (phx_sector_quickestTime * 60) * _delay;
+phx_sector_endPoints = (phx_sector_quickestTime * 60) * (count phx_sector_triggerArray);
 
 // Create markers for players to see whats going on
 {// forEach phx_sector_triggerArray

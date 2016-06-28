@@ -11,9 +11,9 @@ enableDebugConsole = 1;
 
 respawn = 3;
 respawnDialog = 0;
-respawndelay = 3;
+respawndelay = 2;
 respawnOnStart = -1;
-respawnTemplates[] = {"f_spectator"};
+respawnTemplates[] = {"phx_revive"};
 
 disableChannels[]={{0,true,true},{2,true,true},{4,true,true},{5,true,true},{6,true,true}};
 

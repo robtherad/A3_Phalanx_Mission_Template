@@ -101,11 +101,11 @@ _generateORBAT = {
                 };
                 if (getNumber (configFile >> "CfgVehicles" >> typeOf _x >> "attendant") isEqualTo 1) then {
                     private _colorUsed = _color;
-                    if (player == _x) then {_colorUsed = _highlightColor};
+                    if (player isEqualTo _x) then {_colorUsed = _highlightColor};
                     _groupString = _groupString + format["<font size='12'>%2<font color='%3'>%1</font> [M]</font>",name _x,_leftPad,_colorUsed];
                 } else {
                     private _colorUsed = _color;
-                    if (player == _x) then {_colorUsed = _highlightColor};
+                    if (player isEqualTo _x) then {_colorUsed = _highlightColor};
                     _groupString = _groupString + format["<font size='12'>%2<font color='%3'>%1</font></font>",name _x,_leftPad,_colorUsed];
                 };
             } forEach units _x;

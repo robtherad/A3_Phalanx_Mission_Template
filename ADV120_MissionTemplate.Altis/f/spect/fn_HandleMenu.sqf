@@ -5,13 +5,16 @@ switch (_button) do {
         f_cam_playersOnly = !f_cam_playersOnly;
         f_cam_listUnits = [];
         lbClear 2100;
-        if(f_cam_playersOnly) then { _control ctrlSetText "Players only";}
-        else { _control ctrlSetText "All units";};
+        if (f_cam_playersOnly) then {
+            _control ctrlSetText "Players only";
+        } else {
+            _control ctrlSetText "All units";
+        };
     };
     case 1: { // Side Filter
             // 0 = ALL, 1 = BLUFOR , 2 = OPFOR, 3 = INDFOR , 4 = Civ
             f_cam_sideButton = f_cam_sideButton +1;
-            if(f_cam_sideButton > 4) then {f_cam_sideButton = 0};
+            if (f_cam_sideButton > 4) then {f_cam_sideButton = 0};
             f_cam_side = switch (f_cam_sideButton) do {
                 case 0: {nil};
                 case 1: {west};
@@ -28,13 +31,10 @@ switch (_button) do {
     };
     case 3: { // Third/First Person Button
         [] call f_cam_ToggleFPCamera;
-        if(f_cam_toggleCamera) then
-        {
+        if (f_cam_toggleCamera) then {
             _control ctrlSetText "Third Person";
-        }
-        else
-        {
+        } else {
             _control ctrlSetText "First Person";
-        }
-    }
+        };
+    };
 };

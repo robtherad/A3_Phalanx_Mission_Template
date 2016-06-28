@@ -39,11 +39,11 @@ if (!hasInterface) exitWith {};
         };
         
         // Game started, player is JIP, put him in spectate
-        if (((phx_hasGameStarted) && (isNil "phx_didJipCheck")) && {isMultiplayer}) then {
+        if (((phx_hasGameStarted) && {(isNil "phx_didJipCheck")}) && {isMultiplayer}) then {
             phx_didJipCheck = true;
             [_handle] call CBA_fnc_removePerFrameHandler;
             diag_log format["PHX JIP Check: Game started, removing PFH, adding waitUntilAndExec."];
-            [{(!isNull player) && (player == player)}, {
+            [{(!isNull player) && (player isEqualTo player)}, {
                 // Execution
                 player setPos [-1000,-1000,0];
                 player setVariable ["phx_loadoutAssigned",false];

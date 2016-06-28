@@ -7,7 +7,7 @@ if (phx_show_timeUI) then {
     //Create displays in bottom left
     ("timeRsc" call BIS_fnc_rscLayer) cutRsc ["timeleftStructText", "PLAIN"];
     //If displays weren't created then exit the script
-    if (uiNameSpace getVariable "timeleftStructText" == displayNull) exitWith {hint "TIMELEFT display not defined in description.ext"};
+    if (uiNameSpace getVariable "timeleftStructText" isEqualTo displayNull) exitWith {hint "TIMELEFT display not defined in description.ext"};
 
     //Update text in the displays to match the points markers
     _display = uiNameSpace getVariable "timeleftStructText";
@@ -15,9 +15,9 @@ if (phx_show_timeUI) then {
     if (CBA_missionTime <= (_missionTime*60)) then {
         _mins = (_missionTime - floor(CBA_missionTime/60)) -1;
         _secs = 60-floor(CBA_missionTime%60);
-        if ((_secs < 10) || (_secs == 60)) then {
-            if (_secs == 60) then {
-                if (_secs == 60) then {
+        if ((_secs < 10) || (_secs isEqualTo 60)) then {
+            if (_secs isEqualTo 60) then {
+                if (_secs isEqualTo 60) then {
                     _secs = "00";
                     _mins = (_missionTime - floor(CBA_missionTime/60));
                 };
@@ -30,7 +30,7 @@ if (phx_show_timeUI) then {
         _mins = floor((CBA_missionTime-(_missionTime*60))/60);
         _secs = floor((CBA_missionTime-(_missionTime*60))%60);
         if (_secs < 10) then {
-            if (_secs == 0) then {
+            if (_secs isEqualTo 0) then {
                 _secs = "00";
                 _mins = floor((CBA_missionTime-(_missionTime*60))/60);
             };
