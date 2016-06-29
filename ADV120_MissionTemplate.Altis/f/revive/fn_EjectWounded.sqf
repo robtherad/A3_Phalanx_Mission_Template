@@ -12,7 +12,7 @@ params ["_veh", "_caller"];
             moveOut _x;
         };
         waitUntil {isNull objectParent _x}; // Wait until they aren't in the vehicle anymore
-        _x switchmove "acts_InjuredLookingRifle02";
+        _x switchMove "acts_InjuredLookingRifle02";
     };
 } forEach crew _veh;
 

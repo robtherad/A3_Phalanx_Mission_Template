@@ -40,3 +40,5 @@ if (_downedUnit getVariable ["phx_revive_bleeding",false]) then {
 if (_downedUnit getVariable ["phx_revive_down",false]) then {
     [_downedUnit, false] remoteExec ["phx_fnc_SetDowned", 0];
 };
+
+titleText [format["You have revived %1.",name _downedUnit], "PLAIN DOWN"];

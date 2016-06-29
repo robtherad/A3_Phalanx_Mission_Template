@@ -35,23 +35,32 @@ if (_totalDamage >= 1 && {_damage > 0.1} && {!(missionNamespace getVariable ["ph
             // Player isn't down
             if !(isNull objectParent _unit) then {
                 // Player is in a vehicle, skip the ragdoll part and just set them as downed
-                _damage = 0;
-                [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
-                
-                // Stop player from dying from followup shots for a short period
-                [_unit] spawn {
-                    params ["_unit"];
+                if (alive objectParent _unit) then {
+                    // But only set them as downed if the vehicle is still alive
+                    _damage = 0;
+                    [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
+                    
+                    // Stop player from dying from followup shots for a short period
                     _unit allowDamage false;
-                    sleep 1;
-                    _unit allowDamage true;
+                    [{
+                        params ["_unit"];
+                        _unit allowDamage true;
+                    }, [_unit], 1] call CBA_fnc_waitAndExecute;
+                } else {
+                    // If it's not, kill them permanently
+                    _unit setVariable ["phx_revive_respawnRevive",false,true];
+                    missionNamespace setVariable ["phx_revive_respawnRevive",false];
                 };
             } else {
                 // Player is not in a vehicle, apply full damage and add a function to 
-                [_unit] spawn {
+                [{
                     params ["_unit"];
-                    waitUntil {isNull _unit}; // Wait for body to get deleted after player respawns
+                    diag_log _unit;
+                    isNull _unit
+                }, {
+                    params ["_unit"];
                     [_unit, true] remoteExec ["phx_fnc_SetDowned", 0];
-                };
+                }, []] call CBA_fnc_waitUntilAndExecute;
             };
         } else {
             // Player's already down, shouldn't be reviveable again

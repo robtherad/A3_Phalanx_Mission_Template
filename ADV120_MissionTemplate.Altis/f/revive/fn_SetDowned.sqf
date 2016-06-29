@@ -26,7 +26,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])}"
         ];
         _unit setVariable ["phx_revive_bleedIndex",_bleedIndex];
         
@@ -133,7 +133,6 @@ if (_bool && {alive _unit}) then {
     
 } else { 
     // Get the unit up
-
     // Unit is already not down, no need to run again
     if (!(_unit getVariable ["phx_revive_down",false])) exitWith {};
 
@@ -145,9 +144,7 @@ if (_bool && {alive _unit}) then {
     
     // If the unit is not in a vehicle, play pretty animation otherwise just reset to their default animation
     if (isNull objectParent _unit) then {
-        _unit switchmove "AinjPpneMstpSnonWnonDnon_rolltofront";
-    } else {
-        _unit switchmove "";
+        _unit switchMove "AinjPpneMstpSnonWnonDnon_rfolltofront";
     };
     
     // Make AI shoot again
@@ -192,7 +189,9 @@ if (_bool && {alive _unit}) then {
         sleep 0.1;
         
         // Force him into prone otherwise he can get stuck in the rolltofrontanimation.
-        _unit playMove "amovppnemstpsraswrfldnon";
+        if (isNull objectParent _unit) then {
+            _unit playMove "amovppnemstpsraswrfldnon";
+        };
         _unit setDamage 0;
     };
 };
