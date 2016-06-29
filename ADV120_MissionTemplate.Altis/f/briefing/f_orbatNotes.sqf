@@ -11,7 +11,6 @@ _generateORBAT = {
     // Loop through the group, print out group ID, leader name and medics if present
     {
         if !((count units _x) isEqualTo 0) then {
-            waitUntil {_x getVariable ["phx_groupIDSet",false]};
             // Don't apply leading line breaks to first group.
             private _groupSize = _x getVariable ["phx_gps_groupSize",0];
             private _name = groupID _x;
@@ -123,7 +122,8 @@ private _side = side group player;
 private _orbatText = "<br />NOTE: The ORBAT below is only accurate at mission start.<br />
 <br />";
 
-waitUntil { !isNil "phx_playerBaseChannel"; };
+waitUntil { !isNil "phx_groupIDset" };
+waitUntil { !isNil "phx_playerBaseChannel" };
 
 phx_colorArrayBase = [
     "#8080FF", // light blue
