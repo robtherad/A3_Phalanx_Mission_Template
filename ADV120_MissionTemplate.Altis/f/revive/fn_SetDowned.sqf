@@ -81,8 +81,8 @@ if (_bool && {alive _unit}) then {
                 _unit removeMagazine _x;
                 _magazineList pushBack _x;
             };
-            
-        } forEach magazinesAmmoFull _unit;
+            false
+        } count magazinesAmmoFull _unit;
         _unit setVariable ["phx_revive_down_mags",_magazineList];
         
         // Disable TFAR speech
@@ -99,6 +99,7 @@ if (_bool && {alive _unit}) then {
         private _animList = getArray (configfile >> "CfgMovesMaleSdr" >> "States" >> animationState _unit >> "interpolateTo");
         private _newAnim = "passenger_inside_2_Die";
         private _newAnimSelected = false;
+        if (local _unit) then { disableUserInput true; };
         {
             if (_x isEqualType "") then {
                 if (["die",toLower(_x)] call bis_fnc_inString) then {
@@ -107,7 +108,8 @@ if (_bool && {alive _unit}) then {
                 };
             };
             if (_newAnimSelected) exitWith {};
-        } forEach _animList;
+            false
+        } count _animList;
         if (isNil "_newAnim") then {_newAnim = ""};
         _unit switchMove _newAnim;
         
@@ -169,7 +171,8 @@ if (_bool && {alive _unit}) then {
         private _mags = _unit getVariable ["phx_revive_down_mags",magazines _unit];
         {
             _unit addMagazine _x;
-        } forEach _mags;
+            false
+        } count _mags;
         
         // Reset the respawn variables
         player setVariable ["phx_revive_respawnRevive",true,true];
@@ -194,4 +197,5 @@ if (_bool && {alive _unit}) then {
         };
         _unit setDamage 0;
     };
+    if (local _unit) then { disableUserInput false; };
 };
