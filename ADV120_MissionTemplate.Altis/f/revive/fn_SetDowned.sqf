@@ -26,7 +26,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_bleedIndex",_bleedIndex];
         
@@ -39,7 +39,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_reviveIndex",_reviveIndex];
         
@@ -52,7 +52,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
+            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_dragIndex",_dragIndex];
     };

@@ -6,6 +6,7 @@ if (!hasInterface) exitWith {};
 params ["_unit", "_dragger"];
 
 _dragger setVariable ["phx_revive_dragging",_unit,true];
+_unit setVariable ["phx_revive_beingDragged",true,true];
 
 if (_dragger isEqualTo player) then {
     missionNamespace setVariable ["phx_revive_currentlyBusy",true];
@@ -97,7 +98,9 @@ if (local _unit) then {
             if (_dragger isEqualTo player) then {
                 missionNamespace setVariable ["phx_revive_currentlyBusy",false];
             };
-
+            
+            _unit setVariable ["phx_revive_beingDragged",false,true];
+            
             // Play animation depending upon if unit is down or not
             if (_draggedUnit getVariable ["phx_revive_down",false]) then {
                 _draggedUnit switchMove "acts_InjuredLookingRifle02";
