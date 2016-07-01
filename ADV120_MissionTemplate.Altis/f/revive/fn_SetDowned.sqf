@@ -99,7 +99,7 @@ if (_bool && {alive _unit}) then {
         private _animList = getArray (configfile >> "CfgMovesMaleSdr" >> "States" >> animationState _unit >> "interpolateTo");
         private _newAnim = "passenger_inside_2_Die";
         private _newAnimSelected = false;
-        disableUserInput true;
+        if (local _unit) then { disableUserInput true; };
         {
             if (_x isEqualType "") then {
                 if (["die",toLower(_x)] call bis_fnc_inString) then {
@@ -197,4 +197,5 @@ if (_bool && {alive _unit}) then {
         };
         _unit setDamage 0;
     };
+    if (local _unit) then { disableUserInput false; };
 };
