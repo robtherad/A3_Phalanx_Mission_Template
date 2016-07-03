@@ -65,7 +65,7 @@ fn_phx_updateVehMarks={
                                 (vehicle _unit) setVariable ["phx_UnitInside",_string];
                                 (vehicle _unit) setVariable ["phx_LastInside",_groupIdent];
                             } else {
-                                (vehicle _unit) setVariable ["phx_UnitInside",_groupIdent];
+                                (vehicle _unit) setVariable ["phx_UnitInside",(groupID _group)];
                                 (vehicle _unit) setVariable ["phx_LastInside",_groupIdent];
                             };
                             if (!isNil "phx_sideVehArray") then {
