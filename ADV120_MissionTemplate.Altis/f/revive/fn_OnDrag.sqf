@@ -23,7 +23,7 @@ if (_dragger isEqualTo player) then {
             _dragger setVariable ["phx_revive_dragging",nil,true];
         }, 
         nil, 
-        6, 
+        99, 
         false, 
         true, 
         "", 
