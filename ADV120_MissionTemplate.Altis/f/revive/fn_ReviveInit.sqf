@@ -18,6 +18,7 @@ TREATMENT<br/>
     Both actions have their own action separate from the BI treatment system. The revive action will display as 'Revive [player]' and the other will display as 'Slow [player]'s Bleeding'. If an action fails, a reason should be displayed towards the bottom-center of your screen.<br/><br/>
 BLEEDING OUT<br/>
     A downed player only has a few minutes before their wounds become fatal. Without any intervention, a downed player can survive for up to 2 minutes. If another player uses a First Aid Kit on a downed player, the downed player's rate of blood loss will slow, allowing the downed player to survive for up to 8 minutes. A downed player's ability to survive for longer periods of time while bleeding out depends on how long, and how recently, they were previously wounded. A fresh downed player should survive for the full duration, but a player who becomes a downed player multiple times within a short time period will have a shorter window for getting treatment each time they go down.<br/><br/>
+    Once a downed player has about 30 seconds of life left they will recieve a notification in the bottom-center of their screen telling them that they feel weak.<br/><br/>
 DRAGGING CASUALTIES<br/>
     Players can drag a downed player by moving next to them and selecting the relevant action menu option. Whilst dragging, the player has an action menu option for releasing the downed player.<br/><br/>
 CREDITS<br/>
