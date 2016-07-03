@@ -39,6 +39,7 @@ phx_revive_blood = 100;
 player setVariable ["phx_revive_dragging",nil];
 player setVariable ["phx_revive_respawnRevive",true,true];
 phx_revive_respawnRevive = true;
+// diag_log format["[PHX] (revive) init: Disallowing permakill."];
 
 // Lifeticker, manages bleeding and blood values.
 [] spawn phx_fnc_LifeTick;
@@ -59,14 +60,14 @@ phx_revive_damageValue = 1.1;
 // Eventhandlers for the player.
 player addEventHandler ["HandleDamage",{_this call phx_fnc_OnDamage}];
 player addEventHandler ["InventoryClosed",{
-    if (alive player) then {
+    if (alive player && !(missionNamespace getVariable ["phx_revive_isPlayerDead",false])) then {
         missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
         [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
         missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
     };
 }];
 player addEventHandler ["InventoryOpened",{
-    if (alive player) then {
+    if (alive player && !(missionNamespace getVariable ["phx_revive_isPlayerDead",false])) then {
         missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
         [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
         missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
@@ -80,7 +81,7 @@ player addEventHandler ["InventoryOpened",{
         params ["_args", "_handle"];
         
         if (isNil "phx_isSpectator") then {
-            if ( ((diag_tickTime-4.9) > missionNamespace getVariable ["phx_revive_lastSavedLoadoutTime",0]) && {!(missionNamespace getVariable ["phx_revive_down",false])} && {alive player}) then {
+            if ( ((diag_tickTime-4.9) > missionNamespace getVariable ["phx_revive_lastSavedLoadoutTime",0]) && {!(missionNamespace getVariable ["phx_revive_down",false])} && {alive player} && {!(missionNamespace getVariable ["phx_revive_isPlayerDead",false])}) then {
                 missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
                 [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
                 missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved

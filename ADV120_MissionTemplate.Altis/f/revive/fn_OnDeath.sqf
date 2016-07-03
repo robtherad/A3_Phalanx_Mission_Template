@@ -11,7 +11,11 @@ params [
     ["_respawnDelay", 0, [0]]
 ];
 
+missionNamespace setVariable ["phx_revive_isPlayerDead",true];
+
 if (phx_revive_respawnRevive) then {
+    // diag_log format["[PHX] (revive) onDeath: Player died - Revive"];
+    
     waitUntil {!isNull _newUnit};
     
     // Get player back the same gear he had when he died
@@ -33,7 +37,10 @@ if (phx_revive_respawnRevive) then {
     _newUnit setVariable ["phx_revive_bleedFast",phx_revive_bleedFast, true];
     _newUnit setVariable ["phx_revive_respawnRevive",phx_revive_respawnRevive, true];
     
+    missionNamespace setVariable ["phx_revive_isPlayerDead",false];
+    
 } else {
+    // diag_log format["[PHX] (revive) onDeath: Player died - Spectator"];
     // If unit is down, unset them as down
     if (phx_revive_down) then {
         [_oldUnit, false] remoteExec ["phx_fnc_SetDowned", 0];
