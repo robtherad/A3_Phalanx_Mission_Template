@@ -26,7 +26,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_bleedIndex",_bleedIndex];
         
@@ -39,7 +39,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
+            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_reviveIndex",_reviveIndex];
         
@@ -52,7 +52,7 @@ if (_bool && {alive _unit}) then {
             false, 
             true, 
             "", 
-            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this}"
+            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
         ];
         _unit setVariable ["phx_revive_dragIndex",_dragIndex];
     };
@@ -81,8 +81,8 @@ if (_bool && {alive _unit}) then {
                 _unit removeMagazine _x;
                 _magazineList pushBack _x;
             };
-            
-        } forEach magazinesAmmoFull _unit;
+            false
+        } count magazinesAmmoFull _unit;
         _unit setVariable ["phx_revive_down_mags",_magazineList];
         
         // Disable TFAR speech
@@ -99,6 +99,7 @@ if (_bool && {alive _unit}) then {
         private _animList = getArray (configfile >> "CfgMovesMaleSdr" >> "States" >> animationState _unit >> "interpolateTo");
         private _newAnim = "passenger_inside_2_Die";
         private _newAnimSelected = false;
+        if (local _unit) then { disableUserInput true; };
         {
             if (_x isEqualType "") then {
                 if (["die",toLower(_x)] call bis_fnc_inString) then {
@@ -107,7 +108,8 @@ if (_bool && {alive _unit}) then {
                 };
             };
             if (_newAnimSelected) exitWith {};
-        } forEach _animList;
+            false
+        } count _animList;
         if (isNil "_newAnim") then {_newAnim = ""};
         _unit switchMove _newAnim;
         
@@ -169,7 +171,8 @@ if (_bool && {alive _unit}) then {
         private _mags = _unit getVariable ["phx_revive_down_mags",magazines _unit];
         {
             _unit addMagazine _x;
-        } forEach _mags;
+            false
+        } count _mags;
         
         // Reset the respawn variables
         player setVariable ["phx_revive_respawnRevive",true,true];
@@ -194,4 +197,5 @@ if (_bool && {alive _unit}) then {
         };
         _unit setDamage 0;
     };
+    if (local _unit) then { disableUserInput false; };
 };

@@ -51,8 +51,8 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
             _iconSize = .7;
             if (_x getVariable ["phx_revive_down",false]) then {
                 _icon = "\a3\ui_f_exp_a\Data\Displays\RscDisplayEGSpectator\reviveicon_ca.paa";
-                _color set [3,0.6];
-                _iconSize = 5;
+                _color set [3,0.4];
+                _iconSize = 2;
             };
             _str = "";
             if (isPlayer _x) then {
