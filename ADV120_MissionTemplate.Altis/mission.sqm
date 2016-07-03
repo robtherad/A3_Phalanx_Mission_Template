@@ -122,24 +122,6 @@ class CustomAttributes
 		name="Multiplayer";
 		class Attribute0
 		{
-			property="RespawnTemplates";
-			expression="true";
-			class Value
-			{
-				class data
-				{
-					class type
-					{
-						type[]=
-						{
-							"ARRAY"
-						};
-					};
-				};
-			};
-		};
-		class Attribute1
-		{
 			property="RespawnButton";
 			expression="true";
 			class Value
@@ -154,6 +136,24 @@ class CustomAttributes
 						};
 					};
 					value=1;
+				};
+			};
+		};
+		class Attribute1
+		{
+			property="RespawnTemplates";
+			expression="true";
+			class Value
+			{
+				class data
+				{
+					class type
+					{
+						type[]=
+						{
+							"ARRAY"
+						};
+					};
 				};
 			};
 		};
@@ -1135,7 +1135,7 @@ class Mission
 					id=469;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1153,7 +1153,7 @@ class Mission
 					id=472;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1171,7 +1171,7 @@ class Mission
 					id=548;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1258,7 +1258,7 @@ class Mission
 					id=476;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1276,7 +1276,7 @@ class Mission
 					id=479;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1294,7 +1294,7 @@ class Mission
 					id=549;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1432,7 +1432,7 @@ class Mission
 					id=486;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1450,7 +1450,7 @@ class Mission
 					id=489;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1468,7 +1468,7 @@ class Mission
 					id=550;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1555,7 +1555,7 @@ class Mission
 					id=493;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1573,7 +1573,7 @@ class Mission
 					id=496;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1591,7 +1591,7 @@ class Mission
 					id=551;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1729,7 +1729,7 @@ class Mission
 					id=503;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1747,7 +1747,7 @@ class Mission
 					id=506;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1765,7 +1765,7 @@ class Mission
 					id=552;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1852,7 +1852,7 @@ class Mission
 					id=510;
 					type="B_soldier_AAR_F";
 				};
-				class Item3
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1870,7 +1870,7 @@ class Mission
 					id=513;
 					type="B_Soldier_F";
 				};
-				class Item4
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -1888,7 +1888,7 @@ class Mission
 					id=553;
 					type="B_soldier_exp_F";
 				};
-				class Item5
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2438,7 +2438,7 @@ class Mission
 					id=280;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2459,7 +2459,7 @@ class Mission
 					type="O_Soldier_LAT_F";
 					atlOffset=0.0029997826;
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2479,7 +2479,7 @@ class Mission
 					id=283;
 					type="O_Soldier_F";
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2573,7 +2573,7 @@ class Mission
 					id=287;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2593,7 +2593,7 @@ class Mission
 					id=289;
 					type="O_Soldier_LAT_F";
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2614,7 +2614,7 @@ class Mission
 					type="O_Soldier_F";
 					atlOffset=0.0031700134;
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2761,7 +2761,7 @@ class Mission
 					id=297;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2781,7 +2781,7 @@ class Mission
 					id=299;
 					type="O_Soldier_LAT_F";
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2801,7 +2801,7 @@ class Mission
 					id=300;
 					type="O_Soldier_F";
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2895,7 +2895,7 @@ class Mission
 					id=304;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2915,7 +2915,7 @@ class Mission
 					id=306;
 					type="O_Soldier_LAT_F";
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -2935,7 +2935,7 @@ class Mission
 					id=307;
 					type="O_Soldier_F";
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3082,7 +3082,7 @@ class Mission
 					id=314;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3102,7 +3102,7 @@ class Mission
 					id=316;
 					type="O_Soldier_LAT_F";
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3122,7 +3122,7 @@ class Mission
 					id=317;
 					type="O_Soldier_F";
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3216,7 +3216,7 @@ class Mission
 					id=321;
 					type="O_Soldier_A_F";
 				};
-				class Item3
+				class Item4
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3236,7 +3236,7 @@ class Mission
 					id=323;
 					type="O_Soldier_LAT_F";
 				};
-				class Item4
+				class Item5
 				{
 					dataType="Object";
 					class PositionInfo
@@ -3256,7 +3256,7 @@ class Mission
 					id=324;
 					type="O_Soldier_F";
 				};
-				class Item5
+				class Item3
 				{
 					dataType="Object";
 					class PositionInfo
