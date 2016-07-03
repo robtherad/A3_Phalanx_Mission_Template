@@ -45,25 +45,25 @@ if (!hasInterface) exitWith {};
             };
             
             // ----------------------------------------------------------------------------------------------------
-            /*
             // Bleed out warnings
-            // Display warning if blood level is getting low
-            if (_blood <= 10 && {_bleeding} && {!(player getVariable ["phx_revive_bloodLossWarning",false])} ) then {
-                titleText ["You are feeling weak... Maybe you should stop your bleeding.", "PLAIN DOWN"];
+            if (_blood/_bleedRate <= 35 && {_bleeding} && {!(player getVariable ["phx_revive_bloodLossWarning",false])} ) then {
+                titleText ["You feel extremely weak.", "PLAIN DOWN"];
                 player setVariable ["phx_revive_bloodLossWarning",true];
             };
             
             // Reset blood loss warning
             if (!_bleeding && {_blood > 10} && {player getVariable ["phx_revive_bloodLossWarning",false]} ) then {
-                
+                titleText ["You start to feel a bit better.", "PLAIN DOWN"];
+                player setVariable ["phx_revive_bloodLossWarning",false];
             };
-            */
             // ----------------------------------------------------------------------------------------------------
             
             // Player bled out, RIP, no revive
             if (_blood <= 0) then {
                 player setVariable ["phx_revive_respawnRevive",false,true];
                 missionNamespace setVariable ["phx_revive_respawnRevive",false];
+                //diag_log format["[PHX] (revive) lifeTick: Player bled out. Permakilling player."];
+                titleText ["You have bled out.", "PLAIN DOWN"];
                 player setdamage 1;
             };
         };
