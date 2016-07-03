@@ -4,7 +4,7 @@ _fullmapWindow = _this select 0;
 _camera = ([] call f_cam_GetCurrentCam);
 _fullmapWindow drawIcon ["\A3\ui_f\data\GUI\Rsc\RscDisplayMissionEditor\iconCamera_ca.paa", [0,0,0,1],getpos _camera ,20,20,getDir _camera,"",0];
 {
-    private _isSpectator = _x getVariable ["phx_isUnitSpecator",false];
+    private _isSpectator = _x getVariable ["phx_isUnitSpectator",false];
     if (alive _x && {!_isSpectator}) then {
         _name = "";
         _color = switch (side _x) do {
@@ -15,15 +15,15 @@ _fullmapWindow drawIcon ["\A3\ui_f\data\GUI\Rsc\RscDisplayMissionEditor\iconCame
             default {f_cam_empty_color};
         };
         if (isPlayer _x) then {_name = name _x};
-        if (leader _x isEqualTo _x && {private _isSpectator = _x getVariable ["phx_isUnitSpecator",false]; (isPlayer _x) && (!_isSpectator)} count units _x > 0) then {_name = format["%1 - %2",toString(toArray(groupID (group _x)) - [45]),_name]};
+        if (leader _x isEqualTo _x && {private _isSpectator = _x getVariable ["phx_isUnitSpectator",false]; (isPlayer _x) && (!_isSpectator)} count units _x > 0) then {_name = format["%1 - %2",toString(toArray(groupID (group _x)) - [45]),_name]};
         if (vehicle _x != _x && {crew (vehicle _x) select 0 isEqualTo _x || vehicle _x isEqualTo _x}) then {
             _icon = (vehicle _x getVariable ["f_cam_icon",""]);
             if (_icon isEqualTo "") then {_icon = gettext (configfile >> "CfgVehicles" >> typeOf (vehicle _x) >> "icon");vehicle _x setVariable ["f_cam_icon",_icon]};
             _fullmapWindow drawIcon [_icon,_color,getpos _x,19,19,getDir (vehicle _x),_name,1,0.04,"TahomaB"];
         };
     };
-
-} foreach allunits;
+    nil
+} count allunits;
 
 // Display sectors on spectator map
 if (!isNil "phx_sector_triggerArray") then {
@@ -40,7 +40,8 @@ if (!isNil "phx_sector_triggerArray") then {
         };
         _color set [3,1];
         _fullmapWindow drawIcon ["\A3\ui_f\data\map\markers\military\flag_ca.paa",_color,getpos _x ,20,20,0,_iconName,2,0.04,"TahomaB"];
-    } forEach phx_sector_triggerArray;
+        nil
+    } count phx_sector_triggerArray;
 };
 
 f_cam_fired = f_cam_fired - [objNull];
@@ -51,5 +52,6 @@ if (f_cam_tracerOn) then {
             _newPos = [(_pos select 0) + (3 * sin(getdir _x)), (_pos select 1) + (3 * cos(getdir _x)), _pos select 2];
             _fullmapWindow drawLine [_pos,_newPos,[1,0,0,1]];
         };
-    } foreach f_cam_fired;
+        nil
+    } count f_cam_fired;
 };

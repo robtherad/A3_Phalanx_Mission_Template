@@ -16,8 +16,8 @@ private _markerNameIterator = 0;
     private _textMarkerName = str(_markerNameIterator) + "_phxSectorMarkText";
     private _bgMarkerName = str(_markerNameIterator) + "_phxSectorMark";
         
-    private _westCount = {private _isSpectator = _x getVariable ["phx_isUnitSpecator",false]; (alive _x) && {side group _x isEqualTo west} && {!_isSpectator}} count list _x;
-    private _eastCount = {private _isSpectator = _x getVariable ["phx_isUnitSpecator",false]; (alive _x) && {side group _x isEqualTo east} && {!_isSpectator}} count list _x;
+    private _westCount = {private _isSpectator = _x getVariable ["phx_isUnitSpectator",false]; (alive _x) && {side group _x isEqualTo west} && {!_isSpectator}} count list _x;
+    private _eastCount = {private _isSpectator = _x getVariable ["phx_isUnitSpectator",false]; (alive _x) && {side group _x isEqualTo east} && {!_isSpectator}} count list _x;
     private _sideCurOwned = 4;
 
     // Western Controlled - 0
