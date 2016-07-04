@@ -19,9 +19,6 @@ phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandl
 // Time remaining display - TODO: Remove and just add this into the spectator script?
 phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHandler;
 
-// Revive script
-call phx_fnc_reviveInit;
-
 // Create briefing
 [] execVM "briefing.sqf";
 
