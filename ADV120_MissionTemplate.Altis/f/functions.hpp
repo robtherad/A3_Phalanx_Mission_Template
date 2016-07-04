@@ -67,19 +67,3 @@ class sector {
     class titleTextSector{};
     class watchSector{};
 };
-class revive {
-    file = "f\revive";
-    class AddLinkedItems{};
-    class SetDowned{};
-    class WoundedEffect{};
-    class HasWounded{};
-    class EjectWounded{};
-    class OnDrag{};
-    class LifeTick {};
-    class OnDeath {};
-    class OnDamage{};
-    class SetBleeding{};
-    class OnRevive{};
-    class OnSlowBleeding{};
-    class ReviveInit{};
-};
