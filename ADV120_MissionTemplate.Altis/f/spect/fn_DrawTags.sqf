@@ -9,7 +9,7 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
     _isPlayerGroup = false;
     {
         _distToCam = (call f_cam_GetCurrentCam) distance _x;
-        private _isSpectator = _x getVariable ["phx_isUnitSpecator",false];
+        private _isSpectator = _x getVariable ["phx_isUnitSpectator",false];
         if ( (isPlayer _x) && {!_isSpectator} ) then {_isPlayerGroup = true};
         if ( (_distToCam < 200) && {!_isSpectator} ) then {
             _drawUnits pushBack _x;
@@ -18,7 +18,8 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
                 _drawGroup = true;
             };
         };
-    } foreach (units _x);
+        nil
+    } count (units _x);
     _color = switch (side _x) do {
         case blufor: {f_cam_blufor_color};
         case opfor: {f_cam_opfor_color};
@@ -60,5 +61,7 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
             };
             drawIcon3D [_icon, _color, [_visPos select 0, _visPos select 1, (_visPos select 2)+3], _iconSize, _iconSize, 0, _str, 2, f_cam_tagTextSize, "TahomaB"];
         };
-    } foreach _drawUnits;
-} forEach allGroups;
+        nil
+    } count _drawUnits;
+    nil
+} count allGroups;

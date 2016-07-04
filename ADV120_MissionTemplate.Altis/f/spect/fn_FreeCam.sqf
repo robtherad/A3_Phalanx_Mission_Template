@@ -3,13 +3,14 @@ private ["_commitTime","_delta","_zLevel","_pos","_visPos","_mode","_currPos","_
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ====================================================================================
 // Menu shown/hidden
+/*
 if (abs (f_cam_menuShownTime - CBA_missionTime) <= 0.1 && {!f_cam_menuShown}) then {// disable due to being a bit wonky
     [true] spawn f_fnc_showMenu;
 };
 if (abs (f_cam_menuShownTime - CBA_missionTime) >= 1 && {f_cam_menuShown}) then {// disable due to being a bit wonky
     [false] spawn f_fnc_showMenu;
 };
-
+*/
 
 // ====================================================================================
 // if freemode.
@@ -52,47 +53,31 @@ if (f_cam_mode isEqualTo 3) then {
     _accel = 0.2 max (_height/8); // 0.8
     _accelshift = _accel*4.25;//2;
     if (f_cam_freecam_buttons select 0) then {// W
-        if (f_cam_shift_down && {!f_cam_alt_down}) then {
+        if (f_cam_shift_down) then {
             _mY = _accelshift;
         } else {
-            if !(f_cam_alt_down) then {
-                _mY = _accel;
-            } else {
-                _mY = _accel*.5;
-            };  
+            _mY = _accel;
         };
     };
     if (f_cam_freecam_buttons select 1) then {// S
-        if (f_cam_shift_down && {!f_cam_alt_down}) then {
+        if (f_cam_shift_down) then {
             _mY = -_accelshift;
         } else {
-            if !(f_cam_alt_down) then {
-                _mY = -_accel;
-            } else {
-                _mY = -_accel*.5;
-            };  
+            _mY = -_accel;
         };
     };
     if (f_cam_freecam_buttons select 2) then {// A
-        if (f_cam_shift_down && {!f_cam_alt_down}) then {
+        if (f_cam_shift_down) then {
             _mX = -_accelshift;
         } else {
-            if !(f_cam_alt_down) then {
-                _mX = -_accel;
-            } else {
-                _mX = -_accel*.5;
-            };  
+            _mX = -_accel;
         };
     };
     if (f_cam_freecam_buttons select 3) then {// D
-        if (f_cam_shift_down && {!f_cam_alt_down}) then {
+        if (f_cam_shift_down) then {
             _mX = _accelshift;
         } else {
-            if !(f_cam_alt_down) then {
-                _mX = _accel;
-            } else {
-                _mX = _accel*.5;
-            };  
+            _mX = _accel;
         };
     };
     if (f_cam_freecam_buttons select 4) then {// Q
@@ -136,6 +121,26 @@ if (f_cam_mode isEqualTo 3) then {
     f_cam_freecamera setPosASL [_x,_y,_z max _newHeight];
     f_cam_freecamera setDir f_cam_angleX;
     [f_cam_freecamera,f_cam_angleY,0] call BIS_fnc_setPitchBank;
+    
+    /*
+    // Smooth transition from freecam to 3rd person
+    f_cam_camera camSetPos [_x,_y,_z max _newHeight];
+    f_cam_camera camCommit 0;
+    f_cam_fakecamera camSetPos [_x,_y,_z max _newHeight];
+    f_cam_fakecamera camCommit 0;
+    */
+    // Instant transition from freecam to 3rd person
+    cameraEffectEnableHUD true;
+    _delta = (-(2*(0.3 max f_cam_zoom)));
+    _zLevel = sin(f_cam_angleY)*(2*(0.3 max f_cam_zoom));
+    //_pos = getpos f_cam_curTarget;
+    _visPos = visiblePositionASL f_cam_curTarget;
+    if (!(surfaceIsWater _visPos)) then {_visPos = ASLtoATL (_visPos)};
+    f_cam_fakecamera camSetPos [_visPos select 0,_visPos select 1,(_visPos select 2) + 1.5];
+    f_cam_fakecamera camCommit 0;
+    f_cam_camera camSetRelPos[(sin(f_cam_angleX)*_delta)*cos(f_cam_angleY), (cos(f_cam_angleX)*_delta)*cos(f_cam_angleY), _zLevel];
+    f_cam_camera camCommit 0;
+    
     f_cam_scrollHeight = 0;
     f_cam_timestamp = CBA_missionTime;
 };

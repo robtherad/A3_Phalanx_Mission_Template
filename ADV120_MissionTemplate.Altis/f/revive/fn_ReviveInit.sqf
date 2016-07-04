@@ -10,20 +10,20 @@ if (isNil "phx_revive_extraFAK") then {phx_revive_extraFAK = 0};
 if (phx_revive_briefing) then {
     [] spawn {
         waitUntil {!isNil "PHX_Diary"};
-        _bstr = format ["OVERVIEW<br/>
-    When a player is wounded to the point of being 'incapacitated' they become a casualty. Casualties are prone and unable to move or speak. Certain wounds such as headshots have a high chance of instantly killing a player instead of causing them to become a casualty.
-<br/><br/>
-TREATING CASUALTIES<br/>
-    Players can use a First Aid Kit on a casualty to slow their rate of blood loss, consuming the First Aid Kit in the process. Players equipped with a Medikit can revive a casualty by moving close to the casualty and using the revive action.
-<br/><br/>
+        _bstr = format ["
+OVERVIEW<br/>
+    After a player takes a enough damage to be killed they will be placed into an downed state. Downed players cannot move or use their radios but they can still use local voice to call for help.<br/><br/>
+TREATMENT<br/>
+    Players with a Medikit in their inventory can revive downed players and bring them back into action. Player's with at least one First Aid Kit in their inventory can slow the rate of blood loss on a downed player, giving more time for a medic to arrive and revive them. In doing this, the First Aid Kit is consumed.<br/><br/>
+    Both actions have their own action separate from the BI treatment system. The revive action will display as 'Revive [player]' and the other will display as 'Slow [player]'s Bleeding'. If an action fails, a reason should be displayed towards the bottom-center of your screen.<br/><br/>
 BLEEDING OUT<br/>
-    A casualty only has a few minutes before their wounds become fatal. Without any intervention, a casualty can survive for up to 2 minutes. If a player uses a First Aid Kit on a casualty, the casualty's rate of blood loss will slow, allowing the casualty to survive for up to 8 minutes. A casualty's ability to survive for longer periods of time while bleeding out depends on how long, and how recently, they were previously wounded. A fresh casualty should survive for the full duration, but a player who becomes a casualty multiple times within a short time period will have a shorter window for getting treatment each time they go down.
-<br/><br/>
+    A downed player only has a few minutes before their wounds become fatal. Without any intervention, a downed player can survive for up to 2 minutes. If another player uses a First Aid Kit on a downed player, the downed player's rate of blood loss will slow, allowing the downed player to survive for up to 8 minutes. A downed player's ability to survive for longer periods of time while bleeding out depends on how long, and how recently, they were previously wounded. A fresh downed player should survive for the full duration, but a player who becomes a downed player multiple times within a short time period will have a shorter window for getting treatment each time they go down.<br/><br/>
+    Once a downed player has about 30 seconds of life left they will recieve a notification in the bottom-center of their screen telling them that they feel weak.<br/><br/>
 DRAGGING CASUALTIES<br/>
-    Players can drag a casualty by moving next to them and selecting the relevant action menu option. Whilst dragging, the player has an action menu option for releasing the casualty.
-<br/><br/>
+    Players can drag a downed player by moving next to them and selecting the relevant action menu option. Whilst dragging, the player has an action menu option for releasing the downed player.<br/><br/>
 CREDITS<br/>
-    Based on the F3 Mission Framework's Simple Wounding System. Modified for Phalanx by robtherad."];
+    Based on the F3 Mission Framework's Simple Wounding System. Modified for Phalanx by robtherad.
+"];
         player createDiaryRecord ["PHX_Diary", ["Revive Info",_bstr]];
     };
 };
@@ -39,6 +39,7 @@ phx_revive_blood = 100;
 player setVariable ["phx_revive_dragging",nil];
 player setVariable ["phx_revive_respawnRevive",true,true];
 phx_revive_respawnRevive = true;
+// diag_log format["[PHX] (revive) init: Disallowing permakill."];
 
 // Lifeticker, manages bleeding and blood values.
 [] spawn phx_fnc_LifeTick;
@@ -59,14 +60,14 @@ phx_revive_damageValue = 1.1;
 // Eventhandlers for the player.
 player addEventHandler ["HandleDamage",{_this call phx_fnc_OnDamage}];
 player addEventHandler ["InventoryClosed",{
-    if (alive player) then {
+    if (alive player && !(missionNamespace getVariable ["phx_revive_isPlayerDead",false])) then {
         missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
         [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
         missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
     };
 }];
 player addEventHandler ["InventoryOpened",{
-    if (alive player) then {
+    if (alive player && !(missionNamespace getVariable ["phx_revive_isPlayerDead",false])) then {
         missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
         [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
         missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved
@@ -80,7 +81,7 @@ player addEventHandler ["InventoryOpened",{
         params ["_args", "_handle"];
         
         if (isNil "phx_isSpectator") then {
-            if ( ((diag_tickTime-4.9) > missionNamespace getVariable ["phx_revive_lastSavedLoadoutTime",0]) && {!(missionNamespace getVariable ["phx_revive_down",false])} && {alive player}) then {
+            if ( ((diag_tickTime-4.9) > missionNamespace getVariable ["phx_revive_lastSavedLoadoutTime",0]) && {!(missionNamespace getVariable ["phx_revive_down",false])} && {alive player} && {!(missionNamespace getVariable ["phx_revive_isPlayerDead",false])}) then {
                 missionNamespace setVariable ["phx_revive_loadout", getUnitLoadout player]; // So we can get the linkeditems back
                 [player, [missionNamespace, "phx_revive_lastLoadout"]] call BIS_fnc_saveInventory; // For everything else
                 missionNamespace setVariable ["phx_revive_lastSavedLoadoutTime",diag_tickTime]; // Update value for last time the loadout was saved

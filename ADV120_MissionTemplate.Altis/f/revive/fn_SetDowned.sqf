@@ -22,11 +22,11 @@ if (_bool && {alive _unit}) then {
             format["<t color='#FF4040'>Slow</t> %1's <t color='#FF4040'>bleeding</t>",name _unit],
             {_this remoteExec ["phx_fnc_OnSlowBleeding", [_this select 0, _this select 1]];},
             nil, 
-            6, 
+            99, 
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])} && {!_target getVariable ['phx_revive_beingDragged',false]}"
+            "((_this distance _target) < 4) && {!(_this getVariable ['phx_revive_down',false])} && {('FirstAidKit' in (items _this))} && {!('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {(_target getVariable ['phx_revive_bleedFast',true])} && {!(_target getVariable ['phx_revive_beingDragged',false])}"
         ];
         _unit setVariable ["phx_revive_bleedIndex",_bleedIndex];
         
@@ -35,11 +35,11 @@ if (_bool && {alive _unit}) then {
             format["<t color='#FF4040'>Revive</t> %1",name _unit],
             {_this spawn phx_fnc_OnRevive;},
             nil, 
-            6, 
+            99, 
             false, 
             true, 
             "", 
-            "((_this distance _target) < 2) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
+            "((_this distance _target) < 4) && {!(_this getVariable ['phx_revive_down',false])} && {('Medikit' in (items _this))} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!(_target getVariable ['phx_revive_beingDragged',false])}"
         ];
         _unit setVariable ["phx_revive_reviveIndex",_reviveIndex];
         
@@ -48,11 +48,11 @@ if (_bool && {alive _unit}) then {
             format ["<t color='#FF4040'>Drag</t> %1", name _unit],
             {_this remoteExec ["phx_fnc_OnDrag", [_this select 0, _this select 1]];}, 
             nil, 
-            6, 
+            98, 
             false, 
             true, 
             "", 
-            "((_target distance _this) < 2) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!_target getVariable ['phx_revive_beingDragged',false]}"
+            "((_target distance _this) < 4) && {isNil {_this getVariable ['phx_revive_dragging',nil]}} && {_target getVariable ['phx_revive_down',false]} && {!(_this getVariable ['phx_revive_down',false])} && {alive _target} && {!(missionNamespace getVariable ['phx_revive_currentlyBusy',false])} && {isNull objectParent _this} && {!(_target getVariable ['phx_revive_beingDragged',false])}"
         ];
         _unit setVariable ["phx_revive_dragIndex",_dragIndex];
     };
@@ -70,6 +70,7 @@ if (_bool && {alive _unit}) then {
         // Make it so player can't be downed again if they die
         player setVariable ["phx_revive_respawnRevive",false,true];
         missionNamespace setVariable ["phx_revive_respawnRevive",false];
+        // diag_log format["[PHX] (revive) setDowned: Player was downed, allowing permadeath."];
         
         // If the unit is local and a player, remove their magazines (otherwise they can throw grenades while down)
         private _magazineList = [];
@@ -87,11 +88,24 @@ if (_bool && {alive _unit}) then {
         
         // Disable TFAR speech
         _unit setVariable ["tf_unable_to_use_radio", true, true];
-        _unit setVariable ["tf_voiceVolume", 0.0, true];
+        // _unit setVariable ["tf_voiceVolume", 0.0, true]; // Makes player unable to speak
         
         // Disable the action menu
         showHUD false;
         missionNamespace setVariable ["phx_revive_hiddenHud",true];
+        
+        // Add PFH to ensure map stays closed
+        [{
+            params ["_args", "_handle"];
+            
+            if (isNil "phx_isSpectator" && {missionNamespace getVariable ["phx_revive_down",false]}) then {
+                if (visibleMap) then {
+                    openMap false;
+                };
+            } else {
+                [_handle] call CBA_fnc_removePerFrameHandler;
+            };
+        }, 0, []] call CBA_fnc_addPerFrameHandler;
     };
 
     if !(isNull objectParent _unit) then {
@@ -119,7 +133,7 @@ if (_bool && {alive _unit}) then {
                 "<t color='#FF4040'>Pull out wounded</t>", 
                 {_this remoteExec ["phx_fnc_EjectWounded", 0];}, 
                 nil, 
-                5, 
+                97, 
                 false, 
                 true, 
                 "", 
@@ -177,10 +191,11 @@ if (_bool && {alive _unit}) then {
         // Reset the respawn variables
         player setVariable ["phx_revive_respawnRevive",true,true];
         missionNamespace setVariable ["phx_revive_respawnRevive",true];
+        // diag_log format["[PHX] (revive) setDowned: Player no longer downed, disallowing permadeath."];
         
         // Re-enable TFAR speech
         player setVariable ["tf_unable_to_use_radio", false, true];
-        player setVariable ["tf_voiceVolume", 1.0, true];
+        // player setVariable ["tf_voiceVolume", 1.0, true];
         
         // Re-enable HUD
         showHUD [true, true, true, true, true, true, false, true];

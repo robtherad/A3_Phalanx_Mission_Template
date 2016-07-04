@@ -11,4 +11,5 @@ hintSilent "Spectator system has been forcefully closed";
     if (!isNil "_var") then {
         _x removeEventHandler ["fired",_var];
     };
-} foreach (allunits + vehicles);
+    nil
+} count (allunits + vehicles);

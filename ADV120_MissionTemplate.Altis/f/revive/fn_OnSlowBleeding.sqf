@@ -38,6 +38,6 @@ _healingUnit removeItem "FirstAidKit"; // Consume the FAK
 [_downedUnit, true, false] remoteExec ["phx_fnc_SetBleeding", 0];
 
 // Allow unit to speak again, but not use the radio
-_downedUnit setVariable ["tf_voiceVolume", 1.0, true];
+// _downedUnit setVariable ["tf_voiceVolume", 1.0, true];
 
 titleText [format["You have slowed %1's bleeding.",name _downedUnit], "PLAIN DOWN"];

@@ -74,13 +74,11 @@ case "LBListSelChanged": {
         _unit = f_cam_listUnits select (_args select 1);
         if (!isnil "_unit") then {
             if (typeName _unit isEqualTo "GROUP") then {_unit = leader _unit};
-            if (f_cam_mode isEqualTo 0 || f_cam_mode isEqualTo 1) then {
-                f_cam_curTarget = _unit;
-                if (f_cam_toggleCamera) then {
-                    f_cam_curTarget switchCamera "INTERNAL";
-                };
-                ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
+            f_cam_curTarget = _unit;
+            if (f_cam_toggleCamera) then {
+                f_cam_curTarget switchCamera "INTERNAL";
             };
+            ctrlSetText [1000,format ["Spectating: %1", name f_cam_curTarget]];
             if (f_cam_mode isEqualTo 3) then {
                 _pos = getpos _unit;
                 _x = _pos select 0;
@@ -275,9 +273,6 @@ case "KeyDown": {
             _handled = true;
         };
         case 56: { // ALT
-            f_cam_alt_down = true;
-            f_cam_sensitivity = 0.25;
-            [] spawn f_fnc_HandleCamera;
             _handled = true;
         };
         case 25: { // P
@@ -395,8 +390,6 @@ case "KeyUp": {
             _handled = true;
         };
         case 56: {
-            f_cam_alt_down = false;
-            f_cam_sensitivity = 1;
             _handled = true;
         };
         case 1: {

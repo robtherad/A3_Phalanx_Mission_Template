@@ -13,10 +13,12 @@ DO NOT FORGET TO CALL THE SERVER SIDE OF THIS SCRIPT FROM INIT.SQF!
 
 [] execVM "scripts\randomstart\server.sqf";
 */
-if (isDedicated) exitWith {};
+if !(hasInterface) exitWith {};
 private ["_randomizeTeam","_randomMarkVar","_placemark","_text","_color","_placeMarkerPos","_startMarkerPos","_startMark","_startMarkTwo","_dis","_dir","_newPos", "_isSpectator"];
 
 #include "settings.sqf";
+
+waitUntil {!isNull player};
 
 // Get correct settings for player side
 switch (side group player) do {
@@ -78,9 +80,6 @@ if (_randomizeIndependent) then {
         } else {true};
     };
 };
-
-
-
 
 // Ensure player is supposed to be randomly placed
 if (_randomizeTeam) then {

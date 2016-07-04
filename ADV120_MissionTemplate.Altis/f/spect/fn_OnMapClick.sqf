@@ -8,12 +8,13 @@ if (f_cam_mapMode isEqualTo 2) then {
         {
             {
                 if (_pos distance _x <= _dist && {_x in f_cam_listUnits}) then {
-
                     _chosen = _x;
                     _dist = _pos distance _x;
                 };
-            } foreach crew _x;
-        } foreach _ents;
+                nil
+            } count crew _x;
+            nil
+        } count _ents;
         
         if (!isNil "_chosen") then {
             f_cam_curTarget = _chosen;
