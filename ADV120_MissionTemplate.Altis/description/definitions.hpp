@@ -1,7 +1,7 @@
 class Header {
     gameType = TDM;
     minPlayers = 1;
-    maxPlayers = 122;
+    maxPlayers = 124;
 };
 
 Saving = 0;
@@ -13,7 +13,7 @@ respawn = 3;
 respawnDialog = 0;
 respawndelay = 2;
 respawnOnStart = -1;
-respawnTemplates[] = {"phx_revive"};
+respawnTemplates[] = {"f_spectator"};
 
 disableChannels[]={{0,true,true},{2,true,true},{4,true,true},{5,true,true},{6,true,true}};
 
