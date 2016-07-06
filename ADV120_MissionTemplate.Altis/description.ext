@@ -8,6 +8,7 @@ OnLoadMission = "Phoenix Mission Template. Change all these lines!";
 #include "description\cfgRespawnTemplates.hpp"
 #include "description\cfgDebriefingSections.hpp"
 #include "description\cfgEventHandlers.hpp"
+#include "description\ACESettings.hpp"
 
 #include "f\spect\config.hpp"
 class CfgFunctions {
