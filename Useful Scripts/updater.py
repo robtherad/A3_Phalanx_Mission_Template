@@ -31,7 +31,7 @@ def update_missions(oldTemplate, newTemplate, oldMission, newMission):
 
     copy_files_main(filesToWorkWith[1], newTemplate, oldMission, newMission)
     warn_files(filesToWorkWith[0], newTemplate, oldMission, newMission)
-    
+
 def build_directory(path):
     '''
     Given a path, generates a list of files under that path
@@ -50,7 +50,7 @@ def build_directory(path):
         for d in dirs:
             dirList.append(d)
     return fileList
-            
+
 def compare_directories(fileLists, directoryPaths):
     '''
     Compares the files in two directories and puts aside any mismatches. Then compares common files to see if their contents are the same.
@@ -155,7 +155,7 @@ def warn_files(files, sourceNewPath, sourceOldPath, destPath):
         print("========================================================")
         print("- No files need to be manually merged. Congratulations -")
         print("========================================================")
-    
+
 def copy_files_main(filesToCopy, sourceNewPath, sourceOldPath, destPath):
     '''
     Copies files from the old mission and the new template into the new mission folder.
@@ -206,7 +206,7 @@ def get_input_path(inputText, mustExist):
             # Path should be empty, but prompt user to continue anyway if it isn't
             if len(dirs) > 0 or len(files) > 0:
                 # Path isn't empty
-                response = input(" WARNING: New mission folder is not empty! Do you wish to continue anyway? All existing files in this directory will be lost (Y\\N):")
+                response = input(" WARNING: New mission folder is not empty! Do you wish to continue anyway? All existing files in this directory will be lost (Y\\N): ")
                 if not ((response.lower() == "y") or (response.lower() == "yes")):
                     print("User entered value that did not equal yes, exiting...")
                     sys.exit()
@@ -221,12 +221,25 @@ def get_input_path(inputText, mustExist):
 
 def delete_dir(directory):
     '''
-    Deletes a given directory and displays a message.
+    Deletes a given directory, but only if it's a mission directory, and displays a message.
     '''
-    if os.path.exists(directory):
-        shutil.rmtree(directory)
-        print("Cleared directory: ",directory)
-        
+    
+    for root, dirs, files in os.walk(directory):
+        rel_path = (root.split(directory))[1]
+        if rel_path == "":
+            if not ( ("mission.sqm" in files) or ("description.ext" in files) or ("init.sqf" in files) or ("f" in dirs) or ("description" in dirs) or ("scripts" in dirs) ):
+                print()
+                print("ERROR: Couldn't find any mission related files in the New Mission directory, cancelling deletion.")
+                print("Either manually make sure the directory is empty or make sure the path is correct.")
+                print()
+                print("- Exiting program.")
+                sys.exit()
+            else:
+                shutil.rmtree(directory)
+                print("Cleared directory: ",directory)
+                print()
+                break
+
 def confirm_inputs(oldMission, oldTemplate, newTemplate, newMission):
     '''
     Let's user confirm that all inputs are correct before starting any file operations.
@@ -236,10 +249,11 @@ def confirm_inputs(oldMission, oldTemplate, newTemplate, newMission):
     print("New Template Path:",newTemplate)
     print("New Mission Path:",newMission)
     print()
-    response = input("Are these file paths correct? (Y\\N):")
+    response = input("Are these file paths correct? (Y\\N): ")
     if not ((response.lower() == "y") or (response.lower() == "yes")):
         print("User entered value that did not equal yes, exiting...")
         sys.exit()
+
 # -----
 oldMission = get_input_path("Enter the path of the mission you wish to update: ", True)
 oldTemplate = get_input_path("Enter the path of the template used to create that mission: ", True)
