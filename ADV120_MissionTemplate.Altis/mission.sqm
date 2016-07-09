@@ -2305,7 +2305,7 @@ class Mission
 					{
 						skill=0.60000002;
 						init="Red_HQ = group this;";
-						description="Rifleman";
+						description="Platoon Rifleman";
 						isPlayable=1;
 					};
 					id=273;
