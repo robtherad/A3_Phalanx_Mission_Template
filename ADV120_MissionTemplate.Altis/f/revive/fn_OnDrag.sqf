@@ -99,7 +99,7 @@ if (local _unit) then {
                 missionNamespace setVariable ["phx_revive_currentlyBusy",false];
             };
             
-            _unit setVariable ["phx_revive_beingDragged",false,true];
+            _draggedUnit setVariable ["phx_revive_beingDragged",false,true];
             
             // Play animation depending upon if unit is down or not
             if (_draggedUnit getVariable ["phx_revive_down",false]) then {
