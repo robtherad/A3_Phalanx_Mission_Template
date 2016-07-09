@@ -14,6 +14,7 @@ player addWeapon "rhs_weap_ak74m_gp25";
 for "_i" from 1 to 2 do {player addItemToBackpack "rhs_100Rnd_762x54mmR";};
 for "_i" from 1 to 5 do {player addItemToVest "rhs_30Rnd_545x39_AK";};
 for "_i" from 1 to 1 do {player addItemToBackpack "rhs_30Rnd_545x39_AK";};
+player addItem "ACE_MapTools";
 
 // Add items
 phx_loadout_addBinocular = "Binocular";

@@ -13,6 +13,7 @@ for "_i" from 1 to 7 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stana
 player addWeapon "rhs_weap_m16a4_carryhandle_M203";
 for "_i" from 1 to 6 do {player addItemToBackpack "rhs_mag_30Rnd_556x45_M855A1_Stanag";};
 for "_i" from 1 to 2 do {player addItemToBackpack "rhsusf_100Rnd_762x51_m80a1epr";};
+player addItem "ACE_MapTools";
 
 // Add items
 phx_loadout_addBinocular = "Binocular";
