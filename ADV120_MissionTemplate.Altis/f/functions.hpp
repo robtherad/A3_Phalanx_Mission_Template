@@ -15,7 +15,6 @@ class core {
     class core_playerBoundsCheck{};
     class core_setDate{};
     class core_setWeather{};
-    class core_shownHUDCheck{};
     class core_headsetAction{};
 };
 class radios {
