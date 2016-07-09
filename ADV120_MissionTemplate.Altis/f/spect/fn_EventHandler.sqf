@@ -262,7 +262,7 @@ case "KeyDown": {
             _handled = true;
         };
         case 35: { //  H
-            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\n\nPress 'F2' to hide this message and others like it.",15] call phx_fnc__hintThenClear;
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
             ctrlShow [1315, !ctrlVisible 1315];
             ctrlShow [1310, !ctrlVisible 1310];
             ctrlShow [1300, !ctrlVisible 1300];
@@ -370,7 +370,7 @@ case "KeyDown": {
             };
         };
         case 59: { // F1
-            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\nPress 'F2' to clear hints.\n",15] call phx_fnc__hintThenClear;
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
         };
         case 60: { // F2
             hint "";
