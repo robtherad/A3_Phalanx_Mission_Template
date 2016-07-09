@@ -18,7 +18,7 @@ phx_loadout_compass = ["phx_loadout_compass",0] call BIS_fnc_getParamValue;
     0 - Regular unit
     1 - Team Leader
     2 - Squad Leader or Higher
-    
+
     Set the default unit level          */
 phx_loadout_unitLevel = 0;
 
@@ -102,7 +102,10 @@ switch (_char) do {
     case toLower "O_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]
     };
-    
+    case toLower "O_pilot_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_P.sqf",_loadout]
+    };
+
     //----------------------------------------
     // BLUFOR - NATO/WEST - BLU_F
     case toLower "B_officer_F": {
@@ -147,6 +150,9 @@ switch (_char) do {
     case toLower "B_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]
     };
+    case toLower "B_pilot_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_P.sqf",_loadout]
+    };
     //----------------------------------------
     // Spectator Slots
     case toLower "VirtualMan_F": {
@@ -161,7 +167,7 @@ switch (_char) do {
             }] call CBA_fnc_execNextFrame;
         }] call CBA_fnc_waitUntilAndExecute;
     };
-    
+
     //----------------------------------------
     // Error message - Classname not found in list
     default {diag_log format["PHX fn_loadout_set: Unable to find player classname in list: %1",_char];};
