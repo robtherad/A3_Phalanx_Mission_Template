@@ -53,7 +53,7 @@ if (f_cam_tracerOn) then {
     {
         if (!isNull _x) then {
             private _pos = getpos _x;
-            _newPos = [(_pos select 0) + (3 * sin(getdir _x)), (_pos select 1) + (3 * cos(getdir _x)), _pos select 2];
+            private _newPos = [(_pos select 0) + (3 * sin(getdir _x)), (_pos select 1) + (3 * cos(getdir _x)), _pos select 2];
             _fullmapWindow drawLine [_pos,_newPos,[1,0,0,1]];
         };
         nil

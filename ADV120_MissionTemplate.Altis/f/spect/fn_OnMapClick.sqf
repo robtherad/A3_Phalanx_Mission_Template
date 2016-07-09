@@ -1,9 +1,11 @@
-_pos = (_this select 0) ctrlMapScreenToWorld [(_this select 2), (_this select 3)];
+params ["_control", "_unused", "_xCord", "_yCord"];
+
+private _pos = _control ctrlMapScreenToWorld [_xCord, _yCord];
 if (f_cam_mapMode isEqualTo 2) then {
     if (f_cam_mode isEqualTo 0 || f_cam_mode isEqualTo 1) then {
-        _chosen = nil;
-        _dist = 99999;
-        _ents = _pos nearEntities [["CAManBase","AllVehicles"],10];
+        private _chosen = nil;
+        private _dist = 99999;
+        private _ents = _pos nearEntities [["CAManBase","AllVehicles"],10];
         
         {
             {
@@ -34,8 +36,8 @@ if (f_cam_mapMode isEqualTo 2) then {
     };
     
     if (f_cam_mode isEqualTo 3) then {
-        _x = _pos select 0;
-        _y = _pos select 1;
+        private _x = _pos select 0;
+        private _y = _pos select 1;
         f_cam_freecamera setPosASL [_x,_y,((getposASL f_cam_freecamera) select 2 ) max ((getTerrainHeightASL [_x,_y])+1)];
         // hide map
         f_cam_mapMode = 0;

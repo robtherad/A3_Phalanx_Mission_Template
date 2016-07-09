@@ -1,21 +1,24 @@
 // F3 - Spectator Script
 // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
 // ==================================================================
-_listBox =  2100;
+private _listBox =  2100;
 // updaes values for the units listbox.
 f_cam_checkIndex = {
     {
-        _x SetVariable ["f_spect_listBoxIndex",_forEachIndex];
+        _x setVariable ["f_spect_listBoxIndex",_forEachIndex];
     } foreach f_cam_listUnits;
 };
 
 // ====================================================================================
-while {true} do {
+f_cam_updateValues = [{
+    params ["_args", "_handle"];
+    _args params ["_listBox"];
+
+    
     // ====================================================================================
     // make the mini map track the player.
-
     ctrlMapAnimClear ((findDisplay 9228) displayCtrl 1350);
-    ((findDisplay 9228) displayCtrl 1350) ctrlMapAnimAdd [0.3, f_cam_map_zoom,visiblePosition (camTarget f_cam_camera)];
+    ((findDisplay 9228) displayCtrl 1350) ctrlMapAnimAdd [0, f_cam_map_zoom, visiblePosition (camTarget f_cam_camera)];
     ctrlMapAnimCommit ((findDisplay 9228) displayCtrl 1350);
     ctrlSetFocus ((findDisplay 9228) displayCtrl 1315);
     // ====================================================================================
@@ -27,12 +30,12 @@ while {true} do {
     };
     // ====================================================================================
     // fetch units
-    _groupArr = call F_fnc_GetPlayers;
+    private _groupArr = call F_fnc_GetPlayers;
     f_cam_units = ((_groupArr select 0) + (_groupArr select 1));
     f_cam_players = _groupArr select 0;
     // ====================================================================================
     // get the list for players or players/ai
-    _tempArr = [];
+    private _tempArr = [];
     if (f_cam_playersOnly) then {
         _tempArr = f_cam_players;
     } else {
@@ -41,13 +44,14 @@ while {true} do {
 
     // ====================================================================================
     // Check it and see if they have been added already
+    // TODO: Rewrite so each group's units aren't interated over twice
     {
         if (!(_x in f_cam_listUnits) && ({ private _spectator = _x getVariable ["phx_isUnitSpectator",false]; (alive _x) && {!_spectator} } count units _x) > 0 ) then {
-            _text = toString(toArray(groupID _x) - [45]);
-            _index = lbAdd [_listBox,_text];
-            _x SetVariable ["f_spect_listBoxIndex",_index];
+            private _text = toString(toArray(groupID _x) - [45]);
+            private _index = lbAdd [_listBox,_text];
+            _x setVariable ["f_spect_listBoxIndex",_index];
             f_cam_listUnits pushBack _x;
-            lbSetColor [_listBox,_index,[side _x,false] call BIS_fnc_sideColor];
+            lbSetColor [_listBox,_index,([side _x,false] call BIS_fnc_sideColor)];
             {
                 if (alive _x) then {
                     private _spectator = _x getVariable ["phx_isUnitSpectator",false];
@@ -55,7 +59,7 @@ while {true} do {
                         f_cam_listUnits pushBack _x;
                         _text = "    " + name _x;
                         _index = lbAdd [_listBox,_text];
-                        _x SetVariable ["f_spect_listBoxIndex",_index];
+                        _x setVariable ["f_spect_listBoxIndex",_index];
                     };
                 };
                 nil
@@ -66,31 +70,32 @@ while {true} do {
 
     // ====================================================================================
     // Check if they died etc.
-
+    // TODO: Optimize some of this stuff
     {
-        _index = _x GetVariable ["f_spect_listBoxIndex",-1];
-        if (typeName _x isEqualTo "GROUP") then {
-            if (_index >= 0 && {({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x) > 0} && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
-                // there is no lbSetText, so just punt it out of the list and fix it up there..
-                lbDelete [_listBox,_index];
-                f_cam_listUnits = f_cam_listUnits - [_x];
-                [] call f_cam_checkIndex;
-            };
-            if ( (({alive _x} count units _x) <= 0 || ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x) > 0) && {_index >= 0}) then {
-                lbDelete [_listBox,_index];
-                f_cam_listUnits = f_cam_listUnits - [_x];
-                [] call f_cam_checkIndex;
-            };
-        } else {
-            _val = lbText [_listBox,_index] != "    " + name _x;
-            if (_index >= 0 && {alive _x} && {_val}) then {
-                // there is no lbSetText, so just punt it out of the list and fix it up there..
-                lbDelete [_listBox,_index];
-                f_cam_listUnits = f_cam_listUnits - [_x];
-                [] call f_cam_checkIndex;
-            };
-            if (!alive _x || isNull _x || _x getVariable ["phx_isUnitSpectator",false]) then {
-                if (_index >= 0) then {
+        private _index = _x getVariable ["f_spect_listBoxIndex",-1];
+        if (_index >= 0) then {
+            if (typeName _x isEqualTo "GROUP") then {
+                private _count = ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x)
+                if (_count >= 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
+                    // there is no lbSetText, so just punt it out of the list and fix it up there..
+                    lbDelete [_listBox,_index];
+                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    [] call f_cam_checkIndex;
+                };
+                if (_count isEqualTo 0) then {
+                    lbDelete [_listBox,_index];
+                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    [] call f_cam_checkIndex;
+                };
+            } else {
+                _val = lbText [_listBox,_index] != "    " + name _x;
+                if (alive _x && {_val}) then {
+                    // there is no lbSetText, so just punt it out of the list and fix it up there..
+                    lbDelete [_listBox,_index];
+                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    [] call f_cam_checkIndex;
+                };
+                if (!alive _x || isNull _x || _x getVariable ["phx_isUnitSpectator",false]) then {
                     lbDelete [_listBox,_index];
                     f_cam_listUnits = f_cam_listUnits - [_x];
                     [] call f_cam_checkIndex;
@@ -99,5 +104,4 @@ while {true} do {
         };
         nil
     } count f_cam_listUnits;
-    sleep 1;
-};
+}, 1, [_listBox]] call CBA_fnc_addPerFrameHandler;

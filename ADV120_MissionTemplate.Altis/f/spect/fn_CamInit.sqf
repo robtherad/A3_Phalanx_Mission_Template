@@ -43,7 +43,6 @@
     // Creates a virtual unit on the player's side and places it where he died.
     createCenter sideLogic;
     private _newGrp = createGroup sideLogic;
-    private ["_newUnit"];
     private _pos = [-1000,-1000,5];
     if (isNil "phx_spect_playerGroup") then {phx_spect_playerGroup = _newGrp;phx_spect_playerGroupNumber = 1;};
     
@@ -88,10 +87,6 @@
         f_cam_controls = [F_CAM_HELPFRAME,F_CAM_HELPBACK,F_CAM_MOUSEHANDLER,F_CAM_UNITLIST,F_CAM_MODESCOMBO,F_CAM_SPECTEXT,F_CAM_SPECHELP,F_CAM_HELPCANCEL,F_CAM_HELPCANCEL,F_CAM_MINIMAP,F_CAM_FULLMAP,F_CAM_BUTTIONFILTER,F_CAM_BUTTIONTAGS,F_CAM_BUTTIONTAGSNAME,F_CAM_BUTTIONFIRSTPERSON,F_CAM_DIVIDER];
         f_cam_units = [];
         f_cam_players = [];
-        f_cam_startX = 0;
-        f_cam_startY = 0;
-        f_cam_detlaX = 0;
-        f_cam_detlaY = 0;
         f_cam_zoom = 0;
         f_cam_hideUI = false;
         f_cam_map_zoom = 0.5;
@@ -103,10 +98,7 @@
         f_cam_nvOn = false;
         f_cam_tiBHOn = false;
         f_cam_tiWHOn = false;
-        f_cam_tagsEvent = -1;
-        f_cam_mShift = false;
         f_cam_freecamOn = false;
-        f_cam_toggleTagsName = true;
         f_cam_mapMode = 0;
         f_cam_MouseButton = [false,false];
         f_cam_mouseCord = [0.5,0.5];
@@ -114,7 +106,6 @@
         f_cam_mouseDeltaY = 0.5;
         f_cam_mouseLastX = 0.5;
         f_cam_mouseLastY = 0.5;
-        f_cam_angleYcached  = 0;
         f_cam_angleX = 0;
         f_cam_tracerOn = false;
         f_cam_angleY = 60;
@@ -150,10 +141,8 @@
         // Camera
         f_cam_angle = 360;
         f_cam_zoom = 3;
-        f_cam_height = 3;
         f_cam_fovZoom = 1.2;
         f_cam_scrollHeight = 0;
-        f_cam_cameraMode = 0; // set camera mode (default)
         // ------------------------------------------------------------------------------------
         // Define Camera Functions
         f_cam_ToggleFPCamera = {
@@ -221,7 +210,6 @@
             if ( count (actionKeys "curatorInterface") > 0 ) then {
                 f_cam_zeusKey = (actionKeys "curatorInterface") select 0;
             };
-            f_cam_MouseMoving = false;
             cameraEffectEnableHUD true;
             showCinemaBorder false;
             f_cam_fired = [];
