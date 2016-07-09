@@ -84,7 +84,7 @@ switch (_char) do {
     case toLower "O_Soldier_TL_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_TL.sqf",_loadout]
     };
-    case toLower "O_engineer_F": {
+    case toLower "O_soldier_exp_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CE.sqf",_loadout]
     };
     case toLower "O_HeavyGunner_F": {
@@ -135,7 +135,7 @@ switch (_char) do {
     case toLower "B_Soldier_lite_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AG.sqf",_loadout]
     };
-    case toLower "B_engineer_F": {
+    case toLower "B_soldier_exp_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]
     };
     case toLower "B_soldier_LAT_F": {
