@@ -50,7 +50,7 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
             _icon = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
             _color set [3,0.9];
             _iconSize = .7;
-            if (_x getVariable ["phx_revive_down",false]) then {
+            if (_x getVariable ["ACE_isUnconscious",false]) then {
                 _icon = "\a3\ui_f_exp_a\Data\Displays\RscDisplayEGSpectator\reviveicon_ca.paa";
                 _color set [3,0.4];
                 _iconSize = 2;
