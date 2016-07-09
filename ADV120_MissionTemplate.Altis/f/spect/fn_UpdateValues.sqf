@@ -70,13 +70,13 @@ while {true} do {
     {
         _index = _x GetVariable ["f_spect_listBoxIndex",-1];
         if (typeName _x isEqualTo "GROUP") then {
-            if (_index >= 0 && ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x) > 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
+            if (_index >= 0 && {({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x) > 0} && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
                 // there is no lbSetText, so just punt it out of the list and fix it up there..
                 lbDelete [_listBox,_index];
                 f_cam_listUnits = f_cam_listUnits - [_x];
                 [] call f_cam_checkIndex;
             };
-            if (({alive _x} count units _x) <= 0  && {_index >= 0}) then {
+            if ( (({alive _x} count units _x) <= 0 || ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x) > 0) && {_index >= 0}) then {
                 lbDelete [_listBox,_index];
                 f_cam_listUnits = f_cam_listUnits - [_x];
                 [] call f_cam_checkIndex;
@@ -89,7 +89,7 @@ while {true} do {
                 f_cam_listUnits = f_cam_listUnits - [_x];
                 [] call f_cam_checkIndex;
             };
-            if (!alive _x || isNull _x) then {
+            if (!alive _x || isNull _x || _x getVariable ["phx_isUnitSpectator",false]) then {
                 if (_index >= 0) then {
                     lbDelete [_listBox,_index];
                     f_cam_listUnits = f_cam_listUnits - [_x];
