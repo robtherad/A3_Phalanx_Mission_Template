@@ -9,8 +9,8 @@ for "_i" from 1 to 32 do {player addItemToBackpack "ACE_fieldDressing";};
 for "_i" from 1 to 16 do {player addItemToBackpack "ACE_morphine";};
 for "_i" from 1 to 8 do {player addItemToBackpack "ACE_epinephrine";};
 for "_i" from 1 to 2 do {player addItemToBackpack "ACE_bloodIV";};
-
 player addWeapon "rhs_weap_m16a4_carryhandle";
+for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items
 call phx_fnc_loadout_handleItems; // Add binocular/nvg variables above this line!

@@ -14,6 +14,7 @@ for "_i" from 1 to 7 do {player addItemToBackpack "rhs_30Rnd_545x39_AK_green";};
 player addWeapon "rhs_weap_ak74m_gp25";
 for "_i" from 1 to 6 do {player addItemToBackpack "rhs_30Rnd_545x39_AK";};
 player addItem "ACE_MapTools";
+for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items
 phx_loadout_addBinocular = "Binocular";

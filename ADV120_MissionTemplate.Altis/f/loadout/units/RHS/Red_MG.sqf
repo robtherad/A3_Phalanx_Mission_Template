@@ -6,7 +6,8 @@ for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
 for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 3 do {player addItemToBackpack "rhs_100Rnd_762x54mmR";};
-player addWeapon "rhs_weap_pkm";
+player addWeapon "rhs_weap_pkm";for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
+
 // Add items
 call phx_fnc_loadout_handleItems;
 
