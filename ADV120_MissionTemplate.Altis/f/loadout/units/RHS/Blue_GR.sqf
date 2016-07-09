@@ -12,6 +12,7 @@ for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 4 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red";};
 for "_i" from 1 to 9 do {player addItemToBackpack "rhs_mag_30Rnd_556x45_M855A1_Stanag";};
 player addWeapon "rhs_weap_m16a4_carryhandle_M203";
+for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items
 call phx_fnc_loadout_handleItems; // Add binocular/nvg variables above this line!
