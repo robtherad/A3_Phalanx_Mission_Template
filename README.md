@@ -8,3 +8,8 @@ Known issues with this version:
 Recently fixed issues:
 
 * Dragging somebody would break all revive actions.
+
+TODO List:
+
+* Change loadout saving system to use CBA's loadout changed event.
+* Clean up revive briefing text
