@@ -9,6 +9,16 @@ class ACE_Settings {
         typeName = "BOOL";
         force = 0;
     };
+    class ace_finger_maxRange {
+        value = 7;
+        typeName = "SCALAR";
+        force = 0;
+    };
+    class ace_map_gestures_maxRange {
+        value = 7;
+        typeName = "SCALAR";
+        force = 0;
+    };
     class ace_frag_reflectionsEnabled {
         value = 1;
         typeName = "BOOL";
