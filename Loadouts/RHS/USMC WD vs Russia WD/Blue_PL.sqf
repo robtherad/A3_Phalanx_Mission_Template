@@ -12,6 +12,7 @@ player addWeapon "rhs_weap_m16a4_carryhandle";
 for "_i" from 1 to 6 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stanag";};
 player addWeapon "rhs_weap_rsp30_white";
 for "_i" from 1 to 3 do {player addItemToBackpack "rhs_weap_rsp30_white";};
+player addItem "ACE_MapTools";
 
 // Add items
 phx_loadout_addBinocular = "Binocular";
