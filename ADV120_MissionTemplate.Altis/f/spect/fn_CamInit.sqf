@@ -237,7 +237,7 @@
             lbSetCurSel [2101,0];
 
             f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
-            ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
+            f_cam_tagDrawEH = addMissionEventHandler ["Draw3D",{_this call F_fnc_DrawTags}];
             ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
             
             [{
