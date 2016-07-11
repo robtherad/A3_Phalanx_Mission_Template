@@ -2,7 +2,8 @@ class ACE_Settings {
     class ace_ui_groupBar {
         value = 0;
         typeName = "BOOL";
-        force = 0;
+        force = 1;
+        isClientSettable = 0;
     };
     class ace_finger_enabled {
         value = 1;
