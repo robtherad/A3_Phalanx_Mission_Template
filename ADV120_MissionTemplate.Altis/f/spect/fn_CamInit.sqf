@@ -78,6 +78,10 @@
         // ------------------------------------------------------------------------------------
         // Set spectator mode for whichever radio system is in use
         [player, true] call TFAR_fnc_forceSpectator;
+        player setVariable ["tf_unable_to_use_radio", true];
+        // ------------------------------------------------------------------------------------
+        // Disable STHUD
+        ST_STHud_ShownUI = 0;
         // ------------------------------------------------------------------------------------
         // Set inital values.
         private _listBox = 2100;
