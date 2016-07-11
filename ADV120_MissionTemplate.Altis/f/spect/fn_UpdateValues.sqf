@@ -75,7 +75,7 @@ f_cam_updateValues = [{
         private _index = _x getVariable ["f_spect_listBoxIndex",-1];
         if (_index >= 0) then {
             if (typeName _x isEqualTo "GROUP") then {
-                private _count = ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x)
+                private _count = ({private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !_spectator && {alive _x}} count units _x);
                 if (_count >= 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
                     // there is no lbSetText, so just punt it out of the list and fix it up there..
                     lbDelete [_listBox,_index];
