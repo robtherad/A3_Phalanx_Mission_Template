@@ -25,6 +25,15 @@ phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHan
 // Generate ORBAT page
 [] execVM "f\briefing\f_orbatNotes.sqf";
 
+// Add condition for blocking ACE features when player becomes spectator
+["isnotphxspectator", { 
+    private _return = false; 
+    if !(missionNamespace getVariable ["phx_isSpectator",false]) then { 
+        _return = true; 
+    }; 
+    _return 
+}] call ACE_common_fnc_addCanInteractWithCondition;
+
 // Initialize variables for spectator script later on
 phx_spect_playerGroup = group player;
 private _str = str player;
