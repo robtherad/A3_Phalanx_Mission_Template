@@ -15,7 +15,6 @@ class core {
     class core_playerBoundsCheck{};
     class core_setDate{};
     class core_setWeather{};
-    class core_shownHUDCheck{};
     class core_headsetAction{};
 };
 class radios {
@@ -66,20 +65,4 @@ class sector {
     class sectorInit{};
     class titleTextSector{};
     class watchSector{};
-};
-class revive {
-    file = "f\revive";
-    class AddLinkedItems{};
-    class SetDowned{};
-    class WoundedEffect{};
-    class HasWounded{};
-    class EjectWounded{};
-    class OnDrag{};
-    class LifeTick {};
-    class OnDeath {};
-    class OnDamage{};
-    class SetBleeding{};
-    class OnRevive{};
-    class OnSlowBleeding{};
-    class ReviveInit{};
 };

@@ -1,12 +1,12 @@
 disableSerialization;
-_show = _this select 0;
-_disp = findDisplay 9228;
+private _show = param [0];
+private _disp = findDisplay 9228;
 if (f_cam_menuWorking) exitWith {};
 if (_show && {!f_cam_menuShown}) then {
     f_cam_menuWorking = true;
     f_cam_menuShown = true;
     {
-        _pos = ctrlPosition (_disp displayCtrl _x);
+        private _pos = ctrlPosition (_disp displayCtrl _x);
         _pos set [1,(_pos select 1) + 0.03];
         (_disp displayCtrl _x) ctrlSetPosition _pos;
         nil
@@ -19,7 +19,7 @@ if (!_show && {f_cam_menuShown}) then {
     f_cam_menuWorking = true;
     f_cam_menuShown = false;
     {
-        _pos = ctrlPosition (_disp displayCtrl _x);
+        private _pos = ctrlPosition (_disp displayCtrl _x);
         _pos set [1,(_pos select 1) - 0.03];
         (_disp displayCtrl _x) ctrlSetPosition _pos;
         nil

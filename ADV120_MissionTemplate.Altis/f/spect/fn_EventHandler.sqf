@@ -3,19 +3,18 @@
 // ==================================================================
 
 // handles all the events. be afraid.
-_type = _this select 0;
-_args = _this select 1;
-_handled = true;
+params ["_type", "_args"];
+
+private _handled = true;
 switch (_type) do {
 // ==================================================================
 // handles the mouse.
 case "MouseButtonDown": {
-    if (_args select 1 isEqualTo 1 && {f_cam_mode != 1}) then {
-        _button = _args select 1;
+    private _button = _args param [1];
+    if (_button isEqualTo 1 && {f_cam_mode != 1}) then {
         f_cam_MouseButton set [_button,true];
-
     };
-    if (_args select 1 isEqualTo 1) then {
+    if (_button isEqualTo 1) then {
         if (f_cam_mode isEqualTo 1) then {
             f_cam_ads = true;
             f_cam_curTarget switchCamera "gunner";
@@ -23,12 +22,12 @@ case "MouseButtonDown": {
     };
 };
 case "MouseButtonUp": {
-    if (_args select 1 isEqualTo 1 && {f_cam_mode != 1}) then {
-        _button = _args select 1;
+    private _button = _args param [1];
+    if (_button isEqualTo 1 && {f_cam_mode != 1}) then {
         f_cam_MouseButton set [_button,false];
         [] spawn f_fnc_HandleCamera;
     };
-    if (_args select 1 isEqualTo 1) then {
+    if (_button isEqualTo 1) then {
         if (f_cam_mode isEqualTo 1) then {
             f_cam_ads = false;
             f_cam_curTarget switchCamera "internal";
@@ -36,7 +35,8 @@ case "MouseButtonUp": {
     };
 };
 case "MapZoom": {
-    f_cam_map_zoom = f_cam_map_zoom+((_args select 1)*0.05);
+    private _change = _args param [1];
+    f_cam_map_zoom = f_cam_map_zoom+(_change*0.05);
     if (f_cam_map_zoom > 0.5) then {
         f_cam_map_zoom = 0.5;
     };
@@ -46,33 +46,35 @@ case "MapZoom": {
     _handled = true;
 };
 case "MouseMoving": {
-    _x = _args select 1;
-    _y = _args select 2;
+    private _x = _args param [1];
+    private _y = _args param [2];
     f_cam_mouseCord = [_x,_y];
     [] spawn f_fnc_HandleCamera;
 
 };
 case "MouseZChanged": {
+    private _change = _args param [1];
     if (!f_cam_ctrl_down) then {
         switch (f_cam_mode) do {
             case 0: {
-                f_cam_zoom = ((f_cam_zoom - ((_args select 1)*f_cam_zoom/5)) max 0.1) min 650;
+                f_cam_zoom = ((f_cam_zoom - (_change*f_cam_zoom/5)) max 0.1) min 650;
             };
             case 3: {
-                f_cam_scrollHeight = (_args select 1);
+                f_cam_scrollHeight = _change;
             };
         };
     } else {
-        f_cam_fovZoom = ((f_cam_fovZoom - ((_args select 1)*f_cam_fovZoom/5)) max 0.1) min 1;
+        f_cam_fovZoom = ((f_cam_fovZoom - (_change*f_cam_fovZoom/5)) max 0.1) min 1;
     };
 };
 
 // ==================================================================
 // handles dropboxes
 case "LBListSelChanged": {
-    if (count f_cam_listUnits > (_args select 1)) then {
-        _unit = f_cam_listUnits select (_args select 1);
-        if (!isnil "_unit") then {
+    private _lbSelection = _args param [1];
+    if (count f_cam_listUnits > _lbSelection) then {
+        private _unit = f_cam_listUnits param [_lbSelection];
+        if (!isNil "_unit") then {
             if (typeName _unit isEqualTo "GROUP") then {_unit = leader _unit};
             f_cam_curTarget = _unit;
             if (f_cam_toggleCamera) then {
@@ -80,10 +82,10 @@ case "LBListSelChanged": {
             };
             ctrlSetText [1000,format ["Spectating: %1", name f_cam_curTarget]];
             if (f_cam_mode isEqualTo 3) then {
-                _pos = getpos _unit;
-                _x = _pos select 0;
-                _y = _pos select 1;
-                f_cam_freecamera setPosASL [_x,_y,((getposASL f_cam_freecamera) select 2 ) max ((getTerrainHeightASL [_x,_y])+1)];
+                private _pos = getPos _unit;
+                private _x = _pos param [0];
+                private _y = _pos param [1];
+                f_cam_freecamera setPosASL [_x,_y,((getposASL f_cam_freecamera) param [2] ) max ((getTerrainHeightASL [_x,_y])+1)];
             };
         };
     };
@@ -91,7 +93,7 @@ case "LBListSelChanged": {
     ctrlEnable [2100, true];
 };
 case "LBListSelChanged_modes": {
-    _index =  (_args select 1);
+    private _index = _args param [1];
     switch (_index) do {
         case f_cam_lb_toggletiWHIndex: {
             f_cam_tiWHOn = !f_cam_tiWHOn;
@@ -145,7 +147,7 @@ case "LBListSelChanged_modes": {
 // ==================================================================
 // handles keys
 case "KeyDown": {
-    _key = _args select 1;
+    private _key = _args param [1];
     _handled = false;
     if (!isNull (findDisplay 49)) exitWith {if (_key isEqualTo 1) then {true}};
     switch (_key) do {
@@ -160,7 +162,7 @@ case "KeyDown": {
             if (serverCommandAvailable "#kick" || !isNull (getAssignedCuratorLogic player) ) then {
                 // handler to check when we can return to the spectator system ( when zeus interface is closed and not remoteing controlling)
                 [] spawn {
-                    _done = false;
+                    private _done = false;
                     waitUntil {sleep 0.1;!isNull (findDisplay 312)}; // wait until open
                     while {!_done} do {
                         waitUntil {sleep 0.1;isNull (findDisplay 312)}; // then wait until its not open
@@ -257,15 +259,15 @@ case "KeyDown": {
                 cameraEffectEnableHUD true;
                 showCinemaBorder false;
             };
-             _handled = true;
+            _handled = true;
         };
         case 35: { //  H
-            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\n\nPress 'F2' to hide this message and others like it.",15] call phx_fnc__hintThenClear;
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
             ctrlShow [1315, !ctrlVisible 1315];
             ctrlShow [1310, !ctrlVisible 1310];
             ctrlShow [1300, !ctrlVisible 1300];
             ctrlShow [1305, !ctrlVisible 1305];
-             _handled = true;
+            _handled = true;
         };
         case 42: { // SHIFT
             f_cam_shift_down = true;
@@ -315,7 +317,7 @@ case "KeyDown": {
         case 29: { // CTRL
             f_cam_ctrl_down = true;
             [] spawn f_fnc_HandleCamera;
-             _handled = true;
+            _handled = true;
         };
         case 50: { // M
             f_cam_mapMode = f_cam_mapMode +1;
@@ -368,7 +370,7 @@ case "KeyDown": {
             };
         };
         case 59: { // F1
-            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\nPress 'F2' to clear hints.\n",15] call phx_fnc__hintThenClear;
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
         };
         case 60: { // F2
             hint "";
@@ -382,7 +384,7 @@ case "KeyDown": {
 
 case "KeyUp": {
     if (!isNull (findDisplay 49)) exitWith {};
-    _key = _args select 1;
+    private _key = _args param [1];
     _handled = false;
     switch (_key) do {
         case 42: {

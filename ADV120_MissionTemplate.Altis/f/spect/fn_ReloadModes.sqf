@@ -1,5 +1,5 @@
-_listBox = 2101;
-_curIndex = lbCurSel _listBox;
+private _listBox = 2101;
+private _curIndex = lbCurSel _listBox;
 lbClear _listBox;
 // Normal
 if (!f_cam_tiWHOn && {!f_cam_tiBHOn} && {!f_cam_nvOn}) then {

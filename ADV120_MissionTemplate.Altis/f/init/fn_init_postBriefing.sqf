@@ -4,9 +4,6 @@
 if (hasInterface) then {
     // Start GPS script
     call phx_fnc_gps_init;
-    
-    // Add a check to make sure the group HUD is disabled
-    call phx_fnc_core_shownHUDCheck;
 
     // Add raise/lower headset option
     call phx_fnc_core_headsetAction;

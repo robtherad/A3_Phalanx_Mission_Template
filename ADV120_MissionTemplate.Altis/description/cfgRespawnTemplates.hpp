@@ -1,5 +1,5 @@
 class CfgRespawnTemplates {
-    class phx_revive {
-        onPlayerRespawn = "PHX_fnc_OnDeath";
+    class f_spectator {
+        onPlayerRespawn = "f_fnc_CamInit";
     };
 };

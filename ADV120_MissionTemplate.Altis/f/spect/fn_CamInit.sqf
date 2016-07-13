@@ -43,7 +43,6 @@
     // Creates a virtual unit on the player's side and places it where he died.
     createCenter sideLogic;
     private _newGrp = createGroup sideLogic;
-    private ["_newUnit"];
     private _pos = [-1000,-1000,5];
     if (isNil "phx_spect_playerGroup") then {phx_spect_playerGroup = _newGrp;phx_spect_playerGroupNumber = 1;};
     
@@ -79,6 +78,10 @@
         // ------------------------------------------------------------------------------------
         // Set spectator mode for whichever radio system is in use
         [player, true] call TFAR_fnc_forceSpectator;
+        player setVariable ["tf_unable_to_use_radio", true];
+        // ------------------------------------------------------------------------------------
+        // Disable STHUD
+        ST_STHud_ShownUI = 0;
         // ------------------------------------------------------------------------------------
         // Set inital values.
         private _listBox = 2100;
@@ -88,10 +91,6 @@
         f_cam_controls = [F_CAM_HELPFRAME,F_CAM_HELPBACK,F_CAM_MOUSEHANDLER,F_CAM_UNITLIST,F_CAM_MODESCOMBO,F_CAM_SPECTEXT,F_CAM_SPECHELP,F_CAM_HELPCANCEL,F_CAM_HELPCANCEL,F_CAM_MINIMAP,F_CAM_FULLMAP,F_CAM_BUTTIONFILTER,F_CAM_BUTTIONTAGS,F_CAM_BUTTIONTAGSNAME,F_CAM_BUTTIONFIRSTPERSON,F_CAM_DIVIDER];
         f_cam_units = [];
         f_cam_players = [];
-        f_cam_startX = 0;
-        f_cam_startY = 0;
-        f_cam_detlaX = 0;
-        f_cam_detlaY = 0;
         f_cam_zoom = 0;
         f_cam_hideUI = false;
         f_cam_map_zoom = 0.5;
@@ -103,10 +102,7 @@
         f_cam_nvOn = false;
         f_cam_tiBHOn = false;
         f_cam_tiWHOn = false;
-        f_cam_tagsEvent = -1;
-        f_cam_mShift = false;
         f_cam_freecamOn = false;
-        f_cam_toggleTagsName = true;
         f_cam_mapMode = 0;
         f_cam_MouseButton = [false,false];
         f_cam_mouseCord = [0.5,0.5];
@@ -114,7 +110,6 @@
         f_cam_mouseDeltaY = 0.5;
         f_cam_mouseLastX = 0.5;
         f_cam_mouseLastY = 0.5;
-        f_cam_angleYcached  = 0;
         f_cam_angleX = 0;
         f_cam_tracerOn = false;
         f_cam_angleY = 60;
@@ -150,10 +145,8 @@
         // Camera
         f_cam_angle = 360;
         f_cam_zoom = 3;
-        f_cam_height = 3;
         f_cam_fovZoom = 1.2;
         f_cam_scrollHeight = 0;
-        f_cam_cameraMode = 0; // set camera mode (default)
         // ------------------------------------------------------------------------------------
         // Define Camera Functions
         f_cam_ToggleFPCamera = {
@@ -202,7 +195,7 @@
             ((findDisplay 9228) displayCtrl 1360) ctrlShow false;
             ((findDisplay 9228) displayCtrl 1360) mapCenterOnCamera false;
 
-            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who you killed as well as who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
+            ["Extra Keys\n\nPress 'F1' to see this hint again.\nPress 'U' to hide the spectator UI.\nPress 'V' to hide the remaining time UI.\nPress 'Right Arrow' to make player tags bigger.\nPress 'Left Arrow' to make player tags smaller.\n\nTo see who killed you, press your chat key (default '/') then press 'Page-Up' until you see the information in the chat area.\nPress 'P' to mute spectator voice chat and listen to players. If you focus on a player you will pick up their radio settings.\n\nPress 'F2' to hide this message and others like it.",20] call phx_fnc__hintThenClear;
             f_cam_helptext = "<t color='#EAA724'>Press F1 to see more keys.<br />Hold right-click to pan the camera.<br />Use the scroll wheel or numpad+/- to zoom in and out.<br />Use ctrl + rightclick to fov zoom<br />Press H to show and close the help window.<br />Press M to toggle between no map,minimap and full size map.<br />T for switching on tracers on the map<br/>Space to switch to freecam <br/>Use the left and right arrow keys to adjust size of player tags.</t>";
             ((findDisplay 9228) displayCtrl 1310) ctrlSetStructuredText parseText (f_cam_helptext);
             // -----------------------------------------------------------------------------
@@ -221,7 +214,6 @@
             if ( count (actionKeys "curatorInterface") > 0 ) then {
                 f_cam_zeusKey = (actionKeys "curatorInterface") select 0;
             };
-            f_cam_MouseMoving = false;
             cameraEffectEnableHUD true;
             showCinemaBorder false;
             f_cam_fired = [];
@@ -237,7 +229,7 @@
             lbSetCurSel [2101,0];
 
             f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
-            ["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
+            f_cam_tagDrawEH = addMissionEventHandler ["Draw3D",{_this call F_fnc_DrawTags}];
             ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
             
             [{
