@@ -2,7 +2,7 @@
 This module creates and updates markers for every group on a side except for ones which are set to be ignored in the settings file. It can also manage markers for vehicles if they are properly configured in the settings file. 
 
 ###Configure
-All configuration happens in `'f\gpsmarkers\settings.sqf'`.
+All configuration happens in `'f/gpsmarkers/settings.sqf'`.
 
 #####Vehicles
 To manage markers for vehicles you need to define `_westVehArray`, `_eastVehArray`, or `_indVehArray` depending on which teams should be able to see the vehicle's marker.
@@ -18,7 +18,7 @@ This will have the module create and update a marker for that vehicle. By defaul
 #####Group Markers
 By default the module will create a marker for every group present on the map. Unless the group is defined by the setGroupID module it will have a messy name like `Alpha 1-1` or something. Define the group using that module and it will use the name defined there instead.
 
-If you want a group to have no marker created for it you can add it's groupID to `phx_ignoreMarkerArray`. It's groupID should be a string which is defined in the setGroupID module. If I had three groups named A1, A2 and C2 that I wished to hide markers for I would define `phx_ignoreMarkerArray` as follows:
+If you want a group to have no marker created for it you can add it's groupID, or it's group identifier (as defined in the setGroupID module), to `phx_ignoreMarkerArray`. It's groupID should be a string which is defined in the setGroupID module. If I had three groups named A1, A2 and C2 that I wished to hide markers for I would define `phx_ignoreMarkerArray` as follows:
 
 ```phx_ignoreMarkerArray = ["A1", "A2", "C2"];```
 ***
@@ -28,4 +28,6 @@ If you wish for teams to be able to see each other's GPS markers then you can de
 If you wish to change this value after the mission has started you can redefine `phx_sidesVisibleToPlayer` which is a variable local to each client that is initially equal to the `_sidesVisibleToXXXX` that corresponds to the player's initial side when the script was called.
 
 ###Disable
-In `'f\phxInit.sqf'` remove the line `call phx_fnc_gps_init;`.
+In `'/f/init/fn_init_postBriefing.sqf'` remove the line:
+
+```call phx_fnc_gps_init;```
