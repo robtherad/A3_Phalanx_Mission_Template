@@ -19,7 +19,7 @@ Creates a briefing entry that shows information about all groups on the player's
 #####Configure
 If you wish to use this without the radio module you will need to remove the line ```waitUntil { !isNil "phx_playerBaseChannel"; };```.
 #####Disable
-In `'init.sqf'` remove or comment out the line that reads:
+In `'/f/init/fn_init_client.sqf'` remove or comment out the line that reads:
 ```
 [] execVM "f\briefing\f_orbatNotes.sqf";
 ```
