@@ -17,6 +17,9 @@ This module sets up player's radios for them.
 All radio settings are determined by the definitions in the `setGroupIDs` module.
 
 ###Disable
-In `'f\phxInit.sqf'` remove the line `phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;`.
+In `'/f/init/fn_init_client.sqf'` remove the line :
+```phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;```
 
+and in `'/f/init/fn_init_server.sqf'` remove the line:
+```call phx_fnc_radio_genFreqs;```
 You will also need to edit a line in the `'f\briefing'` folder. See the readme file in that folder for more information.
