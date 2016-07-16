@@ -4,21 +4,4 @@ This module is our spectator module.
 ###Configure
 Have fun.
 ###Disable
-In `description.ext` remove the following lines:
-
-```
-#include "f\spect\functions.hpp"
-```
-***
-Edit the following line from:
-```
-    class f_spectator {
-        onPlayerRespawn = "f_fnc_CamInit";
-    };
-```
-To:
-```
-    class f_spectator {
-        onPlayerRespawn = "";
-    };
-```
+You will need to add a whole new system for handling deaths and respawns so if you know how to do that you can figure out how to search for `f_fnc_CamInit` and remove all calls to it.
