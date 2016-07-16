@@ -9,7 +9,11 @@ Adds an event handler to every player which triggers another script (`fn_core_mp
 #####Configure
 No configuration required.
 #####Disable
-In `'f\functions.hpp'` remove `postInit = 1;` from the code block of `class core_addKilledEH`
+In `'/f/init/fn_init_client.sqf'` remove or comment out the line:
+
+```
+call phx_fnc_core_addKilledEH;
+```
 
 
 ***
@@ -19,7 +23,7 @@ Runs locally and gets the name of the person that the player is looking at. Only
 #####Configure
 No configuration required.
 #####Disable
-In `'f\phxInit.sqf'` remove or comment out the line that reads:
+In `'/f/init/fn_init_client.sqf'` remove or comment out the line that reads:
 ```
 phx_core_showTags = [phx_fnc_core_showTags, 0, []] call CBA_fnc_addPerFrameHandler;
 ```
@@ -31,4 +35,7 @@ Ensures a player's side does not change from team damage.
 #####Configure
 No configuration required.
 #####Disable
-In `'f\functions.hpp'` remove `postInit = 1;` from the code block of `class core_addRatingEH`
+In `'f\functions.hpp'` remove or comment out the line that reads:
+```
+call phx_fnc_core_addRatingEH;
+```
