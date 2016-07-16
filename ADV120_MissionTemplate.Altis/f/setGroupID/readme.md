@@ -33,7 +33,7 @@ ex: [1,6,[1,2,3,4]] - mainChannel is ch1, altChannel is ch6, ch2 is 1 unit MHz h
 ```
     
 ###Disable
-In `'init.sqf'` remove the line `[] call compile preprocessFileLineNumbers "f\setGroupID\f_setGroupIDs.sqf";`.
+In `'/f/init/fn_init_client.sqf'` remove the line: ```[] call compile preprocessFileLineNumbers "f\setGroupID\f_setGroupIDs.sqf";```.
 
 ###Other
-If you see a message that says ```[setGroupIDs] No radio freq found for group - '[GROUP NAME]'``` it means that in your group definitions you have set the `mainChannel` variable to a number higher than the amount of values defined in that group's `channelArray`. This message is displayed when the ORBAT script `f\briefing\f_orbatNotes.sqf` is unable to display a frequency next to the name of the listed group.
+If you see a message that says ```[setGroupIDs] No radio freq found for group - '[GROUP NAME]'``` it means that in your group definitions you have set the `mainChannel` variable to a number higher than the amount of values defined in that group's `channelArray`. This message is displayed when the ORBAT script `f/briefing/f_orbatNotes.sqf` is unable to display a frequency next to the name of the listed group.
