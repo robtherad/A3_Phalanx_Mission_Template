@@ -24,9 +24,6 @@ call phx_fnc_radio_genFreqs;
     _marker setMarkerType "Empty";
 } forEach ["respawn", "respawn_west","respawn_east","respawn_guerrila","respawn_civilian"];
 
-// Add EH for kill display
-call phx_fnc_core_addKilledEH;
-
 //====================================================================================================
 phx_serverInitFinished = true;
 

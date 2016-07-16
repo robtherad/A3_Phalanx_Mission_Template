@@ -39,6 +39,9 @@ phx_spect_playerGroup = group player;
 private _str = str player;
 phx_spect_playerGroupNumber = parseNumber (_str select [(_str find ":") + 1]);
 
+// Add EH for kill display
+call phx_fnc_core_addKilledEH;
+
 //====================================================================================================
 phx_clientInitFinished = true;
 
