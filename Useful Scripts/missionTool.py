@@ -106,33 +106,27 @@ def compare_directories(fileLists, directoryPaths):
 def sort_files(templateDiffs, missionDiff):
     '''
     Determines which files to copy and which to warn about.
-    Diffs are passed as lists: [failedList, mismatchList, secondMistmatch, commonList]
+    Diffs are passed as lists: [failedList, passedList, mismatchList, secondListMismatch, commonList]  
     
     Warn about: 
         5. Files changed between old template and old mission AND changed between old template and new template
     Copy:
         1. Files unique to the old mission
         2. Files unique to the new template
-        3. Files NOT changed between the old template and old mission AND NOT changed between the old template and newtemplate
         4. Files changed between the old template and old mission AND NOT changed between the old template and new template
         6. Files NOT changed between the old template and old mission AND changed between the old template and new template
+        8. Files NOT changed between the old template and old mission AND NOT changed between the old template and newtemplate
     Ignore:
-        7. Files that don't exist in the mission but changed in the template
-        8. Files that didn't change between the old template and old mission but changed in the template
-        9. Files that are unique to the old template
-        10. Files common between templates but that don't exist in the mission folder
+        3. Files that are unique to the old template
+        7. Files that don't exist in the old mission AND changed between the old template and new template
+        9. Files common between templates AND don't exist in the old mission
     '''
     copyNewFiles = [] # Files that come from the new template
     copyOldFiles = [] # Files that come from the old mission/template
     warnFiles = []
     orphanFiles = []
 
-    # Common files that haven't changed from the old template to the new template and unchanged in mission are copied
-
-    # [failedList, passedList, mismatchList, secondListMismatch, commonList]
-
-    # TemplateDiffs: 0, 1, 2
-    
+    # [failedList, passedList, mismatchList, secondListMismatch, commonList]  
     failedBtwnTemplates = templateDiffs[0] # Diff btwn old temp and new temp
     commonBtwnTemplates = templateDiffs[1] # Same from old temp to new temp
     uniqueOldTemplate = templateDiffs[2] # Files unique to the old template
@@ -143,56 +137,70 @@ def sort_files(templateDiffs, missionDiff):
     uniqueOldMission = missionDiff[3] # Files unique to the old mission
 
     for f in uniqueOldMission:
-         # -- 1 --
-        # Copy files that are unique to the old mission
-        copyOldFiles.append(f)
+        # -- 1 --
+        # Copy files that are unique to the old mission (compared to the old template)
+            copyOldFiles.append(f)
 
     for f in uniqueNewTemplate:
         # -- 2 --
-        # Copy files that are unique to the new template
-        copyNewFiles.append(f)
+        # Copy files that are unique to the new template (compared to the old template)
+            copyNewFiles.append(f)
 
     for f in uniqueOldTemplate:
-        # -- 9 --
-        # Ignore files that are unique to the old template
-        orphanFiles.append(f)
-
-    for f in commonBtwnTemplates:
-        # -- 10 --
-        # Ignore files that are common between the templates but don't exist in the mission folder
-        if not ((f in commonBtwnMission) or (f in failedBtwnMission)):
-            orphanFiles.append(f)
-    
-    for f in commonBtwnMission:
-        if f in commonBtwnTemplates:
-            # -- 3 --
-            # Copy files that weren't changed in either the old mission or new template
-            copyNewFiles.append(f)
-        elif not f in failedBtwnTemplates:
-            # -- 8 --
-            # Files that didn't change for the mission but changed for the template
+        # -- 3 --
+        # Ignore files that are unique to the old template (compared to the new template)
             orphanFiles.append(f)
             
     for f in failedBtwnMission:
         if f in commonBtwnTemplates:
             # -- 4 --
-            # Files that were changed in the old mission but not in the new template
-            copyOldFiles.append(f)
-        else:
+            # Files changed between the old template and old mission AND NOT changed between the old template and new template
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 4 Already registered - Please report!:: ", f)
+            else:
+                copyOldFiles.append(f)
+        elif f in failedBtwnTemplates:
             # -- 5 --
-            # Files that were changed in both the old mission and new template - manual merge required
-            warnFiles.append(f)
+            # Files changed between old template and old mission AND changed between old template and new template - manual merge required
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 5 Already registered - Please report!:: ", f)
+            else:
+                warnFiles.append(f)
             
     for f in failedBtwnTemplates:
         if f in commonBtwnMission:
             # -- 6 --
-            # Files that weren't changed in the old mission but changed in the new template
-            copyNewFiles.append(f)
-        elif not f in failedBtwnMission:
+            # Files NOT changed between the old template and old mission AND changed between the old template and new template
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 6 Already registered - Please report!:: ", f)
+            else:
+                copyNewFiles.append(f)
+        elif not ((f in missionDiff[3]) or (f in missionDiff[4])):
             # -- 7 --
-            # Files that don't exist in the old mission and changed in the new template
-            orphanFiles.append(f)
+            # Files that don't exist in the old mission AND changed between the old template and new template
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 7 Already registered - Please report!:: ", f)
+            else:
+                orphanFiles.append(f)
+
+    for f in commonBtwnMission:
+        if f in commonBtwnTemplates:
+            # -- 8 --
+            # Files NOT changed between the old template and old mission AND NOT changed between the old template and newtemplate
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 8 Already registered - Please report!:: ", f)
+            else:
+                copyNewFiles.append(f)
             
+    for f in commonBtwnTemplates:
+        if not ((f in missionDiff[3]) or (f in missionDiff[4])):
+            # -- 9 --
+            # Files common between templates AND don't exist in the old mission
+            if f in copyNewFiles or f in copyOldFiles or f in warnFiles or f in orphanFiles:
+                print(" ERROR: 9 Already registered - Please report!:: ", f)
+            else:
+                orphanFiles.append(f)
+
     # Find any files that should have been copied/warned about and werent - Display a warning for each
     for index, diffList in enumerate([templateDiffs, missionDiff]):
         for secondIndex, fileList in enumerate(diffList):
