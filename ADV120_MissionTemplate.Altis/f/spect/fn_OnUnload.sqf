@@ -3,6 +3,10 @@ sleep 0.5;
 if (f_cam_forcedExit) ExitWith {};
 createDialog "f_spec_dialog";
 
+// Stop list from slowly updating after ESC is pressed
+f_cam_listUnits = [];
+lbClear 2100;
+
 private _displayDialog = (findDisplay 9228);
 call f_fnc_ReloadModes;
 ctrlSetText [2112,(f_cam_sideNames select f_cam_sideButton)];
