@@ -45,6 +45,7 @@ f_cam_updateValues = [{
     // ====================================================================================
     // Check it and see if they have been added already
     // TODO: Rewrite so each group's units aren't interated over twice
+    private _specTypes = ["VirtualMan_F", "B_VirtualCurator_F", "O_VirtualCurator_F", "I_VirtualCurator_F", "C_VirtualCurator_F", "VirtualCurator_F"];
     {
         if (!(_x in f_cam_listUnits) && ({ private _spectator = _x getVariable ["phx_isUnitSpectator",false]; (alive _x) && {!_spectator} } count units _x) > 0 ) then {
             private _text = toString(toArray(groupID _x) - [45]);
@@ -55,7 +56,7 @@ f_cam_updateValues = [{
             {
                 if (alive _x) then {
                     private _spectator = _x getVariable ["phx_isUnitSpectator",false];
-                    if (!(_x in f_cam_listUnits) && {!(_x iskindof "VirtualMan_F")} && {!_spectator}) then {
+                    if (!(_x in f_cam_listUnits) && {!((typeOf _x) in _specTypes)} && {!_spectator}) then {
                         f_cam_listUnits pushBack _x;
                         _text = "    " + name _x;
                         _index = lbAdd [_listBox,_text];
@@ -79,25 +80,25 @@ f_cam_updateValues = [{
                 if (_count >= 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
                     // there is no lbSetText, so just punt it out of the list and fix it up there..
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
                 if (_count isEqualTo 0) then {
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
             } else {
                 _val = lbText [_listBox,_index] != "    " + name _x;
-                if (alive _x && {_val}) then {
+                if (_val && {alive _x}) then {
                     // there is no lbSetText, so just punt it out of the list and fix it up there..
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
                 if (!alive _x || isNull _x || _x getVariable ["phx_isUnitSpectator",false]) then {
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
             };
