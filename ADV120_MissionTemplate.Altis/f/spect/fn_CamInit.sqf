@@ -152,11 +152,14 @@
         f_cam_ToggleFPCamera = {
             f_cam_toggleCamera = !f_cam_toggleCamera;
             if (f_cam_toggleCamera) then {
-                f_cam_mode = 1; //(view)
-                f_cam_camera cameraEffect ["terminate", "BACK"];
-                f_cam_curTarget switchCamera "internal";
+                if (alive f_cam_curTarget) then {
+                    f_cam_mode = 1; //(view)
+                    f_cam_camera cameraEffect ["terminate", "BACK"];
+                    f_cam_curTarget switchCamera "internal";
+                };
             } else {
                 f_cam_mode = 0;
+                player switchCamera "EXTERNAL";
                 f_cam_camera cameraEffect ["internal", "BACK"];
             };
             call F_fnc_ReloadModes;
