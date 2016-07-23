@@ -5,12 +5,12 @@
 private _players = [];
 private _ai = [];
 {
-    private _isPlayerGroup = false;
-    private _aiUnitCount = 0;
     if (isNil "f_cam_side" || {side _x isEqualTo f_cam_side}) then {
+        private _isPlayerGroup = false;
+        private _aiUnitCount = 0;
         {
             if (_isPlayerGroup) exitWith {};
-            if (_x getVariable ["phx_isUnitSpectator",false] && {alive _x}) then {
+            if (!(_x getVariable ["phx_isUnitSpectator",false]) && {alive _x}) then {
                 if (isPlayer _x) then {
                     _isPlayerGroup = true;
                 } else {
