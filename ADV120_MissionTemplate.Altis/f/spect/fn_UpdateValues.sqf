@@ -14,7 +14,6 @@ f_cam_updateValues = [{
     params ["_args", "_handle"];
     _args params ["_listBox"];
 
-    
     // ====================================================================================
     // make the mini map track the player.
     ctrlMapAnimClear ((findDisplay 9228) displayCtrl 1350);
@@ -27,6 +26,7 @@ f_cam_updateValues = [{
         ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
     } else {
         ctrlSetText [1000,format ["Spectating:%1", "Dead"]];
+        call f_cam_fixTagBug;
     };
     // ====================================================================================
     // fetch units
