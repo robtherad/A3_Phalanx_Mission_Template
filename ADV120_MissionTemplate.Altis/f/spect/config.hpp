@@ -792,7 +792,7 @@ class f_spec_dialog {
         class SpecText: RscSpectText
         {
             idc = 1000;
-            text = "Spectating:Unknown"; //--- ToDo: Localize;
+            text = "Spectating:Unknown";
             x = 0.430336 * safezoneW + safezoneX;
             y = 0.00159198 * safezoneH + safezoneY;
             w = 0.800 * safezoneW;
