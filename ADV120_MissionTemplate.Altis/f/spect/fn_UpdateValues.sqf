@@ -23,10 +23,15 @@ f_cam_updateValues = [{
     // ====================================================================================
     // update string.
     if (alive f_cam_curTarget) then {
-        ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
+        ctrlSetText [1000,format ["Spectating: %1", name f_cam_curTarget]];
+        f_cam_fixedTagsAlready = false;
     } else {
-        ctrlSetText [1000,format ["Spectating:%1", "Dead"]];
-        call f_cam_fixTagBug;
+        ctrlSetText [1000,format ["Spectating: %1", "Dead"]];
+        if (isNil "f_cam_calledTagFix" && {!f_cam_fixedTagsAlready}) then {
+            f_cam_fixedTagsAlready = true;
+            f_cam_calledTagFix = true;
+            [f_cam_fixTagBug, [], 2.5] call CBA_fnc_waitAndExecute;
+        };
     };
     // ====================================================================================
     // fetch units
@@ -70,8 +75,7 @@ f_cam_updateValues = [{
     } count _tempArr;
 
     // ====================================================================================
-    // Check if they died etc.
-    // TODO: Optimize some of this stuff
+    // Prune any entries that shouldn't be there
     {
         private _index = _x getVariable ["f_spect_listBoxIndex",-1];
         if (_index >= 0) then {
@@ -105,4 +109,12 @@ f_cam_updateValues = [{
         };
         nil
     } count f_cam_listUnits;
+    
+    // Failsafe - Makes sure data counts match
+    if (count f_cam_listUnits !=  lbSize _listBox) then {
+        // Bad count - Refresh data
+        f_cam_listUnits = [];
+        lbClear _listBox;
+    };
+    
 }, 1, [_listBox]] call CBA_fnc_addPerFrameHandler;

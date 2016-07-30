@@ -124,6 +124,7 @@
         f_cam_timestamp = CBA_missionTime;
         f_cam_muteSpectators = true;
         f_cam_listUnits = [];
+        f_cam_fixedTagsAlready = false;
         // ------------------------------------------------------------------------------------
         // Menu (Top left)
         f_cam_menuControls = [2111,2112,2113,2114,2101,4302];
@@ -150,7 +151,7 @@
         // Define Camera Functions
         f_cam_fixTagBug = {
             // Puts the camera back on the player character if the camera target is dead. Should prevent tags from disappearing.
-            if !(cameraOn isEqualTo player && {!alive cameraOn}) then {
+            if (!(cameraOn isEqualTo player) && {!alive cameraOn}) then {
                 if (f_cam_mode isEqualTo 3) then {
                     // Freecam
                     f_cam_mode = 3;
@@ -162,19 +163,22 @@
                     player switchCamera "EXTERNAL";
                     f_cam_camera cameraEffect ["internal", "BACK"];
                 };
+                // Fix camera text
+                f_cam_toggleCamera = false;
+                ctrlSetText [2114, "First Person"];
             };
+            
+            f_cam_calledTagFix = nil;
         };
         
         f_cam_ToggleFPCamera = {
             f_cam_toggleCamera = !f_cam_toggleCamera;
             if (f_cam_toggleCamera) then {
-                if (alive f_cam_curTarget) then {
-                    f_cam_mode = 1; //(view)
-                    f_cam_camera cameraEffect ["terminate", "BACK"];
-                    f_cam_curTarget switchCamera "internal";
-                };
+                f_cam_mode = 1; // First person
+                f_cam_camera cameraEffect ["terminate", "BACK"];
+                f_cam_curTarget switchCamera "internal";
             } else {
-                f_cam_mode = 0;
+                f_cam_mode = 0; // Third person
                 player switchCamera "EXTERNAL";
                 f_cam_camera cameraEffect ["internal", "BACK"];
             };

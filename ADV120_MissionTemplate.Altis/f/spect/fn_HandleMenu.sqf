@@ -30,10 +30,16 @@ switch (_button) do {
         f_cam_toggleTags = !f_cam_toggleTags;
     };
     case 3: { // Third/First Person Button
-        [] call f_cam_ToggleFPCamera;
-        if (f_cam_toggleCamera) then {
-            _control ctrlSetText "Third Person";
+        if (alive f_cam_curTarget) then {
+            [] call f_cam_ToggleFPCamera;
+            if (f_cam_toggleCamera) then {
+                _control ctrlSetText "Third Person";
+            } else {
+                _control ctrlSetText "First Person";
+            };
         } else {
+            systemChat "Cannot use First Person camera on dead units!";
+            f_cam_toggleCamera = false;
             _control ctrlSetText "First Person";
         };
     };
