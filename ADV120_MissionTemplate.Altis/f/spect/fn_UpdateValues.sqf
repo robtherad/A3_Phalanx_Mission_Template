@@ -76,6 +76,7 @@ f_cam_updateValues = [{
 
     // ====================================================================================
     // Prune any entries that shouldn't be there
+    private _listUnits = f_cam_listUnits;
     {
         private _index = _x getVariable ["f_spect_listBoxIndex",-1];
         if (_index >= 0) then {
@@ -106,9 +107,13 @@ f_cam_updateValues = [{
                     [] call f_cam_checkIndex;
                 };
             };
+        } else {
+            // No index set on unit/group, delete from list
+            f_cam_listUnits deleteAt _forEachIndex;
+            // It's probaably faster to use count for iteration and then find these orphan values in the array later - assuming this doesn't happen very often
+            // TODO: Add some logic to remove it from the listbox as well - Save the failsafe code below from running
         };
-        nil
-    } count f_cam_listUnits;
+    } forEach _listUnits;
     
     // Failsafe - Makes sure data counts match
     if (count f_cam_listUnits !=  lbSize _listBox) then {
