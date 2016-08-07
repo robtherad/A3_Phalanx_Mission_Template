@@ -6,10 +6,24 @@ private _players = [];
 private _ai = [];
 {
     if (isNil "f_cam_side" || {side _x isEqualTo f_cam_side}) then {
-        if ( { private _spectator = _x getVariable ["phx_isUnitSpectator",false]; (isPlayer _x) && {!_spectator} && {alive _x} } count (units _x) > 0 ) then {
+        private _isPlayerGroup = false;
+        private _aiUnitCount = 0;
+        {
+            if (_isPlayerGroup) exitWith {};
+            if (!(_x getVariable ["phx_isUnitSpectator",false]) && {alive _x}) then {
+                if (isPlayer _x) then {
+                    _isPlayerGroup = true;
+                } else {
+                    _aiUnitCount = _aiUnitCount + 1;
+                };
+            };
+            nil
+        } count (units _x);
+        
+        if (_isPlayerGroup) then {
             _players pushBack _x;
         } else {
-            if ( { private _spectator = _x getVariable ["phx_isUnitSpectator",false]; !(isPlayer _x) && {!_spectator} && {alive _x}} count (units _x) > 0 ) then {
+            if (_aiUnitCount > 0) then {
                 _ai pushBack _x;
             };
         };

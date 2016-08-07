@@ -14,8 +14,9 @@ if (abs (f_cam_menuShownTime - CBA_missionTime) >= 1 && {f_cam_menuShown}) then 
 // ====================================================================================
 // if freemode.
 f_cam_camera camSetFov f_cam_fovZoom;
-if (f_cam_mode isEqualTo 0) then {
-    private _commitTime = ((1.0 - ((speed vehicle f_cam_curTarget)/65))/3) max 0.1;
+
+f_cam_updateThirdPersonCam = {
+    params [ ["_commitTime", 0, [0]] ];
     private _delta = (-(2*(0.3 max f_cam_zoom)));
     private _zLevel = sin(f_cam_angleY)*(2*(0.3 max f_cam_zoom));
     private _visPos = visiblePositionASL f_cam_curTarget;
@@ -25,7 +26,14 @@ if (f_cam_mode isEqualTo 0) then {
     f_cam_camera camSetRelPos[(sin(f_cam_angleX)*_delta)*cos(f_cam_angleY), (cos(f_cam_angleX)*_delta)*cos(f_cam_angleY), _zLevel];
     f_cam_camera camCommit _commitTime;
 };
-// first person
+
+// Third Person
+if (f_cam_mode isEqualTo 0) then {
+    private _commitTime = ((1.0 - ((speed vehicle f_cam_curTarget)/65))/3) max 0.1;
+    [_commitTime] call f_cam_updateThirdPersonCam;
+};
+
+// First Person
 if (f_cam_mode isEqualTo 1) then {
     if (!isNull objectParent cameraOn) then {
         private _mode = "internal";
@@ -38,8 +46,12 @@ if (f_cam_mode isEqualTo 1) then {
             cameraon switchCamera "internal";
         };
     };
+    
+    // Update 3rd person camera to cam target's position
+    call f_cam_updateThirdPersonCam;
 };
 
+// Freecam
 if (f_cam_mode isEqualTo 3) then {
     private _delta = (CBA_missionTime - f_cam_timestamp)*10;
     f_cam_freecamera camSetFov f_cam_fovZoom;
@@ -127,15 +139,9 @@ if (f_cam_mode isEqualTo 3) then {
     f_cam_fakecamera camSetPos [_x,_y,_z max _newHeight];
     f_cam_fakecamera camCommit 0;
     */
-    // Instant transition from freecam to 3rd person
-    _delta = (-(2*(0.3 max f_cam_zoom)));
-    private _zLevel = sin(f_cam_angleY)*(2*(0.3 max f_cam_zoom));
-    private _visPos = visiblePositionASL f_cam_curTarget;
-    if (!(surfaceIsWater _visPos)) then {_visPos = ASLtoATL (_visPos)};
-    f_cam_fakecamera camSetPos [_visPos select 0,_visPos select 1,(_visPos select 2) + 1.5];
-    f_cam_fakecamera camCommit 0;
-    f_cam_camera camSetRelPos[(sin(f_cam_angleX)*_delta)*cos(f_cam_angleY), (cos(f_cam_angleX)*_delta)*cos(f_cam_angleY), _zLevel];
-    f_cam_camera camCommit 0;
+    
+    // Update 3rd person camera position to target's position
+    call f_cam_updateThirdPersonCam;
     
     f_cam_scrollHeight = 0;
     f_cam_timestamp = CBA_missionTime;

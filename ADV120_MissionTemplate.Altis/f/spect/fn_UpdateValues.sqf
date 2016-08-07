@@ -14,7 +14,6 @@ f_cam_updateValues = [{
     params ["_args", "_handle"];
     _args params ["_listBox"];
 
-    
     // ====================================================================================
     // make the mini map track the player.
     ctrlMapAnimClear ((findDisplay 9228) displayCtrl 1350);
@@ -24,9 +23,15 @@ f_cam_updateValues = [{
     // ====================================================================================
     // update string.
     if (alive f_cam_curTarget) then {
-        ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
+        ctrlSetText [1000,format ["Spectating: %1", name f_cam_curTarget]];
+        f_cam_fixedTagsAlready = false;
     } else {
-        ctrlSetText [1000,format ["Spectating:%1", "Dead"]];
+        ctrlSetText [1000,format ["Spectating: %1", "Dead"]];
+        if (isNil "f_cam_calledTagFix" && {!f_cam_fixedTagsAlready}) then {
+            f_cam_fixedTagsAlready = true;
+            f_cam_calledTagFix = true;
+            [f_cam_fixTagBug, [], 2.5] call CBA_fnc_waitAndExecute;
+        };
     };
     // ====================================================================================
     // fetch units
@@ -45,6 +50,7 @@ f_cam_updateValues = [{
     // ====================================================================================
     // Check it and see if they have been added already
     // TODO: Rewrite so each group's units aren't interated over twice
+    private _specTypes = ["VirtualMan_F", "B_VirtualCurator_F", "O_VirtualCurator_F", "I_VirtualCurator_F", "C_VirtualCurator_F", "VirtualCurator_F"];
     {
         if (!(_x in f_cam_listUnits) && ({ private _spectator = _x getVariable ["phx_isUnitSpectator",false]; (alive _x) && {!_spectator} } count units _x) > 0 ) then {
             private _text = toString(toArray(groupID _x) - [45]);
@@ -55,7 +61,7 @@ f_cam_updateValues = [{
             {
                 if (alive _x) then {
                     private _spectator = _x getVariable ["phx_isUnitSpectator",false];
-                    if (!(_x in f_cam_listUnits) && {!(_x iskindof "VirtualMan_F")} && {!_spectator}) then {
+                    if (!(_x in f_cam_listUnits) && {!((typeOf _x) in _specTypes)} && {!_spectator}) then {
                         f_cam_listUnits pushBack _x;
                         _text = "    " + name _x;
                         _index = lbAdd [_listBox,_text];
@@ -69,8 +75,8 @@ f_cam_updateValues = [{
     } count _tempArr;
 
     // ====================================================================================
-    // Check if they died etc.
-    // TODO: Optimize some of this stuff
+    // Prune any entries that shouldn't be there
+    private _listUnits = f_cam_listUnits;
     {
         private _index = _x getVariable ["f_spect_listBoxIndex",-1];
         if (_index >= 0) then {
@@ -79,29 +85,41 @@ f_cam_updateValues = [{
                 if (_count >= 0 && {lbText [_listBox,_index] != (toString(toArray(groupID _x) - [45]))}) then {
                     // there is no lbSetText, so just punt it out of the list and fix it up there..
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
                 if (_count isEqualTo 0) then {
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
             } else {
                 _val = lbText [_listBox,_index] != "    " + name _x;
-                if (alive _x && {_val}) then {
+                if (_val && {alive _x}) then {
                     // there is no lbSetText, so just punt it out of the list and fix it up there..
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
                 if (!alive _x || isNull _x || _x getVariable ["phx_isUnitSpectator",false]) then {
                     lbDelete [_listBox,_index];
-                    f_cam_listUnits = f_cam_listUnits - [_x];
+                    f_cam_listUnits deleteAt _index;
                     [] call f_cam_checkIndex;
                 };
             };
+        } else {
+            // No index set on unit/group, delete from list
+            f_cam_listUnits deleteAt _forEachIndex;
+            // It's probaably faster to use count for iteration and then find these orphan values in the array later - assuming this doesn't happen very often
+            // TODO: Add some logic to remove it from the listbox as well - Save the failsafe code below from running
         };
-        nil
-    } count f_cam_listUnits;
+    } forEach _listUnits;
+    
+    // Failsafe - Makes sure data counts match
+    if (count f_cam_listUnits !=  lbSize _listBox) then {
+        // Bad count - Refresh data
+        f_cam_listUnits = [];
+        lbClear _listBox;
+    };
+    
 }, 1, [_listBox]] call CBA_fnc_addPerFrameHandler;

@@ -12,5 +12,5 @@ if (f_cam_ctrl_down && {_rightMB} && {_leftMB}) then {
     f_cam_fovZoom = 0.7;
 };
 
-f_cam_mouseLastX = (f_cam_mouseCord select 0);
-f_cam_mouseLastY = (f_cam_mouseCord select 1);
+f_cam_mouseLastX = _x;
+f_cam_mouseLastY = _y;

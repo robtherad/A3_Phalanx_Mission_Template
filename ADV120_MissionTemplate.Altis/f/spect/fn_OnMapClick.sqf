@@ -31,7 +31,7 @@ if (f_cam_mapMode isEqualTo 2) then {
             ctrlShow [1350,false];
             ctrlShow [1360,false];
 
-            ctrlSetText [1000,format ["Spectating:%1", name f_cam_curTarget]];
+            ctrlSetText [1000,format ["Spectating: %1", name f_cam_curTarget]];
         };
     };
     

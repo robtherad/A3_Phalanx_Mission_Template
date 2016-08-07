@@ -33,7 +33,7 @@ Excluding groups from being marked
     phx_ignoreMarkerArray = [];
 */
 //Local script, dedicated server not needed
-if (isDedicated) exitWith {};
+if (!hasInterface) exitWith {};
 //Check to see if mission parameters have markers enabled - Default ON
 _useMarkers = ["phx_gps_markersEnabledParam",1] call BIS_fnc_getParamValue;
 if (_useMarkers isEqualTo 0) exitWith {};
