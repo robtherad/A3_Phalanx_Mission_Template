@@ -13,7 +13,7 @@ if (isServer) then {
     };
 };
 
-if (isDedicated) exitWith {};
+if (!hasInterface) exitWith {};
 
 if (count _lockArray > 0) then {
     { // forEach lockArray
