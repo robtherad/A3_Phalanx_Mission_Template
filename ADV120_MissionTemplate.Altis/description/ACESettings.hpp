@@ -38,11 +38,11 @@ class ACE_Settings {
         typeName = "COLOR";
         isClientSettable = 0;
     };
-    class ace_nametags_showPlayerNames {
+    /*class ace_nametags_showPlayerNames {
         value = 0;
         typeName = "SCALAR";
         isClientSettable = 0;
-    };
+    };*/
     class ace_nametags_showPlayerRanks {
         value = 0;
         typeName = "BOOL";
@@ -68,7 +68,7 @@ class ACE_Settings {
         typeName = "SCALAR";
         isClientSettable = 0;
     };
-    class ace_nametags_playerNamesViewDistance {
+    /*class ace_nametags_playerNamesViewDistance {
         value = 0;
         typeName = "SCALAR";
         isClientSettable = 0;
@@ -77,7 +77,7 @@ class ACE_Settings {
         value = 0;
         typeName = "SCALAR";
         isClientSettable = 0;
-    };
+    };*/
     // Advanced Ballistics
     class ace_advanced_ballistics_enabled {
         typeName = "BOOL";

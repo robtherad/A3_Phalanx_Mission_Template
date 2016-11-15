@@ -1,4 +1,43 @@
 class Params {
+    // Equipment
+    class phx_loadout_blufor_uniform {
+      title = "BLUFOR Uniform:";
+        values[] = {0, 1};
+        texts[] = {"US MARPAT WD", ""};
+        default = 0;
+    };
+    class phx_loadout_opfor_uniform {
+      title = "OPFOR Uniform:";
+        values[] = {0, 1};
+        texts[] = {"Russian TTsKO Forest", ""};
+        default = 0;
+    };
+    class phx_loadout_indfor_uniform {
+      title = "INDFOR Uniform:";
+        values[] = {0, 1};
+        texts[] = {"Guerrila", ""};
+        default = 0;
+    };
+    class phx_loadout_blufor_weapons {
+      title = "BLUFOR Weapons (R, LMG, HMG, AT):";
+        values[] = {0, 1};
+        texts[] = {"M16A4, M249, M240G, M136",
+                   ""};
+        default = 0;
+    };
+    class phx_loadout_opfor_weapons {
+      title = "OPFOR Weapons (R, LMG, HMG, AT):";
+        values[] = {0, 1};
+        texts[] = {"AK74M, PKM, PKM, RPG26",
+                   ""};
+        default = 0;
+    };
+    class phx_loadout_indfor_weapons {
+      title = "INDFOR Weapons (R, LMG, HMG, AT):";
+        values[] = {0, 1};
+        texts[] = {"Guerrila", ""};
+        default = 0;
+    };
     // Environment
     class phx_core_timeOfDay {
         title = "Time of Day:";

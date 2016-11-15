@@ -5,9 +5,9 @@
 
 _generateORBAT = {
     params ["_groups"];
-    
+
     private _functionText = "";
-    
+
     // Loop through the group, print out group ID, leader name and medics if present
     {
         if !((count units _x) isEqualTo 0) then {
@@ -17,7 +17,7 @@ _generateORBAT = {
             private _longName = _x getVariable ["phx_LongName",groupID _x];
             private _groupString = "";
             private _changeColor = false;
-            
+
             if (_forEachIndex != 0) then {
                 switch (_groupSize) do {
                     case 0: {_groupString = _groupString + format["    "]; _changeColor = false;};
@@ -33,10 +33,10 @@ _generateORBAT = {
                     case 3: {_groupString = _groupString + format["<font size='20'>%1</font><br />    ",_longName]; _changeColor = true;};
                 };
             };
-            
+
             // Highlight the player's group with a different color (based on the player's side)
             private _highlightColor = "#2AA5A5";
-            
+
             private _color = "#FFFFFF";
             if (_changeColor) then {
                 if (isNil "phx_orbat_lastUsedColor") then {
@@ -59,7 +59,7 @@ _generateORBAT = {
                 };
                 _color = phx_orbat_lastUsedColor select 0;
             };
-            
+
             // Get group's radio frequency
             private _freq = _x getVariable ["phx_radioSettings",nil];
             if (isNil "_freq") then {
@@ -84,14 +84,14 @@ _generateORBAT = {
                     _freq = _freq + phx_playerBaseChannel;
                 };
             };
-            
+
             // Add group to the ORBAT
             if (isNil "_freq") then {
                 _groupString = _groupString + format ["%1 --", _name];
             } else {
                 _groupString = _groupString + format ["<font size='16'>%1</font><font size='14'> - %2 MHz </font><font size='12'>- %3 men</font>:  ", _name, _freq, (count units _x)];
             };
-            
+
             // Add group members
             {
                 private _leftPad = " ";
@@ -108,12 +108,12 @@ _generateORBAT = {
                     _groupString = _groupString + format["<font size='12'>%2<font color='%3'>%1</font></font>",name _x,_leftPad,_colorUsed];
                 };
             } forEach units _x;
-            
+
             _groupString = _groupString + "<br/>";
             _functionText = _functionText + _groupString;
         };
     } forEach _groups;
-    
+
     // Return functionText
     _functionText
 };
@@ -183,7 +183,7 @@ if !(_groupText isEqualTo "") then {
     _orbatText = _orbatText + "<br/>Attached Units:<br/>" + _groupText;
 };
 
-waitUntil {!isNil "PHX_Diary"};
+waitUntil {!isNil "ORBAT_Diary"};
 // Insert final result into subsection ORBAT of section Notes
-player createDiaryRecord ["PHX_Diary", ["Team ORBAT", _orbatText]];
+player createDiaryRecord ["ORBAT_Diary", ["Team ORBAT", _orbatText]];
 phx_writtenORBAT = true;
