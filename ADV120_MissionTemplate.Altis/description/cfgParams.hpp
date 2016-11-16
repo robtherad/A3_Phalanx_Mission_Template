@@ -2,14 +2,29 @@ class Params {
     // Equipment
     class phx_loadout_blufor_uniform {
       title = "BLUFOR Uniform:";
-        values[] = {0, 1};
-        texts[] = {"US MARPAT WD", ""};
+        values[] = {0,1,2,3,4,5};
+        texts[] = {"0 MARPAT WD",
+          "1 OCP",
+          "2 UCP",
+          "3 MARPAT D",
+          "4 G3 Black",
+          "5 Police",
+          "6 Cold War Era #2"
+        };
         default = 0;
     };
     class phx_loadout_opfor_uniform {
       title = "OPFOR Uniform:";
-        values[] = {0, 1};
-        texts[] = {"Russian TTsKO Forest", ""};
+        values[] = {0,1,2,3,4,5,6,7};
+        texts[] = {"0 TTsKO Forest",
+          "1 VDV Flora",
+          "2 Flora",
+          "3 EMR Desert",
+          "4 MSV EMR",
+          "5 TTsKO Mountain",
+          "6 Specter-S Flora",
+          "7 Cold War Era 1"
+        };
         default = 0;
     };
     class phx_loadout_indfor_uniform {
@@ -20,23 +35,30 @@ class Params {
     };
     class phx_loadout_blufor_weapons {
       title = "BLUFOR Weapons (R, LMG, HMG, AT):";
-        values[] = {0, 1};
-        texts[] = {"M16A4, M249, M240G, M136",
-                   ""};
+        values[] = {0,1,2};
+        texts[] = {"0 M16A4, M249, M240G, M136",
+          "1 M16A4, M249, M240G, M136 (All Tracer)",
+          "2 Kar98k, PKM, RShG-2"
+        };
         default = 0;
     };
     class phx_loadout_opfor_weapons {
       title = "OPFOR Weapons (R, LMG, HMG, AT):";
-        values[] = {0, 1};
-        texts[] = {"AK74M, PKM, PKM, RPG26",
-                   ""};
+        values[] = {0,1,2};
+        texts[] = {"0 AK74M, PKM, PKP, RPG7",
+          "1 AK74M, PKM, PKP, RPG7 (All Tracer)",
+          "2 Mosin, PKM, RShG-2"
+        };
         default = 0;
     };
     class phx_loadout_indfor_weapons {
       title = "INDFOR Weapons (R, LMG, HMG, AT):";
-        values[] = {0, 1};
-        texts[] = {"Guerrila", ""};
-        default = 0;
+      values[] = {0,1,2};
+      texts[] = {"0 AK74M, PKM, PKP, RPG7",
+        "1 AK74M, PKM, PKP, RPG7 (All Tracer)",
+        "2 Mosin, PKM, RShG-2"
+      };
+      default = 0;
     };
     // Environment
     class phx_core_timeOfDay {

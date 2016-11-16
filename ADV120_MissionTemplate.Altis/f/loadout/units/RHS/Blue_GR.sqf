@@ -4,14 +4,14 @@ call phx_fnc_loadout_handleClothing; // Add clothing variables above this line!
 // Add gear
 for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
 for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
-player addItemToUniform "1Rnd_HE_Grenade_shell";
-for "_i" from 1 to 8 do {player addItemToVest "1Rnd_HE_Grenade_shell";};
-for "_i" from 1 to 4 do {player addItemToVest "1Rnd_Smoke_Grenade_shell";};
-for "_i" from 1 to 4 do {player addItemToVest "UGL_FlareWhite_F";};
+player addItemToUniform phx_loadout_rifle_gl_he;
+for "_i" from 1 to 8 do {player addItemToVest phx_loadout_rifle_gl_he;};
+for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_gl_smoke;};
+for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_gl_flare;};
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
-for "_i" from 1 to 4 do {player addItemToVest "rhs_mag_30Rnd_556x45_M855A1_Stanag_Tracer_Red";};
-for "_i" from 1 to 9 do {player addItemToBackpack "rhs_mag_30Rnd_556x45_M855A1_Stanag";};
-player addWeapon "rhs_weap_m16a4_carryhandle_M203";
+for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_mag_tracer;};
+for "_i" from 1 to 9 do {player addItemToBackpack phx_loadout_rifle_mag;};
+player addWeapon phx_loadout_rifle_gl_weapon;
 for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items

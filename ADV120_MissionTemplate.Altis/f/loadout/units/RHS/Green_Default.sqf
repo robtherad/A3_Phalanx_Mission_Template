@@ -4,7 +4,7 @@
     If the values are not redefined, the values in this file will be used.
 */
 
-private _uniform = ["phx_loadout_opfor_uniform",0] call BIS_fnc_getParamValue;
+private _uniform = ["phx_loadout_indfor_uniform",0] call BIS_fnc_getParamValue;
 _uniform = switch (_uniform) do {
     case 0: { // TTsKO Forest
         phx_loadout_uniform = "rhsgref_uniform_ttsko_forest";
@@ -62,7 +62,7 @@ _uniform = switch (_uniform) do {
     };
 };
 
-private _weapons = ["phx_loadout_opfor_weapons",0] call BIS_fnc_getParamValue;
+private _weapons = ["phx_loadout_indfor_weapons",0] call BIS_fnc_getParamValue;
 _weapons = switch (_weapons) do {
     case 0: { // AK74M, PKM, PKP, RPG7
         phx_loadout_rifle_weapon = "rhs_weap_ak74m";
