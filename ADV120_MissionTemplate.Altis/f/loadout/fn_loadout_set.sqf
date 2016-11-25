@@ -1,8 +1,8 @@
 if (!hasInterface) exitWith {};
 
 // Ensure script is run only once.
-if (!isNil "phx_loadout_assigned") exitWith {};
-phx_loadout_assigned = false;
+if (!isNil "phx_loadoutAssigned") exitWith {};
+phx_loadoutAssigned = false;
 
 private _char = toLower (typeOf player);
 

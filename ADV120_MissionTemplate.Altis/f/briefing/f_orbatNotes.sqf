@@ -60,37 +60,80 @@ _generateORBAT = {
                 _color = phx_orbat_lastUsedColor select 0;
             };
 
-            // Get group's radio frequency
-            private _freq = _x getVariable ["phx_radioSettings",nil];
-            if (isNil "_freq") then {
-                _freq = "UNK";
-            } else {
-                private _chNum = _freq select 0;
-                _chNum = _chNum - 2; //Minus one since array starts at 0
-                private _chArray = _freq select 2;
-                if (_chNum < 0) then {
-                    if (_chNum isEqualTo -1) then {
-                        _freq = 0;
-                    };
+            f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+            switch (f_param_radios) do {
+              case 1: { // TFR
+                waitUntil { !isNil "phx_playerBaseChannel"; };
+
+                // Get group's radio frequency
+                private _freq = _x getVariable ["phx_radioSettings",nil];
+                if (isNil "_freq") then {
+                    _freq = "UNK";
                 } else {
-                    _freq = _chArray select _chNum; //Get group's main channel from freq list
-                    if (isNil "_freq") then { //Check if frequency is out of range.
-                        _freq = "UNK";
-                        _str = format["[setGroupIDs] No radio freq found for group - '%1'",groupID _x];
-                        systemChat _str;
+                    private _chNum = _freq select 0;
+                    _chNum = _chNum - 2; //Minus one since array starts at 0
+                    private _chArray = _freq select 2;
+                    if (_chNum < 0) then {
+                        if (_chNum isEqualTo -1) then {
+                            _freq = 0;
+                        };
+                    } else {
+                        _freq = _chArray select _chNum; //Get group's main channel from freq list
+                        if (isNil "_freq") then { //Check if frequency is out of range.
+                            _freq = "UNK";
+                            _str = format["[setGroupIDs] No radio freq found for group - '%1'",groupID _x];
+                            systemChat _str;
+                        };
+                    };
+                    if (!(_freq isEqualTo "UNK")) then {
+                        _freq = _freq + phx_playerBaseChannel;
                     };
                 };
-                if (!(_freq isEqualTo "UNK")) then {
-                    _freq = _freq + phx_playerBaseChannel;
+
+                // Add group to the ORBAT
+                if (isNil "_freq") then {
+                    _groupString = _groupString + format ["%1 --", _name];
+                } else {
+                    _groupString = _groupString + format ["<font size='16'>%1</font><font size='14'> - %2 MHz </font><font size='12'>- %3 men</font>:  ", _name, _freq, (count units _x)];
                 };
+              };
+              case 2: { // acre2
+                waitUntil { !isNil "phx_acre_setup"; };
+
+                // Get group's radio frequency
+                private _radioFreqs = nil;
+                switch (side player) do {
+                  case west: {
+                    _radioFreqs = f_radios_settings_acre2_sr_groups_blufor;
+                  };
+                  case east: {
+                    _radioFreqs = f_radios_settings_acre2_sr_groups_opfor;
+                  };
+                  case independent: {
+                    _radioFreqs = f_radios_settings_acre2_sr_groups_indfor;
+                  };
+                };
+                private _freq = nil;
+                {
+                  if (_name in (_x select 1)) exitWith {
+                    _freq = _forEachIndex;
+                  };
+                } forEach _radioFreqs;
+                if (isNil "_freq") then {
+                    _freq = "UNK";
+                } else {
+                    _freq = _freq + 1;
+                };
+
+                // Add group to the ORBAT
+                if (isNil "_freq") then {
+                    _groupString = _groupString + format ["%1 --", _name];
+                } else {
+                    _groupString = _groupString + format ["<font size='16'>%1</font><font size='14'> - Ch. %2 </font><font size='12'>- %3 men</font>:  ", _name, _freq, (count units _x)];
+                };
+              };
             };
 
-            // Add group to the ORBAT
-            if (isNil "_freq") then {
-                _groupString = _groupString + format ["%1 --", _name];
-            } else {
-                _groupString = _groupString + format ["<font size='16'>%1</font><font size='14'> - %2 MHz </font><font size='12'>- %3 men</font>:  ", _name, _freq, (count units _x)];
-            };
 
             // Add group members
             {
@@ -124,7 +167,15 @@ private _orbatText = "<br />NOTE: The ORBAT below is only accurate at mission st
 <br />";
 
 waitUntil { !isNil "phx_groupIDset" };
-waitUntil { !isNil "phx_playerBaseChannel" };
+f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+switch (f_param_radios) do {
+  case 1: { // TFR
+    waitUntil { !isNil "phx_playerBaseChannel" };
+  };
+  case 2: { // acre2
+    waitUntil { !isNil "phx_acre_setup"; };
+  };
+};
 
 phx_colorArrayBase = [
     "#8080FF", // light blue

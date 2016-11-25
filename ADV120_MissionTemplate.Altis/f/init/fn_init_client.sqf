@@ -7,9 +7,6 @@ call phx_fnc_loadout_set;
 // Set the group IDs
 [] call compile preprocessFileLineNumbers "f\setGroupID\f_setGroupIDs.sqf";
 
-// Preset radios
-phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
-
 // Add mission boundary
 phx_playerBoundsCheck_PFH = [phx_fnc_core_playerBoundsCheck, 5, []] call CBA_fnc_addPerFrameHandler;
 
@@ -26,12 +23,12 @@ phx_end_clientWait = [phx_fnc_end_clientWait, 5, []] call CBA_fnc_addPerFrameHan
 [] execVM "f\briefing\f_orbatNotes.sqf";
 
 // Add condition for blocking ACE features when player becomes spectator
-["isnotphxspectator", { 
-    private _return = false; 
-    if !(missionNamespace getVariable ["phx_isSpectator",false]) then { 
-        _return = true; 
-    }; 
-    _return 
+["isnotphxspectator", {
+    private _return = false;
+    if !(missionNamespace getVariable ["phx_isSpectator",false]) then {
+        _return = true;
+    };
+    _return
 }] call ACE_common_fnc_addCanInteractWithCondition;
 
 // Initialize variables for spectator script later on

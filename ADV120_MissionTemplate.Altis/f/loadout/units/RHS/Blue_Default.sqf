@@ -42,7 +42,7 @@ _uniform = switch (_uniform) do {
         phx_loadout_backpack = ["B_FieldPack_blk","B_AssaultPack_blk"] call BIS_fnc_selectRandom;
         phx_loadout_headgear = ["H_Cap_police","H_Cap_oli_hs","H_Cap_blk","H_MilCap_blue","H_MilCap_gry"] call BIS_fnc_selectRandom;
     };
-    case 5: { // Cold War Era 2
+    case 6: { // Cold War Era 2
         phx_loadout_uniform = "U_BG_leader";
         phx_loadout_vest = "rhs_vest_commander";
         phx_loadout_backpack = "B_Kitbag_cbr";

@@ -1,4 +1,17 @@
 class Params {
+    // Radios
+    // ============================================================================================
+
+    // F3 - Radio Systems Support
+    // Credits: Please see the F3 online manual (http://www.ferstaberinde.com/f3/en/)
+
+    class phx_param_radios {
+      title = "Radio System";
+      values[] = {0,1,2};
+      texts[] = {"Off","TFR","ACRE2"};
+      default = 2;
+    };
+
     // Equipment
     class phx_loadout_blufor_uniform {
       title = "BLUFOR Uniform:";
@@ -9,7 +22,7 @@ class Params {
           "3 MARPAT D",
           "4 G3 Black",
           "5 Police",
-          "6 Cold War Era #2"
+          "6 Cold War Era 2"
         };
         default = 0;
     };
@@ -29,8 +42,15 @@ class Params {
     };
     class phx_loadout_indfor_uniform {
       title = "INDFOR Uniform:";
-        values[] = {0, 1};
-        texts[] = {"Guerrila", ""};
+        values[] = {0,1,2,3,4,5,6,7};
+        texts[] = {"0 TTsKO Forest",
+          "1 VDV Flora",
+          "2 Flora",
+          "3 EMR Desert",
+          "4 MSV EMR",
+          "5 TTsKO Mountain",
+          "6 Specter-S Flora",
+          "7 Cold War Era 1"};
         default = 0;
     };
     class phx_loadout_blufor_weapons {

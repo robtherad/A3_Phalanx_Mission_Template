@@ -17,15 +17,15 @@ class core {
     class core_setWeather{};
     class core_headsetAction{};
 };
-class radios {
-    file = "f\radios";
+/*class radios {
+    file = "f\radios\tfr\phx";
     class radio_genFreqs{};
     class radio_waitGear{};
     class radio_getChannels{};
     class radio_waitRadios{};
     class radio_setRadios{};
     class radio_cleanup{};
-};
+};*/
 class loadout {
     file = "f\loadout";
     class loadout_set{};

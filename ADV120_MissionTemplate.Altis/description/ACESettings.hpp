@@ -1,4 +1,12 @@
 class ACE_Settings {
+    class ace_advanced_fatigue_performanceFactor {
+        typeName = "SCALAR";
+        value = 1.3;
+    };
+    class ace_advanced_fatigue_recoveryFactor {
+        typeName = "SCALAR";
+        value = 2;
+    };
     class ace_ui_groupBar {
         value = 0;
         typeName = "BOOL";
@@ -19,6 +27,10 @@ class ACE_Settings {
     class ace_frag_reflectionsEnabled {
         value = 1;
         typeName = "BOOL";
+    };
+    class ace_map_DefaultChannel {//ACE 3.4.0 - https://github.com/acemod/ACE3/pull/2650
+        typeName = "NUMBER";
+        value = 1; //SIDE
     };
     class ace_map_mapIllumination {
         value = 0;
@@ -78,6 +90,15 @@ class ACE_Settings {
         typeName = "SCALAR";
         isClientSettable = 0;
     };*/
+    class ace_ui_ammoCount {
+        typeName = "BOOL";
+        value = 0;
+        force = 1;
+    };
+    class ace_respawn_removeDeadBodiesDisconnected {
+        typeName = "BOOL";
+        value = 0;
+    };
     // Advanced Ballistics
     class ace_advanced_ballistics_enabled {
         typeName = "BOOL";
