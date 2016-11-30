@@ -32,6 +32,7 @@ if(!alive player) exitWith {[true] call acre_api_fnc_setSpectator;};
 
 // ====================================================================================
 
+
 // Set language of the units depending on side (BABEL API)
 switch (side player) do {
 	case blufor: {

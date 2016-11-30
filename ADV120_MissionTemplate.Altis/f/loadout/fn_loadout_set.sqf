@@ -102,6 +102,12 @@ switch (_char) do {
     case toLower "O_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]
     };
+    case toLower "O_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AT.sqf",_loadout]
+    };
+    case toLower "O_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAT.sqf",_loadout]
+    };
     case toLower "O_pilot_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_P.sqf",_loadout]
     };
@@ -150,6 +156,12 @@ switch (_char) do {
     case toLower "B_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]
     };
+    case toLower "B_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AT.sqf",_loadout]
+    };
+    case toLower "B_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAT.sqf",_loadout]
+    };
     case toLower "B_pilot_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_P.sqf",_loadout]
     };
@@ -191,6 +203,12 @@ switch (_char) do {
     };
     case toLower "I_Soldier_lite_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_MGTL.sqf",_loadout]
+    };
+    case toLower "I_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AT.sqf",_loadout]
+    };
+    case toLower "I_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AAT.sqf",_loadout]
     };
     case toLower "I_pilot_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_P.sqf",_loadout]

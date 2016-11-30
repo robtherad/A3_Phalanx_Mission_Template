@@ -45,50 +45,15 @@ f_radios_settings_acre2_extraRadio = "ACRE_PRC117F";
 // Defines the languages that exist in the mission.
 // string id, displayname
 f_radios_settings_acre2_languages = [
-	["af", "Afrikaans"],
-	["am", "American"],
-	["ar", "Arabic"],
-	["bg", "Bulgarian"],
-	["cn", "Chinese"],
-	["de", "German"],
 	["en", "English"],
-	["es", "Spanish"],
-	["fa", "Persian"],
-	["fr", "French"],
-	["ga", "Irish"],
-	["gd", "Gaelic"],
-	["hg", "Hand Gestures and Grunts"],
-	["hi", "Hindi"],
-	["it", "Italian"],
-	["ja", "Japanese"],
-	["ku", "Kurdish"],
-	["la", "Latin"],
-	["mn", "Mongolian"],
-	["nv", "Navajo"],
-	["oc", "Occitan"],
-	["pl", "Polish"],
-	["ps", "Pushto"],
-	["pt", "Portuguese"],
-	["qu", "Quechua"],
-	["ru", "Russian"],
-	["so", "Somali"],
-	["sv", "Swedish"],
-	["sw", "Swahili"],
-	["tl", "Tagalog"],
-	["uk", "Ukrainian"],
-	["vi", "Vietnamese"],
-	["wa", "Walloon"],
-	["wo", "Wolof"],
-	["xh", "Xhosa"],
-	["yi", "Yiddish"],
-	["zu", "Zulu"]
+	["ru", "Russian"]
 ];
 
 // defines the language that a player can speak.
 // can define multiple
-f_radios_settings_acre2_language_blufor = ["en,am"];
-f_radios_settings_acre2_language_opfor = ["ru,uk"];
-f_radios_settings_acre2_language_indfor = ["uk"];
+f_radios_settings_acre2_language_blufor = ["en"];
+f_radios_settings_acre2_language_opfor = ["en"];
+f_radios_settings_acre2_language_indfor = ["en"];
 
 // Channel names and group defaults
 // first item in the array will correspond to the first channel
@@ -100,7 +65,7 @@ f_radios_settings_acre2_sr_groups_blufor = [
 	["Alpha",    ["A","A1","A2"]],
 	["Bravo",    ["B","B1","B2"]],
 	["Charlie",  ["C","C1","C2"]],
-	["Delta",    ["D","D1","D2","D3"]]
+	["Delta",    ["D","D1","D2","D3","D4"]]
 ];
 
 f_radios_settings_acre2_sr_groups_opfor = [
@@ -108,7 +73,7 @@ f_radios_settings_acre2_sr_groups_opfor = [
 	["Echo",     ["E","E1","E2"]],
 	["Foxtrot",  ["F","F1","F2"]],
 	["Golf",     ["G","G1","G2"]],
-	["Hotel",    ["H","H1","H2","H3"]]
+	["Hotel",    ["H","H1","H2","H3","H4"]]
 ];
 
 f_radios_settings_acre2_sr_groups_indfor = [
@@ -116,7 +81,7 @@ f_radios_settings_acre2_sr_groups_indfor = [
 	["India",    ["I","I1","I2"]],
 	["Juliet",   ["J","J1","J2"]],
 	["Kilo",     ["K","K1","K2"]],
-	["Lima",     ["L","L1","L2","L3"]]
+	["Lima",     ["L","L1","L2","L3","L4"]]
 ];
 
 f_radios_settings_acre2_lr_groups_blufor = [

@@ -78,6 +78,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhs_100Rnd_762x54mmR";
         phx_loadout_antitank_weapon = "rhs_weap_rpg7";
         phx_loadout_antitank_mag = "rhs_rpg7_PG7VL_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_rpg7";
+        phx_loadout_mediumantitank_mag = "rhs_rpg7_PG7VR_mag";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     case 1: { // AK74M, PKM, PKP, RPG7 (All Tracer)
@@ -94,6 +96,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhs_100Rnd_762x54mmR_green";
         phx_loadout_antitank_weapon = "rhs_weap_rpg7";
         phx_loadout_antitank_mag = "rhs_rpg7_PG7VL_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_rpg7";
+        phx_loadout_mediumantitank_mag = "rhs_rpg7_PG7VR_mag";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     case 2: { // Mosin, PKM, RShG-2
@@ -110,6 +114,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhs_100Rnd_762x54mmR";
         phx_loadout_antitank_weapon = "rhs_weap_rshg2";
         phx_loadout_antitank_mag = "rhs_rshg2_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_rpg7";
+        phx_loadout_mediumantitank_mag = "rhs_rpg7_PG7VR_mag";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     default {
@@ -126,6 +132,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhs_100Rnd_762x54mmR";
         phx_loadout_antitank_weapon = "rhs_weap_rpg7";
         phx_loadout_antitank_mag = "rhs_rpg7_PG7VL_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_rpg7";
+        phx_loadout_mediumantitank_mag = "rhs_rpg7_PG7VR_mag";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
 };

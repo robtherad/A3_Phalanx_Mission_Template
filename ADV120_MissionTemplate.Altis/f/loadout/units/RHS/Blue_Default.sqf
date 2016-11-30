@@ -72,6 +72,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhsusf_100Rnd_762x51_m80a1epr";
         phx_loadout_antitank_weapon = "rhs_weap_M136_hedp";
         phx_loadout_antitank_mag = "rhs_m136_hedp_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_smaw";
+        phx_loadout_mediumantitank_mag = "rhs_mag_smaw_HEDP";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     case 1: { // M16A4, M249, M240G, M136 (All Tracer)
@@ -88,6 +90,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhsusf_100Rnd_762x51_m62_tracer";
         phx_loadout_antitank_weapon = "rhs_weap_M136_hedp";
         phx_loadout_antitank_mag = "rhs_m136_hedp_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_smaw";
+        phx_loadout_mediumantitank_mag = "rhs_mag_smaw_HEDP";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     case 2: { // Kar98k, PKM, RShG-2
@@ -104,6 +108,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhs_100Rnd_762x54mmR";
         phx_loadout_antitank_weapon = "rhs_weap_rshg2";
         phx_loadout_antitank_mag = "rhs_rshg2_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_smaw";
+        phx_loadout_mediumantitank_mag = "rhs_mag_smaw_HEDP";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     default {
@@ -120,6 +126,8 @@ _weapons = switch (_weapons) do {
         phx_loadout_mmg_mag = "rhsusf_100Rnd_762x51_m80a1epr";
         phx_loadout_antitank_weapon = "rhs_weap_M136_hedp";
         phx_loadout_antitank_mag = "rhs_m136_hedp_mag";
+        phx_loadout_mediumantitank_weapon = "rhs_weap_smaw";
+        phx_loadout_mediumantitank_mag = "rhs_mag_smaw_HEDP";
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
 };

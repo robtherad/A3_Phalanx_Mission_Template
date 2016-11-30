@@ -11,7 +11,7 @@ for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_gl_smoke;};
 for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_gl_flare;};
 for "_i" from 1 to 7 do {player addItemToBackpack phx_loadout_rifle_mag_tracer;};
 player addWeapon phx_loadout_rifle_gl_weapon;
-for "_i" from 1 to 2 do {player addItemToBackpack phx_loadout_mmg_mag;};
+//for "_i" from 1 to 2 do {player addItemToBackpack phx_loadout_mmg_mag;};
 for "_i" from 1 to 5 do {player addItemToVest phx_loadout_rifle_mag;};
 for "_i" from 1 to 1 do {player addItemToBackpack phx_loadout_rifle_mag;};
 player addItem "ACE_MapTools";
