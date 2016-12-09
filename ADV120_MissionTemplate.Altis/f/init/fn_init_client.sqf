@@ -7,6 +7,12 @@ call phx_fnc_loadout_set;
 // Set the group IDs
 [] call compile preprocessFileLineNumbers "f\setGroupID\f_setGroupIDs.sqf";
 
+f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+if (f_param_radios isEqualTo 1) then {
+  // Preset radios
+  phx_radHandle1 = [phx_fnc_radio_waitGear, 0.1, []] call CBA_fnc_addPerFrameHandler;
+};
+
 // Add mission boundary
 phx_playerBoundsCheck_PFH = [phx_fnc_core_playerBoundsCheck, 5, []] call CBA_fnc_addPerFrameHandler;
 

@@ -77,21 +77,32 @@
         };
         // ------------------------------------------------------------------------------------
         // Set spectator mode for whichever radio system is in use
-        if (false) then {
-          [player, true] call TFAR_fnc_forceSpectator;
-          player setVariable ["tf_unable_to_use_radio", true];
-        };
-        if (isClass(configFile >> "CfgPatches" >> "acre_main")) then {
-          [true] call acre_api_fnc_setSpectator;
-          if (!isNil "potato_radios_availableLanguages") then {
-              _languages = [];
-              {
-                  _languages pushBack (_x select 0);
-                  nil;
-              } count potato_radios_availableLanguages;
-              _languages call acre_api_fnc_babelSetSpokenLanguages;
+        f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+        switch (f_param_radios) do {
+          // TFR
+          case 1: {
+            [player, true] call TFAR_fnc_forceSpectator;
+            player setVariable ["tf_unable_to_use_radio", true];
+          };
+          // acre2
+          case 2: {
+            if (isClass(configFile >> "CfgPatches" >> "acre_main")) then {
+              [true] call acre_api_fnc_setSpectator;
+              if (!isNil "potato_radios_availableLanguages") then {
+                  _languages = [];
+                  {
+                      _languages pushBack (_x select 0);
+                      nil;
+                  } count potato_radios_availableLanguages;
+                  _languages call acre_api_fnc_babelSetSpokenLanguages;
+              };
+            };
+          };
+          default {
+            // Vanilla
           };
         };
+
         // ------------------------------------------------------------------------------------
         // Disable STHUD
         ST_STHud_ShownUI = 0;

@@ -10,21 +10,16 @@
 // If any radio system selected
 f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
 //if(f_param_radios != 0) then {
-
   switch (f_param_radios) do {
-
-  // TFR
-  case 1: {
-    //[] execVM "f\radios\tfr\phx\tfr_init.sqf";
-  };
-  // acre2
-  case 2: {
-    [] execVM "f\radios\acre2\acre2_init.sqf";
-  };
-  default {
-    [] execVM "f\radios\acre2\acre2_init.sqf";
-  };
-
+    case 1: { // TFR
+      //[] execVM "f\radios\tfr\tfr_init.sqf";
+    };
+    case 2: { // acre2
+      [] execVM "f\radios\acre2\acre2_init.sqf";
+    };
+    default {
+      [] execVM "f\radios\acre2\acre2_init.sqf";
+    };
   };
 //};
 

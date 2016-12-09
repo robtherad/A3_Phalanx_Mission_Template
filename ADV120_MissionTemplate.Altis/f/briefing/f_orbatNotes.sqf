@@ -7,6 +7,7 @@ _generateORBAT = {
     params ["_groups"];
 
     private _functionText = "";
+    f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
 
     // Loop through the group, print out group ID, leader name and medics if present
     {
@@ -60,11 +61,8 @@ _generateORBAT = {
                 _color = phx_orbat_lastUsedColor select 0;
             };
 
-            f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
             switch (f_param_radios) do {
               case 1: { // TFR
-                waitUntil { !isNil "phx_playerBaseChannel"; };
-
                 // Get group's radio frequency
                 private _freq = _x getVariable ["phx_radioSettings",nil];
                 if (isNil "_freq") then {
@@ -134,7 +132,6 @@ _generateORBAT = {
               };
             };
 
-
             // Add group members
             {
                 private _leftPad = " ";
@@ -167,7 +164,6 @@ private _orbatText = "<br />NOTE: The ORBAT below is only accurate at mission st
 <br />";
 
 waitUntil { !isNil "phx_groupIDset" };
-f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
 switch (f_param_radios) do {
   case 1: { // TFR
     waitUntil { !isNil "phx_playerBaseChannel" };
