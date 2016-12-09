@@ -4,7 +4,7 @@
     If the values are not redefined, the values in this file will be used.
 */
 
-private _uniform = ["phx_loadout_opfor_uniform",0] call BIS_fnc_getParamValue;
+private _uniform = ["phx_loadout_indfor_uniform",0] call BIS_fnc_getParamValue;
 _uniform = switch (_uniform) do {
     case 0: { // MARPAT WD
         phx_loadout_uniform = "rhs_uniform_FROG01_wd";
@@ -104,7 +104,7 @@ _uniform = switch (_uniform) do {
     };
 };
 
-private _weapons = ["phx_loadout_opfor_weapons",4] call BIS_fnc_getParamValue;
+private _weapons = ["phx_loadout_indfor_weapons",4] call BIS_fnc_getParamValue;
 _weapons = switch (_weapons) do {
     case 0: { // M16A4, M249, M240G, M136 / SMAW
         phx_loadout_rifle_weapon = "rhs_weap_m16a4_carryhandle";
@@ -179,7 +179,7 @@ _weapons = switch (_weapons) do {
         phx_loadout_flare = "rhs_weap_rsp30_white";
     };
     case 4: { // AK74M, PKM, PKP, RPG7
-        phx_loadout_rifle_weapon = "rhs_weap_ak74m";
+        phx_loadout_rifle_weapon = "rhs_weap_ak74m"; //rhs_weap_ak74m_camo
         phx_loadout_rifle_gl_weapon = "rhs_weap_ak74m_gp25";
         phx_loadout_rifle_mag = "rhs_30Rnd_545x39_AK";
         phx_loadout_rifle_mag_tracer = "rhs_30Rnd_545x39_AK_green";

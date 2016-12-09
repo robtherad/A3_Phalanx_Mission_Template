@@ -7,7 +7,9 @@ for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
 for "_i" from 1 to 9 do {player addItemToVest phx_loadout_rifle_mag;};
 for "_i" from 1 to 4 do {player addItemToVest phx_loadout_rifle_mag_tracer;};
-player addWeapon phx_loadout_rifle_weapon;for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
+player addWeapon phx_loadout_rifle_weapon;
+player addItemToBackpack phx_loadout_mediumantitank_mag;
+player addWeapon phx_loadout_mediumantitank_weapon;for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items
 call phx_fnc_loadout_handleItems; // Add binocular/nvg variables above this line!

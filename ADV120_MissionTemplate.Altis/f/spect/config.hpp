@@ -430,10 +430,10 @@ class RscSpectButton {
     offsetY = 0;
     shadow = 0;
     sizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1)";
-    soundClick[] = {"\A3\ui_f\data\sound\RscButton\soundClick",0.09,1};
-    soundEnter[] = {"\A3\ui_f\data\sound\RscButton\soundEnter",0.09,1};
-    soundEscape[] = {"\A3\ui_f\data\sound\RscButton\soundEscape",0.09,1};
-    soundPush[] = {"\A3\ui_f\data\sound\RscButton\soundPush",0.09,1};
+    soundClick[] = {"\A3\ui_f\data\sound\RscSpectButton\soundClick",0.09,1};
+    soundEnter[] = {"\A3\ui_f\data\sound\RscSpectButton\soundEnter",0.09,1};
+    soundEscape[] = {"\A3\ui_f\data\sound\RscSpectButton\soundEscape",0.09,1};
+    soundPush[] = {"\A3\ui_f\data\sound\RscSpectButton\soundPush",0.09,1};
     style = 0x02 + 160;
     text = "";
     type = 1;

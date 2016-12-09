@@ -48,19 +48,30 @@ if (!f_cam_toggleTags || f_cam_mapMode isEqualTo 2 ) exitWith{};
         if ( ((isNull objectParent _x) && (alive _x)) || (!(isNull objectParent _x) && (((crew vehicle _x) select 0) isEqualTo _x) && (alive _x)) ) then {
             private _visPos = getPosATLVisual _x;
             if (surfaceIsWater _visPos) then {_visPos = getPosASLVisual _x;};
-            private _icon = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
+            
             _color set [3,0.9];
-            private _iconSize = .7;
+	    //private _icon = "\A3\ui_f\data\map\markers\military\dot_CA.paa";
+            private _icon = gettext (configfile >> "CfgVehicles" >> typeOf (vehicle _x) >> "icon");
+	    private _crewCount = count (crew (vehicle _x));
+	    private _iconSize = .7;
+	    private _directionToCamera = ([(call f_cam_GetCurrentCam), _x] call BIS_fnc_dirTo) - (getDir _x);
+	    
             if (_x getVariable ["ACE_isUnconscious",false]) then {
                 _icon = "\a3\ui_f_exp_a\Data\Displays\RscDisplayEGSpectator\reviveicon_ca.paa";
                 _color set [3,0.4];
                 _iconSize = 2;
             };
-            private _str = "";
+            private _name = "";
             if (isPlayer _x) then {
-                _str = name _x;
+                _name = name _x;
+            } else {
+	        _name = format ["AI - %1", gettext (configfile >> "CfgVehicles" >> typeOf (vehicle _x) >> "displayName")];
             };
-            drawIcon3D [_icon, _color, [_visPos select 0, _visPos select 1, (_visPos select 2)+3], _iconSize, _iconSize, 0, _str, 2, f_cam_tagTextSize, "TahomaB"];
+	    
+	    if (_crewCount > 1) then {
+                _name = format ["%1 (+%2)", _name, ((count (crew (vehicle _x))) - 1)];
+            };
+            drawIcon3D [_icon, _color, [_visPos select 0, _visPos select 1, (_visPos select 2)+3], _iconSize, _iconSize, _directionToCamera, _name, 2, f_cam_tagTextSize, "TahomaB"];
         };
         nil
     } count _drawUnits;

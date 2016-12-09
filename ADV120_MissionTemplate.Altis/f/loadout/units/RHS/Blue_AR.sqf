@@ -5,10 +5,10 @@ call phx_fnc_loadout_handleClothing; // Add clothing variables above this line!
 for "_i" from 1 to 2 do {player addItemToUniform "FirstAidKit";};
 for "_i" from 1 to 4 do {player addItemToUniform "SmokeShell";};
 for "_i" from 1 to 2 do {player addItemToVest "HandGrenade";};
-for "_i" from 1 to 2 do {player addItemToBackpack "rhs_200rnd_556x45_M_SAW";};
-player addItemToVest "rhs_200rnd_556x45_M_SAW";
-player addWeapon "rhs_weap_m249_pip_L";
-player addItemToVest "rhs_200rnd_556x45_M_SAW";
+for "_i" from 1 to 2 do {player addItemToBackpack phx_loadout_automaticrifle_mag;};
+player addItemToVest phx_loadout_automaticrifle_mag;
+player addWeapon phx_loadout_automaticrifle_weapon;
+player addItemToVest phx_loadout_automaticrifle_mag;
 for "_i" from 1 to 2 do {player addItem "ACE_CableTie";};
 
 // Add items

@@ -1,8 +1,8 @@
 if (!hasInterface) exitWith {};
 
 // Ensure script is run only once.
-if (!isNil "phx_loadout_assigned") exitWith {};
-phx_loadout_assigned = false;
+if (!isNil "phx_loadoutAssigned") exitWith {};
+phx_loadoutAssigned = false;
 
 private _char = toLower (typeOf player);
 
@@ -102,6 +102,12 @@ switch (_char) do {
     case toLower "O_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]
     };
+    case toLower "O_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AT.sqf",_loadout]
+    };
+    case toLower "O_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAT.sqf",_loadout]
+    };
     case toLower "O_pilot_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_P.sqf",_loadout]
     };
@@ -150,9 +156,64 @@ switch (_char) do {
     case toLower "B_soldier_PG_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]
     };
+    case toLower "B_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AT.sqf",_loadout]
+    };
+    case toLower "B_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAT.sqf",_loadout]
+    };
     case toLower "B_pilot_F": {
         [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_P.sqf",_loadout]
     };
+
+    //----------------------------------------
+    // INDFOR - Independent - IND_F
+    case toLower "I_officer_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_PL.sqf",_loadout]
+    };
+    case toLower "I_Soldier_AR_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AR.sqf",_loadout]
+    };
+    case toLower "I_medic_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_CLS.sqf",_loadout];
+    };
+    case toLower "I_Soldier_AAR_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AAR.sqf",_loadout]
+    };
+    case toLower "I_Soldier_SL_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_SL.sqf",_loadout]
+    };
+    case toLower "I_soldier_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_R.sqf",_loadout]
+    };
+    case toLower "I_Soldier_TL_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_TL.sqf",_loadout]
+    };
+    case toLower "I_support_MG_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_MG.sqf",_loadout]
+    };
+    case toLower "I_engineer_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_CE.sqf",_loadout]
+    };
+    case toLower "I_Soldier_LAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_RAT.sqf",_loadout]
+    };
+    case toLower "I_Soldier_A_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AM.sqf",_loadout]
+    };
+    case toLower "I_Soldier_lite_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_MGTL.sqf",_loadout]
+    };
+    case toLower "I_Soldier_AT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AT.sqf",_loadout]
+    };
+    case toLower "I_Soldier_AAT_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AAT.sqf",_loadout]
+    };
+    case toLower "I_pilot_F": {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_P.sqf",_loadout]
+    };
+
     //----------------------------------------
     // Spectator Slots
     case toLower "VirtualMan_F": {

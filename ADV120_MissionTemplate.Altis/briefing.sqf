@@ -11,8 +11,9 @@ if (hasInterface && (isNull player)) then
 
 // ====================================================================================
 // Create Phalanx Diary Entry
+ORBAT_Diary = player createDiarySubject ["ORBAT_Diary", "ORBAT"];
 PHX_Diary = player createDiarySubject ["PHX_Diary", "[PHX] Misc Info"];
-player createDiaryRecord ["PHX_Diary", ["Bug Reports", "  This mission uses the Phalanx Mission Template. If you notice any bugs please contact robtherad via discord or send an email to robtherad@gmail.com with as much information as you can. Please include the mission name and version."]];
+//player createDiaryRecord ["PHX_Diary", ["Bug Reports", "  This mission uses the Phalanx Mission Template. If you notice any bugs please contact robtherad via discord or send an email to robtherad@gmail.com with as much information as you can. Please include the mission name and version."]];
 
 // ====================================================================================
 // BRIEFING: ADMIN

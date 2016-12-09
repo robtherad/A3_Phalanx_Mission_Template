@@ -59,3 +59,38 @@ if (f_cam_tracerOn) then {
         nil
     } count f_cam_fired;
 };
+{
+  private _markerType = getMarkerType _x;
+  private _markerShape = markerShape _x;
+  private _markerPos = getMarkerPos _x;
+  private _markerSize = getMarkerSize _x;
+  private _markerDir = markerDir _x;
+  private _markerColorString = getMarkerColor _x;
+  private _markerColor = "";
+  if (_markerColorString == "Default") then {
+    _markerColor = (configfile >> "CfgMarkers" >> _markerType >> "color") call BIS_fnc_colorConfigToRGBA;
+  }
+  else {
+    _markerColor = (configfile >> "CfgMarkerColors" >> getMarkerColor _x >> "color") call BIS_fnc_colorConfigToRGBA;
+  };
+
+  switch (_markerShape) do {
+    case "RECTANGLE": {
+      private _markerTexture = getText (configfile >> "cfgMarkerBrushes" >> markerBrush _x >> "texture");
+      _fullmapWindow drawRectangle [_markerPos, _markerSize select 0, _markerSize select 1, _markerDir, _markerColor, _markerTexture];
+    };
+    case "ELLIPSE": {
+      private _markerTexture = getText (configfile >> "cfgMarkerBrushes" >> markerBrush _x >> "texture");
+      _fullmapWindow drawEllipse  [_markerPos, _markerSize select 0, _markerSize select 1, _markerDir, _markerColor, _markerTexture];
+    };
+    case "ICON": {
+      if (_markerType != "Empty") then {
+        private _multiplier = 20;
+        private _markerText = markerText _x;
+        private _markerIcon = getText (configfile >> "CfgMarkers" >> _markerType >> "icon");
+        _fullmapWindow drawIcon [_markerIcon, _markerColor, _markerPos, (_markerSize select 0) * _multiplier, (_markerSize select 1) * _multiplier, _markerDir, _markerText, 1];
+      };
+    };
+  };
+  nil;
+} count allMapMarkers;

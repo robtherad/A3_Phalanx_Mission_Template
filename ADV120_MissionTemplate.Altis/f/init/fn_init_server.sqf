@@ -14,8 +14,11 @@ phx_alertSoon = 0; // 15 minute warning
 phx_end_checkTime = [phx_fnc_end_checkTime, 10, []] call CBA_fnc_addPerFrameHandler;
 phx_end_checkAlive = [phx_fnc_end_checkAlive, 10, []] call CBA_fnc_addPerFrameHandler;
 
-// Generate frequencies for preset radios
-call phx_fnc_radio_genFreqs;
+f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+if (f_param_radios isEqualTo 1) then {
+  // Generate frequencies for preset radios
+  call phx_fnc_radio_genFreqs;
+};
 
 // Create respawn markers in bottom left corner of map
 {

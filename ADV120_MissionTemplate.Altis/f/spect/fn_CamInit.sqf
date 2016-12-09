@@ -28,7 +28,7 @@
     cutText ["","BLACK FADED"];
     // Move unit off the battlefield just in case
     _unit setPos [-1000,-1000,5];
-    
+
     if (!isNil "BIS_fnc_feedback_allowPP") then {
       // disable effects death effects
       BIS_fnc_feedback_allowPP = false;
@@ -45,7 +45,7 @@
     private _newGrp = createGroup sideLogic;
     private _pos = [-1000,-1000,5];
     if (isNil "phx_spect_playerGroup") then {phx_spect_playerGroup = _newGrp;phx_spect_playerGroupNumber = 1;};
-    
+
     switch (side phx_spect_playerGroup) do {
         case WEST: {phx_spect_newUnit = phx_spect_playerGroup createUnit ["B_VirtualCurator_F", _pos, [], 0, "FORM"];};
         case EAST: {phx_spect_newUnit = phx_spect_playerGroup createUnit ["O_VirtualCurator_F", _pos, [], 0, "FORM"];};
@@ -55,18 +55,18 @@
     };
     phx_spect_newUnit allowDamage false;
     selectPlayer phx_spect_newUnit;
-    
+
     // ====================================================================================
     // Wait until player becomes the new unit
     [{player isEqualTo phx_spect_newUnit}, {
         params ["_unit", "_oldUnit"];
-        
-        [phx_spect_newUnit] call phx_fnc_disableCSpect; 
+
+        [phx_spect_newUnit] call phx_fnc_disableCSpect;
         deleteVehicle _unit;
-        
+
         player setspeaker "NoVoice";
         player disableConversation true;
-        
+
         if (isNull _oldUnit ) then {if (count playableUnits > 0) then {_oldUnit = (playableUnits select 0)} else {_oldUnit = (allUnits select 0)};};
         if (isNil "_oldUnit") then {
             createCenter civilian;
@@ -77,8 +77,32 @@
         };
         // ------------------------------------------------------------------------------------
         // Set spectator mode for whichever radio system is in use
-        [player, true] call TFAR_fnc_forceSpectator;
-        player setVariable ["tf_unable_to_use_radio", true];
+        f_param_radios = ["phx_param_radios",0] call BIS_fnc_getParamValue;
+        switch (f_param_radios) do {
+          // TFR
+          case 1: {
+            [player, true] call TFAR_fnc_forceSpectator;
+            player setVariable ["tf_unable_to_use_radio", true];
+          };
+          // acre2
+          case 2: {
+            if (isClass(configFile >> "CfgPatches" >> "acre_main")) then {
+              [true] call acre_api_fnc_setSpectator;
+              if (!isNil "potato_radios_availableLanguages") then {
+                  _languages = [];
+                  {
+                      _languages pushBack (_x select 0);
+                      nil;
+                  } count potato_radios_availableLanguages;
+                  _languages call acre_api_fnc_babelSetSpokenLanguages;
+              };
+            };
+          };
+          default {
+            // Vanilla
+          };
+        };
+
         // ------------------------------------------------------------------------------------
         // Disable STHUD
         ST_STHud_ShownUI = 0;
@@ -167,10 +191,21 @@
                 f_cam_toggleCamera = false;
                 ctrlSetText [2114, "First Person"];
             };
-            
+
             f_cam_calledTagFix = nil;
         };
-        
+
+	f_cam_checkAcreMute = {
+            params ["_inputKey", "_inputShift", "_inputCtrl", "_inputAlt"];
+            (["ACRE2", "HeadSet"] call CBA_fnc_getKeybind select 5) params ["_key", "_modifiers"];
+            _modifiers params ["_shift", "_ctrl", "_alt"];
+
+            (_inputKey == _key &&
+                _inputShift isEqualTo _shift &&
+                _inputCtrl isEqualTo _ctrl &&
+                _inputAlt isEqualTo _alt)
+        };
+
         f_cam_ToggleFPCamera = {
             f_cam_toggleCamera = !f_cam_toggleCamera;
             if (f_cam_toggleCamera) then {
@@ -184,7 +219,7 @@
             };
             call F_fnc_ReloadModes;
         };
-        
+
         f_cam_GetCurrentCam = {
           private _camera = f_cam_camera;
           switch(f_cam_mode) do {
@@ -253,19 +288,20 @@
 
             f_cam_updatevalues_script = [] spawn F_fnc_UpdateValues;
             f_cam_tagDrawEH = addMissionEventHandler ["Draw3D",{_this call F_fnc_DrawTags}];
+	    //["f_spect_tags", "onEachFrame", {_this call F_fnc_DrawTags}] call BIS_fnc_addStackedEventHandler;
             ["f_spect_cams", "onEachFrame", {_this call F_fnc_FreeCam}] call BIS_fnc_addStackedEventHandler;
-            
+
             [{
                 // Join group in correct slot
                 player joinAsSilent [phx_spect_playerGroup, phx_spect_playerGroupNumber];
             }, []] call CBA_fnc_execNextFrame;
-            
+
             // Add player to the spectator list kept on the server
             phx_spectatorPV = player;
             publicVariableServer "phx_spectatorPV";
             player setVariable ["phx_isUnitSpectator",true,true];
         }, [_oldUnit], 1] call CBA_fnc_waitAndExecute;
-        
+
     }, [_unit, _oldUnit]] call CBA_fnc_waitUntilAndExecute;
-    
+
 }, _this] call CBA_fnc_directCall;

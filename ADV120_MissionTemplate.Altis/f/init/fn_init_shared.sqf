@@ -12,6 +12,9 @@ call phx_fnc_core_setWeather;
 // Run safestart script
 [] execVM "f\safeStart\f_safeStart.sqf";
 
+// Run radio setup
+[] execVM "f\radios\radio_init.sqf";
+
 //====================================================================================================
 phx_sharedInitFinished = true;
 
