@@ -1,3 +1,5 @@
+#include "..\f\loadout\cfgLoadouts.hpp"
+
 class Params {
     // Radios
     // ============================================================================================
@@ -15,120 +17,75 @@ class Params {
     // Equipment
     class phx_loadout_blufor_uniform {
       title = "BLUFOR Uniform:";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-      texts[] = { "0 MARPAT WD",
-                  "1 OCP",
-                  "2 UCP",
-                  "3 MARPAT D",
-                  "4 G3 Black",
-                  "5 Police",
-                  "6 TTsKO Forest",
-                  "7 VDV Flora",
-                  "8 Flora",
-                  "9 EMR Desert",
-                  "10 MSV EMR",
-                  "11 TTsKO Mountain",
-                  "12 Specter-S Flora",
-                  "13 Cold War Era 1",
-                  "14 Cold War Era 2"
-      };
-      default = 0;
+      values[] = UNIFORM_VALUES;
+      texts[] = UNIFORM_TEXTS;
+      default = UNIFORM_MARPAT_WD;
     };
     class phx_loadout_opfor_uniform {
       title = "OPFOR Uniform:";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-      texts[] = { "0 MARPAT WD",
-                  "1 OCP",
-                  "2 UCP",
-                  "3 MARPAT D",
-                  "4 G3 Black",
-                  "5 Police",
-                  "6 TTsKO Forest",
-                  "7 VDV Flora",
-                  "8 Flora",
-                  "9 EMR Desert",
-                  "10 MSV EMR",
-                  "11 TTsKO Mountain",
-                  "12 Specter-S Flora",
-                  "13 Cold War Era 1",
-                  "14 Cold War Era 2"
-      };
-      default = 6;
+      values[] = UNIFORM_VALUES;
+      texts[] = UNIFORM_TEXTS;
+      default = UNIFORM_TTSKO_FOREST;
     };
     class phx_loadout_indfor_uniform {
       title = "INDFOR Uniform:";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-      texts[] = { "0 MARPAT WD",
-                  "1 OCP",
-                  "2 UCP",
-                  "3 MARPAT D",
-                  "4 G3 Black",
-                  "5 Police",
-                  "6 TTsKO Forest",
-                  "7 VDV Flora",
-                  "8 Flora",
-                  "9 EMR Desert",
-                  "10 MSV EMR",
-                  "11 TTsKO Mountain",
-                  "12 Specter-S Flora",
-                  "13 Cold War Era 1",
-                  "14 Cold War Era 2"
-      };
-      default = 12;
+      values[] = UNIFORM_VALUES;
+      texts[] = UNIFORM_TEXTS;
+      default = UNIFORM_M93_WOODLAND;
+    };
+    class phx_loadout_civ_uniform {
+      title = "CIV Uniform:";
+      values[] = UNIFORM_VALUES;
+      texts[] = UNIFORM_TEXTS;
+      default = UNIFORM_CIVILIAN;
     };
     class phx_loadout_blufor_weapons {
       title = "BLUFOR Weapons (R, LMG, HMG, AT):";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11};
-      texts[] = {"0 M16A4, M249, M240G, M136 / SMAW",
-        "1 M16A4 (All Tracer), M249, M240G, M136 / SMAW",
-        "2 M4A1, M249, M240G, M136 / SMAW",
-        "3 HK416 D10, M249, M240G, M136 / SMAW",
-        "4 AK74M, PKM, PKP, RPG7",
-        "5 AK74M (All Tracer), PKM, PKP, RPG7",
-        "6 AK74M (Wood Camo), PKM, PKP, RPG7",
-        "7 M70B1 / AKMS (GP25), PKM, PKP, RPG7",
-        "8 AKM (7.62), PKM, PKP, RPG7",
-        "9 Mosin, PKM, RShG-2 / RPG7",
-        "10 Kar98k, PKM, RShG-2 / RPG7",
-        "11 Unarmed"
-      };
-      default = 0;
+      values[] = WEAPON_VALUES;
+      texts[] = WEAPON_TEXTS;
+      default = WEAPONS_M16A4_M249_M240G_M136_SMAW;
     };
     class phx_loadout_opfor_weapons {
       title = "OPFOR Weapons (R, LMG, HMG, AT):";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11};
-      texts[] = {"0 M16A4, M249, M240G, M136 / SMAW",
-        "1 M16A4 (All Tracer), M249, M240G, M136 / SMAW",
-        "2 M4A1, M249, M240G, M136 / SMAW",
-        "3 HK416 D10, M249, M240G, M136 / SMAW",
-        "4 AK74M, PKM, PKP, RPG7",
-        "5 AK74M (All Tracer), PKM, PKP, RPG7",
-        "6 AK74M (Wood Camo), PKM, PKP, RPG7",
-        "7 M70B1 / AKMS (GP25), PKM, PKP, RPG7",
-        "8 AKM (7.62), PKM, PKP, RPG7",
-        "9 Mosin, PKM, RShG-2 / RPG7",
-        "10 Kar98k, PKM, RShG-2 / RPG7",
-        "11 Unarmed"
-      };
-      default = 4;
+      values[] = WEAPON_VALUES;
+      texts[] = WEAPON_TEXTS;
+      default = WEAPONS_AK74M_PKM_PKP_RPG7;
     };
     class phx_loadout_indfor_weapons {
       title = "INDFOR Weapons (R, LMG, HMG, AT):";
-      values[] = {0,1,2,3,4,5,6,7,8,9,10,11};
-      texts[] = {"0 M16A4, M249, M240G, M136 / SMAW",
-        "1 M16A4 (All Tracer), M249, M240G, M136 / SMAW",
-        "2 M4A1, M249, M240G, M136 / SMAW",
-        "3 HK416 D10, M249, M240G, M136 / SMAW",
-        "4 AK74M, PKM, PKP, RPG7",
-        "5 AK74M (All Tracer), PKM, PKP, RPG7",
-        "6 AK74M (Wood Camo), PKM, PKP, RPG7",
-        "7 M70B1 / AKMS (GP25), PKM, PKP, RPG7",
-        "8 AKM (7.62), PKM, PKP, RPG7",
-        "9 Mosin, PKM, RShG-2 / RPG7",
-        "10 Kar98k, PKM, RShG-2 / RPG7",
-        "11 Unarmed"
-      };
-      default = 4;
+      values[] = WEAPON_VALUES;
+      texts[] = WEAPON_TEXTS;
+      default = WEAPONS_AK74M_WOODCAMO_PKM_PKP_RPG7;
+    };
+    class phx_loadout_civ_weapons {
+      title = "CIV Weapons (R, LMG, HMG, AT):";
+      values[] = WEAPON_VALUES;
+      texts[] = WEAPON_TEXTS;
+      default = WEAPONS_UNARMED;
+    };
+    class phx_loadout_blufor_lr_radio {
+      title = "BLUFOR Long Range Radios";
+      values[] = {0,1};
+      texts[] = {"Off","On"};
+      default = 1;
+    };
+    class phx_loadout_opfor_lr_radio {
+      title = "OPFOR Long Range Radios";
+      values[] = {0,1};
+      texts[] = {"Off","On"};
+      default = 1;
+    };
+    class phx_loadout_indfor_lr_radio {
+      title = "INDFOR Long Range Radios";
+      values[] = {0,1};
+      texts[] = {"Off","On"};
+      default = 1;
+    };
+    class phx_loadout_civ_lr_radio {
+      title = "INDFOR Long Range Radios";
+      values[] = {0,1};
+      texts[] = {"Off","On"};
+      default = 0;
     };
     // Environment
     class phx_core_timeOfDay {

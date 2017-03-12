@@ -4,6 +4,8 @@ if (!hasInterface) exitWith {};
 if (!isNil "phx_loadoutAssigned") exitWith {};
 phx_loadoutAssigned = false;
 
+#include "cfgLoadouts.hpp"
+
 private _char = toLower (typeOf player);
 
 //Get radio and map parameters from the slot screen. If the parameters don't exist then they default to giving everybody a map and radio.
@@ -12,6 +14,19 @@ phx_loadout_map = ["phx_loadout_map",0] call BIS_fnc_getParamValue;
 phx_loadout_gps = ["phx_loadout_gps",0] call BIS_fnc_getParamValue;
 phx_loadout_watch = ["phx_loadout_watch",0] call BIS_fnc_getParamValue;
 phx_loadout_compass = ["phx_loadout_compass",0] call BIS_fnc_getParamValue;
+phx_loadout_aid = "FirstAidKit:2";
+phx_loadout_smoke = "SmokeShell:4";
+phx_loadout_grenade = "HandGrenade:2";
+phx_loadout_cuffs = "ACE_CableTie:2";
+phx_loadout_explosives = "SatchelCharge_Remote_Mag:2";
+phx_loadout_defusalkit = "ACE_DefusalKit";
+phx_loadout_trigger = "ACE_Clacker";
+phx_loadout_bandage = "ACE_fieldDressing:32";
+phx_loadout_morphine = "ACE_morphine:16";
+phx_loadout_epinephrine = "ACE_epinephrine:8";
+phx_loadout_blood = "ACE_bloodIV:2";
+phx_loadout_maptools = "ACE_MapTools";
+phx_loadout_entrenching = "ACE_EntrenchingTool";
 
 /*
     Acceptable Values for unit level:
@@ -33,17 +48,158 @@ _loadout = switch (_loadout) do {
 // Get the default gear settings for each side
 switch (side group player) do {
     case west: {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_Default.sqf",_loadout]
+      pUniform = ["phx_loadout_blufor_uniform",0] call BIS_fnc_getParamValue;
+      pWeapons = ["phx_loadout_blufor_weapons",0] call BIS_fnc_getParamValue;
     };
     case east: {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_Default.sqf",_loadout]
+      pUniform = ["phx_loadout_opfor_uniform",0] call BIS_fnc_getParamValue;
+      pWeapons = ["phx_loadout_opfor_weapons",0] call BIS_fnc_getParamValue;
     };
     case independent: {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_Default.sqf",_loadout]
+      pUniform = ["phx_loadout_indfor_uniform",0] call BIS_fnc_getParamValue;
+      pWeapons = ["phx_loadout_indfor_weapons",0] call BIS_fnc_getParamValue;
     };
-    default {};
+    case civilian: {
+      pUniform = ["phx_loadout_civ_uniform",0] call BIS_fnc_getParamValue;
+      pWeapons = ["phx_loadout_civ_weapons",0] call BIS_fnc_getParamValue;
+    };
+    default {
+      pUniform = 0;
+      pWeapons = 0;
+    };
 };
 
+// Default role is rifleman
+pRole = ROLE_R;
+
+if (_char == UNIT_SPECTATOR) then {
+      pRole = ROLE_SPECTATOR;
+} else {
+
+if (_char == UNIT_OPFOR_PL ||
+    _char == UNIT_BLUFOR_PL ||
+    _char == UNIT_INDFOR_PL) then {
+      pRole = ROLE_PL;
+} else {
+
+if (_char == UNIT_OPFOR_CLS ||
+    _char == UNIT_BLUFOR_CLS ||
+    _char == UNIT_INDFOR_CLS) then {
+      pRole = ROLE_CLS;
+} else {
+
+if (_char == UNIT_OPFOR_SL ||
+    _char == UNIT_BLUFOR_SL ||
+    _char == UNIT_INDFOR_SL) then {
+      pRole = ROLE_SL;
+} else {
+
+if (_char == UNIT_OPFOR_TL ||
+    _char == UNIT_BLUFOR_TL ||
+    _char == UNIT_INDFOR_TL) then {
+      pRole = ROLE_TL;
+} else {
+
+if (_char == UNIT_OPFOR_AR ||
+    _char == UNIT_BLUFOR_AR ||
+    _char == UNIT_INDFOR_AR) then {
+      pRole = ROLE_AR;
+} else {
+
+if (_char == UNIT_OPFOR_AAR ||
+    _char == UNIT_BLUFOR_AAR ||
+    _char == UNIT_INDFOR_AAR) then {
+      pRole = ROLE_AAR;
+} else {
+
+if (_char == UNIT_OPFOR_RAT ||
+    _char == UNIT_BLUFOR_RAT ||
+    _char == UNIT_INDFOR_RAT) then {
+      pRole = ROLE_RAT;
+} else {
+
+if (_char == UNIT_OPFOR_CE ||
+    _char == UNIT_BLUFOR_CE ||
+    _char == UNIT_INDFOR_CE) then {
+      pRole = ROLE_CE;
+} else {
+
+if (_char == UNIT_OPFOR_R ||
+    _char == UNIT_BLUFOR_R ||
+    _char == UNIT_INDFOR_R ||
+    _char == UNIT_CIV_R) then {
+      pRole = ROLE_R;
+} else {
+
+if (_char == UNIT_OPFOR_MG ||
+    _char == UNIT_BLUFOR_MG ||
+    _char == UNIT_INDFOR_MG) then {
+      pRole = ROLE_MG;
+} else {
+
+if (_char == UNIT_OPFOR_AM ||
+    _char == UNIT_BLUFOR_AM ||
+    _char == UNIT_INDFOR_AM) then {
+      pRole = ROLE_AM;
+} else {
+
+if (_char == UNIT_OPFOR_MGTL ||
+    _char == UNIT_BLUFOR_MGTL ||
+    _char == UNIT_INDFOR_MGTL) then {
+      pRole = ROLE_MGTL;
+} else {
+
+if (_char == UNIT_OPFOR_AT ||
+    _char == UNIT_BLUFOR_AT ||
+    _char == UNIT_INDFOR_AT) then {
+      pRole = ROLE_AT;
+} else {
+
+if (_char == UNIT_OPFOR_AAT ||
+    _char == UNIT_BLUFOR_AAT ||
+    _char == UNIT_INDFOR_AAT) then {
+      pRole = ROLE_AAT;
+} else {
+
+if (_char == UNIT_OPFOR_P ||
+    _char == UNIT_BLUFOR_P ||
+    _char == UNIT_INDFOR_P) then {
+      pRole = ROLE_P;
+} else {
+
+if (_char == UNIT_OPFOR_CR ||
+    _char == UNIT_BLUFOR_CR ||
+    _char == UNIT_INDFOR_CR) then {
+      pRole = ROLE_CR;
+} else {
+
+if (_char == UNIT_OPFOR_MK ||
+    _char == UNIT_BLUFOR_MK ||
+    _char == UNIT_INDFOR_MK) then {
+      pRole = ROLE_MK;
+};
+
+}; //end ROLE_CR
+}; //end ROLE_P
+}; //end ROLE_AAT
+}; //end ROLE_AT
+}; //end ROLE_MGTL
+}; //end ROLE_AM
+}; //end ROLE_MG
+}; //end ROLE_R
+}; //end ROLE_CE
+}; //end ROLE_RAT
+}; //end ROLE_AAR
+}; //end ROLE_AR
+}; //end ROLE_TL
+}; //end ROLE_SL
+}; //end ROLE_CLS
+}; //end ROLE_PL
+}; //end ROLE_SPECTATOR
+
+// Determine uniform and weapons
+[] call compile preprocessFileLineNumbers format["f\loadout\fn_loadout_uniforms.sqf"];
+[] call compile preprocessFileLineNumbers format["f\loadout\fn_loadout_weapons.sqf"];
 
 // Add stuff
 [{
@@ -57,166 +213,58 @@ removeGoggles player;
 
 [_handle] call CBA_fnc_removePerFrameHandler;
 
-switch (_char) do {
+switch (pRole) do {
     //----------------------------------------
     // REDFOR - CSAT/EAST - OPF_F
-    case toLower "O_officer_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_PL.sqf",_loadout]
+    case ROLE_PL: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\PL.sqf"]
     };
-    case toLower "O_Soldier_AR_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AR.sqf",_loadout]
+    case ROLE_AR: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\AR.sqf"]
     };
-    case toLower "O_medic_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CLS.sqf",_loadout]
+    case ROLE_CLS: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\CLS.sqf"]
     };
-    case toLower "O_Soldier_A_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAR.sqf",_loadout]
+    case ROLE_AAR: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\AAR.sqf"]
     };
-    case toLower "O_Soldier_SL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_SL.sqf",_loadout]
+    case ROLE_SL: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\SL.sqf"]
     };
-    case toLower "O_Soldier_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_R.sqf",_loadout]
+    case ROLE_R: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\R.sqf"]
     };
-    case toLower "O_Soldier_GL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_GR.sqf",_loadout]
+    case ROLE_TL: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\TL.sqf"]
     };
-    case toLower "O_Soldier_TL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_TL.sqf",_loadout]
+    case ROLE_CE: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\CE.sqf"]
     };
-    case toLower "O_soldier_exp_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_CE.sqf",_loadout]
+    case ROLE_MG: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\MG.sqf"]
     };
-    case toLower "O_HeavyGunner_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MG.sqf",_loadout]
+    case ROLE_RAT: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\RAT.sqf"]
     };
-    case toLower "O_Soldier_lite_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AG.sqf",_loadout]
+    case ROLE_AM: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\AM.sqf"]
     };
-    case toLower "O_Soldier_LAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_RAT.sqf",_loadout]
+    case ROLE_MGTL: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\MGTL.sqf"]
     };
-    case toLower "O_Soldier_unarmed_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AM.sqf",_loadout]
+    case ROLE_AT: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\AT.sqf"]
     };
-    case toLower "O_soldier_PG_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_MGTL.sqf",_loadout]
+    case ROLE_AAT: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\AAT.sqf"]
     };
-    case toLower "O_Soldier_AT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AT.sqf",_loadout]
-    };
-    case toLower "O_Soldier_AAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_AAT.sqf",_loadout]
-    };
-    case toLower "O_pilot_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Red_P.sqf",_loadout]
-    };
-
-    //----------------------------------------
-    // BLUFOR - NATO/WEST - BLU_F
-    case toLower "B_officer_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_PL.sqf",_loadout]
-    };
-    case toLower "B_soldier_AR_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AR.sqf",_loadout]
-    };
-    case toLower "B_medic_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CLS.sqf",_loadout];
-    };
-    case toLower "B_soldier_AAR_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAR.sqf",_loadout]
-    };
-    case toLower "B_Soldier_SL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_SL.sqf",_loadout]
-    };
-    case toLower "B_Soldier_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_R.sqf",_loadout]
-    };
-    case toLower "B_Soldier_GL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_GR.sqf",_loadout]
-    };
-    case toLower "B_Soldier_TL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_TL.sqf",_loadout]
-    };
-    case toLower "B_HeavyGunner_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MG.sqf",_loadout]
-    };
-    case toLower "B_Soldier_lite_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AG.sqf",_loadout]
-    };
-    case toLower "B_soldier_exp_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_CE.sqf",_loadout]
-    };
-    case toLower "B_soldier_LAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_RAT.sqf",_loadout]
-    };
-    case toLower "B_Soldier_unarmed_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AM.sqf",_loadout]
-    };
-    case toLower "B_soldier_PG_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_MGTL.sqf",_loadout]
-    };
-    case toLower "B_Soldier_AT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AT.sqf",_loadout]
-    };
-    case toLower "B_Soldier_AAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_AAT.sqf",_loadout]
-    };
-    case toLower "B_pilot_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Blue_P.sqf",_loadout]
-    };
-
-    //----------------------------------------
-    // INDFOR - Independent - IND_F
-    case toLower "I_officer_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_PL.sqf",_loadout]
-    };
-    case toLower "I_Soldier_AR_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AR.sqf",_loadout]
-    };
-    case toLower "I_medic_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_CLS.sqf",_loadout];
-    };
-    case toLower "I_Soldier_AAR_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AAR.sqf",_loadout]
-    };
-    case toLower "I_Soldier_SL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_SL.sqf",_loadout]
-    };
-    case toLower "I_soldier_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_R.sqf",_loadout]
-    };
-    case toLower "I_Soldier_TL_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_TL.sqf",_loadout]
-    };
-    case toLower "I_support_MG_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_MG.sqf",_loadout]
-    };
-    case toLower "I_engineer_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_CE.sqf",_loadout]
-    };
-    case toLower "I_Soldier_LAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_RAT.sqf",_loadout]
-    };
-    case toLower "I_Soldier_A_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AM.sqf",_loadout]
-    };
-    case toLower "I_Soldier_lite_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_MGTL.sqf",_loadout]
-    };
-    case toLower "I_Soldier_AT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AT.sqf",_loadout]
-    };
-    case toLower "I_Soldier_AAT_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_AAT.sqf",_loadout]
-    };
-    case toLower "I_pilot_F": {
-        [] call compile preprocessFileLineNumbers format["f\loadout\units\%1\Green_P.sqf",_loadout]
+    case ROLE_P: {
+        [] call compile preprocessFileLineNumbers format["f\loadout\units\P.sqf"]
     };
 
     //----------------------------------------
     // Spectator Slots
-    case toLower "VirtualMan_F": {
+    case ROLE_SPECTATOR: {
         player forceAddUniform "U_I_Protagonist_VR";
         player linkItem "ItemMap";
         missionNamespace setVariable ["phx_loadoutAssigned",true];

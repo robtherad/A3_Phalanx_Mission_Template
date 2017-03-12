@@ -95,3 +95,8 @@ if ((missionNamespace getVariable ["phx_loadout_addNVG",false]) isEqualType "") 
         };
     } forEach phx_loadout_nvgoggleArray;
 };
+
+// Flashlight
+if ((missionNamespace getVariable ["phx_loadout_addAttachment",false]) isEqualType "") then {
+    player addPrimaryWeaponItem phx_loadout_addAttachment;
+};

@@ -15,6 +15,9 @@ phx_sector_westPointsPublic = 0;
 phx_sector_eastPoints = 0;
 phx_sector_eastPointsPublic = 0;
 
+phx_sector_indPoints = 0;
+phx_sector_indPointsPublic = 0;
+
 phx_sector_playing = true;
 phx_sector_sectorControl = true;
 missionNamespace setVariable ["phx_sector_sectorControlActive", true, true]; // Used to check if sector control module is running or not
@@ -38,7 +41,7 @@ phx_sector_endPoints = (phx_sector_quickestTime * 60) * (count phx_sector_trigge
         deleteMarker _markerName;
         deleteMarker _markerNameText;
     };
-    
+
     // Build marker for area
     private _marker = createMarker [_markerName,_markerPos];
     _marker setMarkerSize [_markerSize select 0,_markerSize select 1];
@@ -62,7 +65,7 @@ phx_sector_endPoints = (phx_sector_quickestTime * 60) * (count phx_sector_trigge
     _flag = createVehicle ["Flag_White_F", (getPos _x), [], 0, "CAN_COLLIDE"];
     _flag allowDamage false;
     _x setVariable ["phx_sector_flagPole",_flag,true];
-    
+
     // Set sector status to neutral for later
     _x setVariable ["phx_sector_curOwner",3,true];
     _x setVariable ["phx_sector_lastOwner",3];

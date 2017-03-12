@@ -9,6 +9,9 @@ call phx_fnc_core_addScoreEH;
 call phx_fnc_core_setDate;
 call phx_fnc_core_setWeather;
 
+// Run sector script
+call phx_fnc_sectorInit;
+
 // Run safestart script
 [] execVM "f\safeStart\f_safeStart.sqf";
 
