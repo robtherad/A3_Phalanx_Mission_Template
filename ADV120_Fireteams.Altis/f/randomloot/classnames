@@ -1,0 +1,55 @@
+/* Classnames */
+
+
+/* CUP Classnames */
+CUP_sgun_AA12
+  CUP_20Rnd_B_AA12_HE
+  CUP_20Rnd_B_AA12_74Slug
+  CUP_20Rnd_B_AA12_Pellets
+
+CUP_arifle_AKS_Gold
+  CUP_30Rnd_762x39_AK47_M
+
+CUP_smg_MP5A5
+  CUP_30Rnd_9x19_MP5
+
+CUP_smg_bizon
+  CUP_64Rnd_9x19_Bizon_M
+
+CUP_hgun_TaurusTracker455_gold
+  CUP_6Rnd_45ACP_M
+
+CUP_srifle_SVD_pso
+CUP_srifle_SVD
+  CUP_10Rnd_762x54_SVD_M
+
+CUP_lmg_Pecheneg
+  CUP_100Rnd_TE4_LRT4_762x54_PK_Tracer_Green_M
+
+CUP_lmg_M249_para
+  CUP_100Rnd_TE4_Yellow_Tracer_556x45_M249
+
+CUP_arifle_G36C
+CUP_arifle_M4A1_black
+CUP_arifle_M16A4_Base
+  30Rnd_556x45_Stanag
+  CUP_100Rnd_556x45_BetaCMag
+
+CUP_arifle_AK74
+CUP_arifle_AK107
+  CUP_30Rnd_545x39_AK_M
+
+CUP_arifle_AKM
+  CUP_30Rnd_762x39_AK47_M
+
+CUP_glaunch_M32
+CUP_glaunch_M79
+  CUP_1Rnd_HE_M203
+
+CUP_optic_PSO_1
+CUP_optic_PSO_3
+CUP_acc_Flashlight
+CUP_optic_CompM2_Black
+CUP_optic_AN_PVS_10
+CUP_optic_ACOG
+CUP_optic_RCO

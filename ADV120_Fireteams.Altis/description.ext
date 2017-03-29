@@ -1,0 +1,27 @@
+author = "Fritz";
+onLoadName = "Fireteams";
+OnLoadMission = "";
+
+#include "description\definitions.hpp"
+#include "description\cfgNotifications.hpp"
+#include "description\cfgParams.hpp"
+#include "description\cfgRespawnTemplates.hpp"
+#include "description\cfgDebriefingSections.hpp"
+#include "description\cfgEventHandlers.hpp"
+#include "description\ACESettings.hpp"
+
+#include "f\spect\config.hpp"
+class CfgFunctions {
+    #include "description\cfgFunctions.hpp"
+    class F {
+        class safeStart {
+            file = "f\safeStart";
+            class safety{};
+        };
+        #include "f\spect\functions.hpp"
+    };
+    class PHX {
+        #include "f\functions.hpp"
+    };
+};
+#include "f\display.hpp"

@@ -1,0 +1,20 @@
+//====================================================================================================
+// Shared Scripts
+
+// Add event handlers for rating and score
+call phx_fnc_core_addRatingEH;
+call phx_fnc_core_addScoreEH;
+
+// Run sector script
+call phx_fnc_sectorInit;
+
+// Run radio setup
+[] execVM "f\radios\radio_init.sqf";
+
+//====================================================================================================
+phx_sharedInitFinished = true;
+
+// Wait for mission to start, then execute post briefing init
+[{CBA_missionTime > 0}, {
+    call phx_fnc_init_postBriefing;
+}, []] call CBA_fnc_waitUntilAndExecute;

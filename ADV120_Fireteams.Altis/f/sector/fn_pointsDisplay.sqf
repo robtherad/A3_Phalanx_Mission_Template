@@ -10,7 +10,7 @@ if (!hasInterface) exitWith {};
 
 // Make sure the sector control script has been running long enough
 phx_show_timeUI = true;
-private _totalCapTime = ["phx_sector_sectorTime",20] call BIS_fnc_getParamValue;
+private _totalCapTime = ["phx_sector_sectorTime",.1] call BIS_fnc_getParamValue;
 _totalCapTime = (_totalCapTime * 60) * (count phx_sector_triggerArray);
 phx_sector_westPointsPublic = 0;
 phx_sector_eastPointsPublic = 0;
