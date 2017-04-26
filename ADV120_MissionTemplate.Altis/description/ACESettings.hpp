@@ -1,11 +1,11 @@
 class ACE_Settings {
     class ace_advanced_fatigue_performanceFactor {
         typeName = "SCALAR";
-        value = 1.3;
+        value = 2;
     };
     class ace_advanced_fatigue_recoveryFactor {
         typeName = "SCALAR";
-        value = 2;
+        value = 16;
     };
     class ace_ui_groupBar {
         value = 0;
@@ -80,7 +80,7 @@ class ACE_Settings {
         typeName = "SCALAR";
         isClientSettable = 0;
     };
-    /*class ace_nametags_playerNamesViewDistance {
+    class ace_nametags_playerNamesViewDistance {
         value = 0;
         typeName = "SCALAR";
         isClientSettable = 0;
@@ -89,7 +89,7 @@ class ACE_Settings {
         value = 0;
         typeName = "SCALAR";
         isClientSettable = 0;
-    };*/
+    };
     class ace_ui_ammoCount {
         typeName = "BOOL";
         value = 0;

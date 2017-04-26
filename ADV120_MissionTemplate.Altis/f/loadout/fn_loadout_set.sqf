@@ -50,18 +50,23 @@ switch (side group player) do {
     case west: {
       pUniform = ["phx_loadout_blufor_uniform",0] call BIS_fnc_getParamValue;
       pWeapons = ["phx_loadout_blufor_weapons",0] call BIS_fnc_getParamValue;
+      phx_loadout_addAttachment = ["phx_loadout_blufor_attachments",""] call BIS_fnc_getParamValue;
     };
     case east: {
       pUniform = ["phx_loadout_opfor_uniform",0] call BIS_fnc_getParamValue;
       pWeapons = ["phx_loadout_opfor_weapons",0] call BIS_fnc_getParamValue;
+      phx_loadout_addAttachment = ["phx_loadout_opfor_attachments",""] call BIS_fnc_getParamValue;
     };
     case independent: {
       pUniform = ["phx_loadout_indfor_uniform",0] call BIS_fnc_getParamValue;
       pWeapons = ["phx_loadout_indfor_weapons",0] call BIS_fnc_getParamValue;
+      phx_loadout_addAttachment = ["phx_loadout_indfor_attachments",""] call BIS_fnc_getParamValue;
     };
     case civilian: {
       pUniform = ["phx_loadout_civ_uniform",0] call BIS_fnc_getParamValue;
       pWeapons = ["phx_loadout_civ_weapons",0] call BIS_fnc_getParamValue;
+      phx_loadout_addAttachment = ["phx_loadout_civ_attachments",""] call BIS_fnc_getParamValue;
+      phx_loadout_radio = 3; // Don't give civs radios
     };
     default {
       pUniform = 0;

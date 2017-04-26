@@ -39,7 +39,6 @@ giveBLUFORLoadout = {
     phx_loadout_mediumantitank_mag = "rhs_mag_smaw_HEDP";
   };
   phx_loadout_flare = "rhs_weap_rsp30_white:3";
-  phx_loadout_addAttachment = "rhsusf_acc_wmx";
 };
 
 giveOPFORLoadout = {
@@ -81,7 +80,6 @@ giveOPFORLoadout = {
     phx_loadout_mediumantitank_mag = "rhs_rpg7_PG7VR_mag";
   };
   phx_loadout_flare = "rhs_weap_rsp30_white:3";
-  phx_loadout_addAttachment = "rhs_acc_2dpZenit";
 };
 
 switch (pWeapons) do {
@@ -93,6 +91,18 @@ switch (pWeapons) do {
         if (pRole == ROLE_PL || pRole == ROLE_SL || pRole == ROLE_TL || pRole == ROLE_MGTL) then {
           phx_loadout_rifle_weapon = "rhs_weap_m4a1_carryhandle_m203";
         } else { phx_loadout_rifle_weapon = "rhs_weap_m4a1_carryhandle"; };
+    };
+    case WEAPONS_M4A1_BLOCK_M249_M240G_M136_SMAW: {
+        [] call giveBLUFORLoadout;
+        if (pRole == ROLE_PL || pRole == ROLE_SL || pRole == ROLE_TL || pRole == ROLE_MGTL) then {
+          phx_loadout_rifle_weapon = "rhs_weap_m4a1_blockII_M203_bk";
+        } else { phx_loadout_rifle_weapon = "rhs_weap_m4a1_blockII_bk"; };
+    };
+    case WEAPONS_M4A1_BLOCK_WOODLAND_M249_M240G_M136_SMAW: {
+        [] call giveBLUFORLoadout;
+        if (pRole == ROLE_PL || pRole == ROLE_SL || pRole == ROLE_TL || pRole == ROLE_MGTL) then {
+          phx_loadout_rifle_weapon = "rhs_weap_m4a1_blockII_M203_wd";
+        } else { phx_loadout_rifle_weapon = "rhs_weap_m4a1_blockII_wd"; };
     };
     case WEAPONS_HK416D10_M249_M240G_M136_SMAW: {
         [] call giveBLUFORLoadout;

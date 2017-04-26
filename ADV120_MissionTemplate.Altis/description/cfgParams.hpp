@@ -63,6 +63,30 @@ class Params {
       texts[] = WEAPON_TEXTS;
       default = WEAPONS_UNARMED;
     };
+    class phx_loadout_blufor_attachments {
+      title = "BLUFOR Attachments:";
+      values[] = ATTACHMENT_VALUES;
+      texts[] = ATTACHMENT_TEXTS;
+      default = ATTACHMENTS_NONE;
+    };
+    class phx_loadout_opfor_attachments {
+      title = "OPFOR Attachments:";
+      values[] = ATTACHMENT_VALUES;
+      texts[] = ATTACHMENT_TEXTS;
+      default = ATTACHMENTS_NONE;
+    };
+    class phx_loadout_indfor_attachments {
+      title = "INDFOR Attachments:";
+      values[] = ATTACHMENT_VALUES;
+      texts[] = ATTACHMENT_TEXTS;
+      default = ATTACHMENTS_NONE;
+    };
+    class phx_loadout_civ_attachments {
+      title = "CIV Attachments:";
+      values[] = ATTACHMENT_VALUES;
+      texts[] = ATTACHMENT_TEXTS;
+      default = ATTACHMENTS_NONE;
+    };
     class phx_loadout_blufor_lr_radio {
       title = "BLUFOR Long Range Radios";
       values[] = {0,1};
@@ -82,7 +106,7 @@ class Params {
       default = 1;
     };
     class phx_loadout_civ_lr_radio {
-      title = "INDFOR Long Range Radios";
+      title = "CIV Long Range Radios";
       values[] = {0,1};
       texts[] = {"Off","On"};
       default = 0;
