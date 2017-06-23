@@ -187,9 +187,9 @@ phx_colorArrayUsed = [];
 private _groups = [];
 private _templateGroups = [];
 private _templateGroupList = [
-    "Blue_HQ", "Blue_A", "Blue_A1", "Blue_A2", "Blue_B", "Blue_B1", "Blue_B2", "Blue_C", "Blue_C1", "Blue_C2", "Blue_D", "Blue_D1", "Blue_D2", "Blue_D3",
-    "Red_HQ", "Red_E", "Red_E1", "Red_E2", "Red_F", "Red_F1", "Red_F2", "Red_G", "Red_G1", "Red_G2", "Red_H", "Red_H1", "Red_H2", "Red_H3",
-    "Green_HQ", "Green_I", "Green_I1", "Green_I2", "Green_J", "Green_J1", "Green_J2", "Green_K", "Green_K1", "Green_K2", "Green_L", "Green_L1", "Green_L2", "Green_L3"
+    "Blue_CC", "Blue_P1HQ", "Blue_P2HQ", "Blue_P", "Blue_A", "Blue_A1", "Blue_A2", "Blue_B", "Blue_B1", "Blue_B2", "Blue_C", "Blue_C1", "Blue_C2", "Blue_D", "Blue_D1", "Blue_D2", "Blue_D3", "Blue_D4", "Blue_E", "Blue_E1", "Blue_E2", "Blue_F", "Blue_F1", "Blue_F2", "Blue_G", "Blue_G1", "Blue_G2",
+    "Red_CC", "Red_P1HQ", "Red_P2HQ", "Red_P", "Red_A", "Red_A1", "Red_A2", "Red_B", "Red_B1", "Red_B2", "Red_C", "Red_C1", "Red_C2", "Red_D", "Red_D1", "Red_D2", "Red_D3", "Red_D4", "Red_E", "Red_E1", "Red_E2", "Red_F", "Red_F1", "Red_F2", "Red_G", "Red_G1", "Red_G2",
+    "Green_CC", "Green_P1HQ", "Green_P2HQ", "Green_P", "Green_I", "Green_I1", "Green_I2", "Green_J", "Green_J1", "Green_J2", "Green_K", "Green_K1", "Green_K2", "Green_L", "Green_L1", "Green_L2", "Green_L3", "Green_L4", "Green_M", "Green_M1", "Green_M2", "Green_N", "Green_N1", "Green_N2", "Green_O", "Green_O1", "Green_O2"
 ];
 
 {

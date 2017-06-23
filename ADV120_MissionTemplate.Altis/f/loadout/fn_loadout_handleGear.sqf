@@ -16,16 +16,16 @@ if (_item isEqualType "") then {
     };
 
     addAnywhere = {
-      if (player canAddItemToBackpack [_class, 1]) then {
-        player addItemToBackpack _class;
+      if (player canAddItemToUniform [_class, 1]) then {
+        player addItemToUniform _class;
       } else {
 
       if (player canAddItemToVest [_class, 1]) then {
         player addItemToVest _class;
       } else {
 
-      if (player canAddItemToUniform [_class, 1]) then {
-        player addItemToUniform _class;
+      if (player canAddItemToBackpack [_class, 1]) then {
+        player addItemToBackpack _class;
       } else {
 
       if (player canAdd [_class, 1]) then {

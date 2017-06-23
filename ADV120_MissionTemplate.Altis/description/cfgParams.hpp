@@ -154,8 +154,8 @@ class Params {
     // Loadout Stuff
     class phx_loadout_modset{
       title = "Loadout Modset:";
-        values[] = {0, 1};
-        texts[] = {"Vanilla", "RHS"};
+        values[] = {0, 1, 2};
+        texts[] = {"Vanilla", "RHS", "IFA/FOW"};
         default = 1;
     };
     class phx_loadout_radio {
