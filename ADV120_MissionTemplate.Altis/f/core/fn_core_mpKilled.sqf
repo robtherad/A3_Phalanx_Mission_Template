@@ -18,8 +18,8 @@ showSubtitles false; //Apparently when you get a team kill it changes this varia
 // Player has died and 
 if (player isEqualTo _unit && {!(missionNamespace getVariable ["ACE_isDead",false])}) then {
     // Check for real killer, just in case
-    if (isNull _killer) then {_killer = missionNamespace getVariable ["ace_medical_lastDamageSource",objNull];
-    private _name = "UNKNOWN"
+    if (isNull _killer) then {_killer = player getVariable ["ace_medical_lastDamageSource",objNull];
+    private _name = "UNKNOWN";
     private _killDist = 0;
     if !(isNull _killer) then {
         _name = name _killer;
@@ -35,7 +35,5 @@ if (player isEqualTo _unit && {!(missionNamespace getVariable ["ACE_isDead",fals
     };
     // Commence Readout
     private _kills = "You were killed by - " + _name + " (" + str(_killDist) + "m)" + _friendly;
-    {
-        systemChat format ["%1",_x];
-    } forEach phx_kills2;
+    systemChat format ["%1",_kills];
 };
